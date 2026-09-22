@@ -1,0 +1,348 @@
+{
+  "Brand": {
+    "name": "Taran Taran",
+    "wordmark": "TARAN"
+  },
+  "Metadata": {
+    "title": "Taran Taran — wedding vendors in Armenia",
+    "description": "A directory of wedding vendors in Armenia: venues, photographers, videographers, decor, stylists, dresses and cars. Find the people who will make your day."
+  },
+  "Format": {},
+  "Header": {
+    "nav": {
+      "catalog": "Catalog",
+      "about": "About us",
+      "howItWorks": "How it works",
+      "blog": "Blog",
+      "forVendors": "For vendors",
+      "listProfile": "List your profile"
+    },
+    "openMenu": "Open menu",
+    "language": "Language"
+  },
+  "Footer": {
+    "sections": {
+      "catalog": "Catalog",
+      "company": "Company",
+      "vendors": "For vendors",
+      "help": "Help"
+    },
+    "links": {
+      "about": "About",
+      "howItWorks": "How it works",
+      "blog": "Blog",
+      "listProfile": "List your profile",
+      "contacts": "Contacts",
+      "privacy": "Privacy",
+      "terms": "Terms"
+    },
+    "tagline": "A directory of wedding vendors across Armenia.",
+    "copyright": "© {year} Taran Taran. All rights reserved."
+  },
+  "Hero": {
+    "eyebrow": "Armenia’s wedding marketplace",
+    "titleLine1": "Find the people",
+    "titleLine2": "who will make",
+    "titleLine3": "your day.",
+    "subtitle": "Venues, photographers, decorators and other vendors for your wedding — all in one place.",
+    "searchButton": "Search",
+    "trending": "Trending now:",
+    "imageAlt": "A wedding couple",
+    "stats": {
+      "vendors": "vendors",
+      "categories": "categories",
+      "cityName": "Armenia",
+      "cityLabel": "11 regions"
+    },
+    "allCategories": "All categories",
+    "allMarzes": "All Armenia",
+    "selectedCount": "{count} selected"
+  },
+  "BlogTeaser": {
+    "eyebrow": "Guides",
+    "title": "A guide to wedding planning",
+    "cta": "All articles"
+  },
+  "Categories": {
+    "eyebrow": "Categories",
+    "title": "Everything for your wedding, in one place",
+    "vendorCount": "{count}+ vendors",
+    "vendorCta": "Are you a vendor? List your profile"
+  },
+  "HowItWorks": {
+    "eyebrow": "Process",
+    "titleLine1": "How it",
+    "titleLine2": "works",
+    "step1": {
+      "title": "Choose a category",
+      "desc": "Venue, photographer, decorator — pick the vendor you need from a catalog filtered by category and region."
+    },
+    "step2": {
+      "title": "Compare vendors",
+      "desc": "Browse portfolios, descriptions and terms."
+    },
+    "step3": {
+      "title": "Send a request",
+      "desc": "Contact the vendor directly or check their availability for your date."
+    }
+  },
+  "Inspiration": {
+    "imageAlt": "A wedding celebration",
+    "bouquetAlt": "Bridal bouquet",
+    "eyebrow": "Inspiration",
+    "title": "Build a wedding you'll remember",
+    "description": "Every detail of your day matters. The platform brings together vetted vendors from across Armenia — from intimate ceremonies to large celebrations. Find the people who will turn your idea into an unforgettable event.",
+    "stats": {
+      "vendors": "vendors",
+      "categories": "categories"
+    }
+  },
+  "CTA": {
+    "eyebrow": "Get started",
+    "title": "Your wedding starts with the right people.",
+    "subtitle": "Find vendors you can trust with your most important day.",
+    "button": "Find a vendor"
+  },
+  "LeadActions": {
+    "contact": "Contact",
+    "mentionUsHint": "Mention you found them on Taran Taran — many vendors offer a discount for it.",
+    "disclaimer": "We recommend communicating through the platform — it makes disputes easier to resolve if something goes wrong.",
+    "submitted": {
+      "title": "Message sent",
+      "desc": "The vendor will receive it and get in touch with you shortly."
+    },
+    "form": {
+      "name": "Your name",
+      "phone": "Phone",
+      "message": "What you'd like to discuss (optional)",
+      "submit": "Send"
+    }
+  },
+  "VendorGallery": {
+    "photoLabel": "Photo {index}",
+    "openFullscreen": "Open fullscreen",
+    "close": "Close",
+    "prev": "Previous photo",
+    "next": "Next photo"
+  },
+  "CategoryVendorList": {
+    "empty": "No vendors match these filters.",
+    "apply": "Apply",
+    "allMarzes": "All Armenia",
+    "selectedCount": "{count} selected"
+  },
+  "BlogIndexPage": {
+    "title": "A guide to wedding planning",
+    "description": "How to choose vendors, plan a budget, and not miss the details.",
+    "allRubrics": "All articles",
+    "rubrics": {
+      "vendors": "Choosing vendors",
+      "planning": "Planning",
+      "traditions": "Traditions"
+    },
+    "searchPlaceholder": "Search articles",
+    "empty": "Nothing found. Try a different search or rubric."
+  },
+  "ForVendorsPage": {
+    "metaTitle": "For vendors",
+    "metaDescription": "List your profile on Taran Taran and get requests from couples directly.",
+    "eyebrow": "For vendors",
+    "title": "List your profile and get requests from couples",
+    "description": "We set up vendor profiles ourselves. Contact us on WhatsApp to get your page made.",
+    "whatsapp": "Message us on WhatsApp"
+  },
+  "AboutPage": {
+    "metaTitle": "About us",
+    "metaDescription": "A directory of vetted wedding vendors across Armenia — portfolios and contacts right on the listing, no endless back-and-forth in DMs.",
+    "eyebrow": "About us",
+    "title": "Taran Taran — Armenia’s wedding marketplace",
+    "description": "A directory of vetted wedding vendors across Armenia — portfolios and contacts right on the listing, no endless back-and-forth in DMs.",
+    "story": {
+      "p1": "Planning a wedding in Armenia usually means asking around and messaging a dozen people — a venue, a photographer, a decorator, a toastmaster, a dress — each one needing the same questions answered separately. Taran Taran brings vendors together in one directory, with a portfolio and contacts right on the card.",
+      "p2": "Requests go straight to the vendor’s messenger and get logged on our end — so you can see how many requests a vendor actually received, not just what they say about themselves."
+    },
+    "why": {
+      "eyebrow": "Why Taran Taran",
+      "title": "Less messaging, more answers",
+      "portfolio": {
+        "title": "Portfolio on the card",
+        "desc": "Past work, a description and contacts are right on the vendor page — no need to DM just to see whether they fit."
+      },
+      "direct": {
+        "title": "No middleman",
+        "desc": "Requests go straight to the vendor, no booking markup — we charge for placement, not for the booking itself."
+      },
+      "vetted": {
+        "title": "Listings are reviewed by hand",
+        "desc": "Every vendor application is checked before it goes live — no random listings in the catalog."
+      }
+    },
+    "roadmap": "Taran Taran works across Armenia: Yerevan and ten regions."
+  },
+  "ContactsPage": {
+    "metaTitle": "Contacts",
+    "metaDescription": "Get in touch with the Taran Taran team.",
+    "eyebrow": "Contacts",
+    "title": "Get in touch",
+    "email": "Email: tarantaran.am@gmail.com",
+    "phone": "Phone: +374 43 467 302",
+    "instagram": "Instagram: <link>{handle}</link>",
+    "tiktok": "TikTok: <link>{handle}</link>",
+    "telegram": "Telegram: <link>{handle}</link>",
+    "hours": "Yerevan, Armenia. We reply on weekdays, 10:00–19:00."
+  },
+  "PrivacyPage": {
+    "eyebrow": "Legal",
+    "title": "Privacy policy",
+    "metaDescription": "Taran Taran's personal data processing policy."
+  },
+  "TermsPage": {
+    "eyebrow": "Legal",
+    "title": "Terms of use",
+    "metaDescription": "Terms of use for the platform and vendor listings on Taran Taran."
+  },
+  "InvitePage": {
+    "metaTitle": "Wedding invitation",
+    "metaDescription": "This section is under development.",
+    "eyebrow": "Invitation",
+    "title": "Wedding invitation",
+    "description": "This section is under development — an invitation builder will appear here later."
+  },
+  "CatalogPage": {
+    "metaTitle": "Wedding vendor catalog",
+    "metaDescription": "Every wedding vendor in Armenia: venues, photographers, décor, hosts and more.",
+    "title": "All vendors",
+    "description": "Every vendor on the platform in one list. Pick a category or search by name.",
+    "filters": {
+      "allCategories": "All categories",
+      "apply": "Show",
+      "allMarzes": "All Armenia",
+      "searchPlaceholder": "Search by name and description",
+      "categoriesLabel": "Categories:",
+      "clearCategories": "Clear",
+      "selectedCount": "{count} selected"
+    },
+    "found": "Found: {count}",
+    "empty": "Nothing matches these filters."
+  },
+  "Pagination": {
+    "label": "Pages",
+    "prev": "Previous",
+    "next": "Next",
+    "status": "{page} of {totalPages}"
+  },
+  "NotFoundPage": {
+    "eyebrow": "404",
+    "title": "Page not found",
+    "description": "The link is outdated or the address has a typo.",
+    "home": "Go home",
+    "catalog": "Browse catalog"
+  },
+  "ErrorPage": {
+    "eyebrow": "Error",
+    "title": "Something went wrong",
+    "description": "We're already aware of this. Try refreshing the page.",
+    "retry": "Try again",
+    "home": "Go home"
+  },
+  "Breadcrumbs": {
+    "home": "Home",
+    "catalog": "Catalog",
+    "blog": "Blog"
+  },
+  "Marz": {
+    "yerevan": "Yerevan",
+    "aragatsotn": "Aragatsotn",
+    "ararat": "Ararat",
+    "armavir": "Armavir",
+    "gegharkunik": "Gegharkunik",
+    "kotayk": "Kotayk",
+    "lori": "Lori",
+    "shirak": "Shirak",
+    "syunik": "Syunik",
+    "tavush": "Tavush",
+    "vayots_dzor": "Vayots Dzor",
+    "all": "All Armenia",
+    "more": "{first} and {count} more"
+  },
+  "Category": {
+    "venues": {
+      "name": "Venue or restaurant",
+      "namePlural": "Venues and restaurants",
+      "description": "Banquet halls, restaurants and celebration venues for any number of guests."
+    },
+    "photographers": {
+      "name": "Photographer",
+      "namePlural": "Photographers",
+      "description": "Wedding photography in every style, from documentary to fine art."
+    },
+    "videographers": {
+      "name": "Videographer",
+      "namePlural": "Videographers",
+      "description": "Wedding videos, clips and full-length films about your day."
+    },
+    "decor": {
+      "name": "Decor and florals",
+      "namePlural": "Decor, florals and styling",
+      "description": "Venue styling, arches, florals and decor for the ceremony."
+    },
+    "reels": {
+      "name": "Reels maker",
+      "namePlural": "Reels makers",
+      "description": "Short vertical wedding videos shot and edited for social media."
+    },
+    "stylists": {
+      "name": "Stylist or makeup artist",
+      "namePlural": "Stylists, makeup artists and hairdressers",
+      "description": "Bridal hair and makeup, on location or in the studio."
+    },
+    "dresses": {
+      "name": "Wedding dress",
+      "namePlural": "Wedding dresses",
+      "description": "Bridal salons for buying and renting, with fittings for your figure."
+    },
+    "cakes": {
+      "name": "Wedding cake",
+      "namePlural": "Cakes",
+      "description": "Custom wedding cakes and dessert tables."
+    },
+    "cars": {
+      "name": "Car rental",
+      "namePlural": "Car rental",
+      "description": "A wedding cortege and a car for the newlyweds on the big day."
+    },
+    "hosts": {
+      "name": "Tamada or host",
+      "namePlural": "Tamadas and hosts",
+      "description": "Hosts and tamadas for the wedding celebration in Armenian, Russian and English."
+    },
+    "show": {
+      "name": "Entertainment",
+      "namePlural": "Entertainment",
+      "description": "Fire shows, light and dance acts for the evening part of the banquet."
+    },
+    "choreographers": {
+      "name": "Choreographer",
+      "namePlural": "Choreographers",
+      "description": "Choreography for the first dance and dance numbers for the couple and guests."
+    },
+    "catering": {
+      "name": "Catering",
+      "namePlural": "Catering",
+      "description": "Catering and buffet menus for weddings outside a venue or on top of the banquet."
+    },
+    "dj": {
+      "name": "DJ",
+      "namePlural": "DJs",
+      "description": "DJs and sound equipment for the dance part of the evening."
+    }
+  },
+  "Filters": {
+    "categoryLabel": "Vendor category",
+    "marzLabel": "Region"
+  },
+  "VendorPage": {
+    "website": "Website",
+    "links": "Links"
+  }
+}
