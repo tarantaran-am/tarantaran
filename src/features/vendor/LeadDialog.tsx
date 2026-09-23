@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, type ReactNode } from "react";
+import { useActionState, useState, type FormEvent, type ReactNode } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { Dialog } from "@base-ui/react/dialog";
 import { Button, buttonVariants } from "@/shared/components/ui/button";
@@ -15,6 +15,31 @@ const INITIAL_STATE: LeadFormState = { status: "idle" };
 
 // Most visitors have an Armenian number, so the country code is typed in for them.
 const PHONE_PREFIX = "+374 ";
+
+// Remembered so a second request, to another vendor, doesn't ask for the same details again.
+const SAVED_CONTACT_KEY = "tarantaran:lead-contact";
+
+type SavedContact = { name?: string; phone?: string };
+
+function readSavedContact(): SavedContact {
+  try {
+    const saved: unknown = JSON.parse(localStorage.getItem(SAVED_CONTACT_KEY) ?? "{}");
+    if (!saved || typeof saved !== "object") return {};
+    const { name, phone } = saved as Record<string, unknown>;
+    return { name: typeof name === "string" ? name : undefined, phone: typeof phone === "string" ? phone : undefined };
+  } catch {
+    return {};
+  }
+}
+
+function saveContact(event: FormEvent<HTMLFormElement>) {
+  const data = new FormData(event.currentTarget);
+  try {
+    localStorage.setItem(SAVED_CONTACT_KEY, JSON.stringify({ name: data.get("name"), phone: data.get("phone") }));
+  } catch {
+    // Storage can be unavailable (private mode, blocked site data); remembering is only a convenience.
+  }
+}
 
 export function LeadDialog({ vendorId, vendorName }: { vendorId: string; vendorName: string }) {
   const t = useTranslations("LeadActions");
@@ -37,6 +62,8 @@ function LeadForm({ vendorId, vendorName }: { vendorId: string; vendorName: stri
   const t = useTranslations("LeadActions");
   const locale = useLocale();
   const [state, formAction, pending] = useActionState(submitLead.bind(null, vendorId, locale), INITIAL_STATE);
+  // The form only mounts in the open dialog, on the client, so reading storage here is safe.
+  const [saved] = useState(readSavedContact);
 
   if (state.status === "success") {
     return (
@@ -57,7 +84,7 @@ function LeadForm({ vendorId, vendorName }: { vendorId: string; vendorName: stri
 
   return (
     // Base UI inputs don't accept a new defaultValue, so the form remounts with the returned values instead.
-    <form key={JSON.stringify(values ?? {})} action={formAction} className="flex flex-col gap-5">
+    <form key={JSON.stringify(values ?? {})} action={formAction} onSubmit={saveContact} className="flex flex-col gap-5">
       <ModalHeader title={t("form.open")} description={vendorName} />
 
       <Field label={t("form.eventDate")} htmlFor="lead-event-date">
@@ -78,7 +105,7 @@ function LeadForm({ vendorId, vendorName }: { vendorId: string; vendorName: stri
           required
           maxLength={100}
           autoComplete="name"
-          defaultValue={values?.name}
+          defaultValue={values?.name ?? saved.name}
           aria-invalid={invalid("name") || undefined}
           aria-describedby={invalid("name") ? "lead-name-error" : undefined}
         />
@@ -93,7 +120,7 @@ function LeadForm({ vendorId, vendorName }: { vendorId: string; vendorName: stri
           required
           maxLength={30}
           autoComplete="tel"
-          defaultValue={values?.phone ?? PHONE_PREFIX}
+          defaultValue={values?.phone ?? saved.phone ?? PHONE_PREFIX}
           aria-invalid={invalid("phone") || undefined}
           aria-describedby={invalid("phone") ? "lead-phone-error" : undefined}
         />
@@ -130,9 +157,9 @@ function LeadForm({ vendorId, vendorName }: { vendorId: string; vendorName: stri
       {/* Honeypot for bots; see submitLead. */}
       <input type="text" name="company" tabIndex={-1} autoComplete="off" aria-hidden="true" className="hidden" />
 
-      {state.status === "error" && (
+      {(state.status === "error" || state.status === "limited") && (
         <p role="alert" className="text-sm text-destructive">
-          {t("form.errors.generic")}
+          {state.status === "limited" ? t("form.errors.tooMany") : t("form.errors.generic")}
         </p>
       )}
 

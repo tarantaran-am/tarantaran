@@ -123,8 +123,11 @@ model VendorLead {
   contactWhatsapp Boolean   @default(false) @map("contact_whatsapp")
   contactTelegram Boolean   @default(false) @map("contact_telegram")
   locale          String
+  /// sha256(salt | IP), only used to rate-limit submissions.
+  visitorHash     String?   @map("visitor_hash")
   createdAt       DateTime  @default(now()) @map("created_at")
 
   @@index([vendorId, createdAt])
+  @@index([visitorHash, createdAt])
   @@map("vendor_leads")
 }

@@ -9,6 +9,9 @@ const schema = z.object({
 
   VISITOR_HASH_SALT: z.string().min(32),
 
+  TELEGRAM_BOT_TOKEN: z.string().min(1).optional(),
+  TELEGRAM_CHAT_ID: z.string().min(1).optional(),
+
   NEXT_PUBLIC_APP_URL: z.url(),
   NEXT_PUBLIC_SENTRY_DSN: z.url(),
 });

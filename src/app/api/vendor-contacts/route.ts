@@ -3,6 +3,7 @@ import { z } from "zod";
 import { env } from "@/env";
 import { routing } from "@/i18n/routing";
 import { prisma } from "@/shared/lib/db";
+import { clientIp } from "@/shared/lib/client-ip";
 import { CONTACT_EVENT_KINDS } from "@/shared/config/social";
 
 const bodySchema = z.object({
@@ -35,7 +36,7 @@ export async function POST(request: Request) {
   });
   if (!vendor) return new Response(null, { status: 404 });
 
-  const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? request.headers.get("x-real-ip") ?? "";
+  const ip = clientIp(request.headers);
   const day = YEREVAN_DAY.format(new Date());
   const visitorHash = createHash("sha256").update(`${env.VISITOR_HASH_SALT}|${day}|${ip}|${userAgent}`).digest("hex");
 

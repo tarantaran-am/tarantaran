@@ -120,7 +120,8 @@
       "errors": {
         "name": "Please enter your name",
         "phone": "Please enter a phone number, e.g. +374 91 234 567",
-        "generic": "Couldn't send. Please try again."
+        "generic": "Couldn't send. Please try again.",
+        "tooMany": "Too many requests in a row. Please try again in an hour or contact the vendor directly."
       }
     },
     "close": "Close",

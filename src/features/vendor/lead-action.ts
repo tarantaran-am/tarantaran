@@ -1,9 +1,15 @@
 "use server";
 
+import { createHash } from "node:crypto";
+import { after } from "next/server";
+import { headers } from "next/headers";
 import * as Sentry from "@sentry/nextjs";
 import { z } from "zod";
+import { env } from "@/env";
 import { routing } from "@/i18n/routing";
 import { prisma } from "@/shared/lib/db";
+import { clientIp } from "@/shared/lib/client-ip";
+import { notifyNewLead } from "@/features/vendor/lead-notification";
 
 export type LeadField = "name" | "phone" | "eventDate" | "message";
 
@@ -19,7 +25,9 @@ export type LeadValues = {
 export type LeadFormState =
   | { status: "idle" | "success" }
   // React resets the form after an action, so the values come back to refill it.
-  | { status: "invalid" | "error"; values: LeadValues; invalid: LeadField[] };
+  | { status: "invalid" | "limited" | "error"; values: LeadValues; invalid: LeadField[] };
+
+const RATE_LIMIT = { max: 20, windowMs: 60 * 60 * 1000 };
 
 const PHONE = /^\+?[\d\s()-]+$/;
 
@@ -69,10 +77,19 @@ export async function submitLead(
   }
 
   const { name, phone, eventDate, message } = parsed.data;
+  const visitorHash = createHash("sha256")
+    .update(`${env.VISITOR_HASH_SALT}|${clientIp(await headers())}`)
+    .digest("hex");
+
   try {
+    const recent = await prisma.vendorLead.count({
+      where: { visitorHash, createdAt: { gte: new Date(Date.now() - RATE_LIMIT.windowMs) } },
+    });
+    if (recent >= RATE_LIMIT.max) return { status: "limited", values, invalid: [] };
+
     const vendor = await prisma.vendor.findFirst({
       where: { id: context.data.vendorId, isPublished: true },
-      select: { id: true },
+      select: { id: true, slug: true, category: true, nameRu: true, phone: true, whatsapp: true, telegram: true },
     });
     if (!vendor) return { status: "error", values, invalid: [] };
 
@@ -86,8 +103,17 @@ export async function submitLead(
         contactWhatsapp: values.whatsapp,
         contactTelegram: values.telegram,
         locale: context.data.locale,
+        visitorHash,
       },
     });
+
+    // The lead is saved; a Telegram outage must not turn it into an error for the visitor.
+    after(() =>
+      notifyNewLead({
+        vendor,
+        lead: { ...values, name, phone, eventDate, message, locale: context.data.locale },
+      }).catch((error) => Sentry.captureException(error)),
+    );
   } catch (error) {
     Sentry.captureException(error);
     return { status: "error", values, invalid: [] };
