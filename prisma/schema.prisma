@@ -43,15 +43,25 @@ enum Marz {
   vayots_dzor
 }
 
+enum ContactEventKind {
+  reveal
+  instagram
+  facebook
+  tiktok
+  telegram
+  whatsapp
+  website
+}
+
 model Vendor {
-  id            String   @id @default(dbgenerated("gen_random_uuid()"))
-  slug          String   @unique
-  nameHy        String?  @map("name_hy")
-  nameRu        String   @map("name_ru")
-  nameEn        String?  @map("name_en")
-  descriptionHy String?  @map("description_hy")
-  descriptionRu String   @map("description_ru")
-  descriptionEn String?  @map("description_en")
+  id            String         @id @default(dbgenerated("gen_random_uuid()"))
+  slug          String         @unique
+  nameHy        String?        @map("name_hy")
+  nameRu        String         @map("name_ru")
+  nameEn        String?        @map("name_en")
+  descriptionHy String?        @map("description_hy")
+  descriptionRu String         @map("description_ru")
+  descriptionEn String?        @map("description_en")
   category      Category
   phone         String
   address       String?
@@ -62,9 +72,10 @@ model Vendor {
   telegram      String?
   whatsapp      String?
   website       String?
-  isPublished   Boolean  @default(true) @map("is_published")
-  createdAt     DateTime @default(now()) @map("created_at")
+  isPublished   Boolean        @default(true) @map("is_published")
+  createdAt     DateTime       @default(now()) @map("created_at")
   photos        Photo[]
+  contactEvents ContactEvent[]
 
   @@index([category, isPublished])
   @@map("vendors")
@@ -80,4 +91,21 @@ model Photo {
   sortOrder  Int     @default(0) @map("sort_order")
 
   @@map("photos")
+}
+
+/// One row per visitor, vendor, kind and day: repeats the same day are dropped.
+/// `reveal` is a "show contacts" press; the other kinds are clicks on the vendor's links.
+model ContactEvent {
+  id          String           @id @default(dbgenerated("gen_random_uuid()"))
+  vendorId    String           @map("vendor_id")
+  vendor      Vendor           @relation(fields: [vendorId], references: [id], onDelete: Cascade)
+  kind        ContactEventKind
+  day         DateTime         @db.Date
+  visitorHash String           @map("visitor_hash")
+  locale      String
+  createdAt   DateTime         @default(now()) @map("created_at")
+
+  @@unique([vendorId, kind, day, visitorHash])
+  @@index([vendorId, day])
+  @@map("vendor_contact_events")
 }

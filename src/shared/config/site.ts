@@ -1,5 +1,7 @@
 export const BRAND = "Taran Taran";
 
+export const CONTACT_EMAIL = "tarantaran.am@gmail.com";
+
 export const WHATSAPP_URL = "https://wa.me/37443467302";
 
 export const SOCIAL_LINKS = [

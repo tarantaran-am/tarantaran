@@ -3,6 +3,7 @@ import { PageHeader } from "@/shared/components/PageHeader";
 import { Container } from "@/shared/components/container";
 import { buttonVariants } from "@/shared/components/ui/button";
 import { WHATSAPP_URL } from "@/shared/config/site";
+import { AdvertiseSection } from "@/features/advertise/AdvertiseSection";
 
 export async function ForVendorsScreen() {
   const t = await getTranslations("ForVendorsPage");
@@ -15,6 +16,7 @@ export async function ForVendorsScreen() {
           {t("whatsapp")}
         </a>
       </Container>
+      <AdvertiseSection />
     </>
   );
 }

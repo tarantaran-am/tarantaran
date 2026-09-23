@@ -30,3 +30,7 @@ export function socialUrl(network: SocialNetwork, value: string): string {
       return `https://${handle}`;
   }
 }
+
+export const CONTACT_EVENT_KINDS = ["reveal", ...SOCIAL_NETWORKS] as const;
+
+export type ContactEventKind = (typeof CONTACT_EVENT_KINDS)[number];

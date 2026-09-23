@@ -5,6 +5,7 @@ import { Container } from "@/shared/components/container";
 import { Eyebrow } from "@/shared/components/eyebrow";
 import { HowItWorks } from "@/features/landing/HowItWorks";
 import { CTA } from "@/features/landing/CTA";
+import { AdvertiseSection } from "@/features/advertise/AdvertiseSection";
 import { getPublishedVendorCount } from "@/shared/lib/queries";
 import { getCategories } from "@/shared/lib/categories";
 
@@ -55,6 +56,8 @@ export async function AboutScreen() {
           <p className="mt-10 max-w-xl text-sm leading-relaxed text-muted-foreground">{t("roadmap")}</p>
         </Container>
       </section>
+
+      <AdvertiseSection />
 
       <CTA />
     </>

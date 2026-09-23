@@ -3,12 +3,11 @@ import { getTranslations } from "next-intl/server";
 import { MapPin } from "lucide-react";
 import { Breadcrumbs } from "@/shared/components/Breadcrumbs";
 import { VendorGallery } from "@/features/vendor/VendorGallery";
-import { LeadActions } from "@/features/lead/LeadActions";
+import { VendorContacts } from "@/features/vendor/VendorContacts";
 import { getVendor } from "@/shared/lib/queries";
 import { getCategory } from "@/shared/lib/categories";
 import { marzLabel } from "@/shared/lib/marz-label";
-import { SOCIAL_LABELS, SOCIAL_NETWORKS } from "@/shared/config/social";
-import { SocialIcon } from "@/shared/components/SocialIcon";
+import { SOCIAL_NETWORKS } from "@/shared/config/social";
 import { jsonLdHtml, localizedAlternates, SITE_URL } from "@/shared/config/seo";
 import { getRequestLocale } from "@/i18n/locale";
 
@@ -16,7 +15,6 @@ export async function VendorScreen({ categorySlug, slug }: { categorySlug: strin
   const lang = await getRequestLocale();
   const tCrumbs = await getTranslations("Breadcrumbs");
   const tMarz = await getTranslations("Marz");
-  const tVendor = await getTranslations("VendorPage");
   const category = await getCategory(categorySlug);
   if (!category) notFound();
 
@@ -88,35 +86,7 @@ export async function VendorScreen({ categorySlug, slug }: { categorySlug: strin
         </div>
 
         <div className="flex flex-col gap-5 xl:sticky xl:top-24">
-          <LeadActions phone={vendor.phone} />
-
-          {(links.length > 0 || vendor.address) && (
-            <div className="border border-border bg-background p-6">
-              <div className="mb-4 text-[10px] tracking-wider text-muted-foreground uppercase">{tVendor("links")}</div>
-              <div className="flex flex-col gap-3">
-                {vendor.address && (
-                  <div className="flex items-start gap-2.5 text-sm text-foreground">
-                    <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-muted-foreground" aria-hidden="true" />
-                    <span>{vendor.address}</span>
-                  </div>
-                )}
-                {links.map(({ network, href }) => (
-                  <a
-                    key={network}
-                    href={href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2.5 text-sm text-foreground transition-opacity hover:opacity-70"
-                  >
-                    <SocialIcon network={network} className="h-4 w-4 shrink-0 text-muted-foreground" />
-                    <span className="underline decoration-foreground/25 underline-offset-4">
-                      {network === "website" ? tVendor("website") : SOCIAL_LABELS[network]}
-                    </span>
-                  </a>
-                ))}
-              </div>
-            </div>
-          )}
+          <VendorContacts vendorId={vendor.id} phone={vendor.phone} address={vendor.address} links={links} />
         </div>
       </div>
     </>

@@ -104,7 +104,7 @@
     "button": "Find a vendor"
   },
   "LeadActions": {
-    "contact": "Contact",
+    "showContacts": "Show contacts",
     "mentionUsHint": "Mention you found them on Taran Taran — many vendors offer a discount for it.",
     "disclaimer": "We recommend communicating through the platform — it makes disputes easier to resolve if something goes wrong.",
     "submitted": {
@@ -150,6 +150,28 @@
     "title": "List your profile and get requests from couples",
     "description": "We set up vendor profiles ourselves. Contact us on WhatsApp to get your page made.",
     "whatsapp": "Message us on WhatsApp"
+  },
+  "Advertise": {
+    "eyebrow": "Advertising",
+    "title": "Reach couples who are planning their wedding",
+    "description": "The site is read by couples choosing vendors right now. Any vendor can advertise — whether or not they're listed in our catalog.",
+    "formats": {
+      "article": {
+        "title": "Blog article",
+        "desc": "A feature about you in our wedding planning guide. It stays on the site and keeps bringing couples from search."
+      },
+      "mention": {
+        "title": "Mention in an article",
+        "desc": "A recommendation and link to you in a relevant guide: a bridal salon in the dress article, a jeweller in the rings one."
+      },
+      "banner": {
+        "title": "Banner on the site",
+        "desc": "An ad block on the home page or in the blog, linking to your website or social media."
+      }
+    },
+    "whatsapp": "Discuss advertising on WhatsApp",
+    "whatsappText": "Hello! I'd like to advertise on Taran Taran.",
+    "email": "or email <link>{email}</link>"
   },
   "AboutPage": {
     "metaTitle": "About us",
