@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
+import { Dialog } from "@base-ui/react/dialog";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
 import { PHOTO_PLACEHOLDER } from "@/shared/lib/photo";
 
@@ -10,62 +11,20 @@ export function VendorGallery({ photos: approved, name }: { photos: string[]; na
   const t = useTranslations("VendorGallery");
   const [active, setActive] = useState(0);
   const [open, setOpen] = useState(false);
-  const dialogRef = useRef<HTMLDivElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
-  const openerRef = useRef<HTMLButtonElement>(null);
 
   const photos = approved.length > 0 ? approved : [PHOTO_PLACEHOLDER];
-
-  useEffect(() => {
-    if (!open) return;
-    const opener = openerRef.current;
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    closeRef.current?.focus();
-    return () => {
-      document.body.style.overflow = previousOverflow;
-      opener?.focus();
-    };
-  }, [open]);
-
-  useEffect(() => {
-    if (!open) return;
-    function onKey(e: KeyboardEvent) {
-      if (e.key === "Escape") setOpen(false);
-      if (e.key === "ArrowLeft") setActive((i) => (i - 1 + photos.length) % photos.length);
-      if (e.key === "ArrowRight") setActive((i) => (i + 1) % photos.length);
-      if (e.key === "Tab") trapFocus(e);
-    }
-    function trapFocus(e: KeyboardEvent) {
-      const buttons = dialogRef.current?.querySelectorAll<HTMLButtonElement>("button");
-      const first = buttons?.[0];
-      const last = buttons?.[buttons.length - 1];
-      if (!first || !last) return;
-      const current = document.activeElement;
-      const inside = dialogRef.current?.contains(current) ?? false;
-      if (e.shiftKey && (current === first || !inside)) {
-        e.preventDefault();
-        last.focus();
-      } else if (!e.shiftKey && (current === last || !inside)) {
-        e.preventDefault();
-        first.focus();
-      }
-    }
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [open, photos.length]);
+  const current = photos[active] ?? PHOTO_PLACEHOLDER;
+  const step = (delta: number) => setActive((i) => (i + delta + photos.length) % photos.length);
 
   return (
-    <div>
-      <button
-        type="button"
-        ref={openerRef}
-        onClick={() => setOpen(true)}
-        className="relative block aspect-[4/3] w-full cursor-zoom-in overflow-hidden bg-muted"
+    <Dialog.Root open={open} onOpenChange={setOpen}>
+      <Dialog.Trigger
         aria-label={t("openFullscreen")}
+        className="relative block aspect-[4/3] w-full cursor-zoom-in overflow-hidden bg-muted"
       >
         <Image
-          src={photos[active] ?? PHOTO_PLACEHOLDER}
+          src={current}
           alt=""
           aria-hidden="true"
           fill
@@ -73,18 +32,20 @@ export function VendorGallery({ photos: approved, name }: { photos: string[]; na
           className="scale-110 object-cover blur-2xl"
         />
         <Image
-          src={photos[active] ?? PHOTO_PLACEHOLDER}
+          src={current}
           alt={name}
           fill
           priority
           sizes="(min-width: 1024px) 60vw, 100vw"
           className="object-contain"
         />
-      </button>
+      </Dialog.Trigger>
+
       {photos.length > 1 && (
         <div className="mt-2 grid gap-2" style={{ gridTemplateColumns: "repeat(auto-fill, minmax(64px, 1fr))" }}>
           {photos.map((photo, i) => (
             <button
+              type="button"
               key={photo}
               onClick={() => setActive(i)}
               className={`relative aspect-square overflow-hidden bg-muted transition-opacity ${
@@ -98,33 +59,33 @@ export function VendorGallery({ photos: approved, name }: { photos: string[]; na
         </div>
       )}
 
-      {open && (
-        <div
-          ref={dialogRef}
-          role="dialog"
-          aria-modal="true"
+      <Dialog.Portal>
+        {/* The popup covers the whole screen, so a click on its own background acts as the backdrop click. */}
+        <Dialog.Popup
           aria-label={name}
+          initialFocus={closeRef}
           className="fixed inset-0 z-50 flex items-center justify-center bg-background/95"
-          onClick={() => setOpen(false)}
+          onClick={(e) => {
+            if (e.target === e.currentTarget) setOpen(false);
+          }}
+          onKeyDown={(e) => {
+            if (e.key === "ArrowLeft") step(-1);
+            if (e.key === "ArrowRight") step(1);
+          }}
         >
-          <button
-            type="button"
+          <Dialog.Close
             ref={closeRef}
-            onClick={() => setOpen(false)}
             aria-label={t("close")}
             className="absolute top-6 right-6 text-foreground transition-opacity hover:opacity-70"
           >
             <X className="h-6 w-6" />
-          </button>
+          </Dialog.Close>
 
           {photos.length > 1 && (
             <>
               <button
                 type="button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setActive((i) => (i - 1 + photos.length) % photos.length);
-                }}
+                onClick={() => step(-1)}
                 aria-label={t("prev")}
                 className="absolute left-4 text-foreground transition-opacity hover:opacity-70 md:left-8"
               >
@@ -132,10 +93,7 @@ export function VendorGallery({ photos: approved, name }: { photos: string[]; na
               </button>
               <button
                 type="button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setActive((i) => (i + 1) % photos.length);
-                }}
+                onClick={() => step(1)}
                 aria-label={t("next")}
                 className="absolute right-4 text-foreground transition-opacity hover:opacity-70 md:right-8"
               >
@@ -144,11 +102,11 @@ export function VendorGallery({ photos: approved, name }: { photos: string[]; na
             </>
           )}
 
-          <div className="relative h-[80vh] w-[90vw] max-w-5xl" onClick={(e) => e.stopPropagation()}>
-            <Image src={photos[active] ?? PHOTO_PLACEHOLDER} alt={name} fill sizes="90vw" className="object-contain" />
+          <div className="relative h-[80vh] w-[90vw] max-w-5xl">
+            <Image src={current} alt={name} fill sizes="90vw" className="object-contain" />
           </div>
-        </div>
-      )}
-    </div>
+        </Dialog.Popup>
+      </Dialog.Portal>
+    </Dialog.Root>
   );
 }

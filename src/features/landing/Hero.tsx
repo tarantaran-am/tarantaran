@@ -5,34 +5,31 @@ import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { Link, useRouter } from "@/i18n/navigation";
 import { Search, MapPin, ArrowRight } from "lucide-react";
-import { MARZES } from "@/shared/config/marz";
 import type { Category } from "@/shared/model/types";
 import { Eyebrow } from "@/shared/components/eyebrow";
 import { Button } from "@/shared/components/ui/button";
 import { MultiCombobox } from "@/shared/components/MultiCombobox";
+import { MarzCombobox } from "@/shared/components/MarzCombobox";
+import { withQuery } from "@/shared/lib/url";
+
+const FIELD_CLASS =
+  "h-auto w-full min-w-0 flex-1 rounded-none border-0 px-5 py-4 hover:bg-muted/25 [&>svg:last-child]:hidden";
 
 export function Hero({ categories }: { categories: Category[] }) {
   const t = useTranslations("Hero");
-  const tMarz = useTranslations("Marz");
   const tFilters = useTranslations("Filters");
   const router = useRouter();
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [selectedMarzes, setSelectedMarzes] = useState<string[]>([]);
 
   function handleSearch() {
-    const params = new URLSearchParams();
-    if (selectedMarzes.length > 0) params.set("marz", selectedMarzes.join(","));
-
-    if (selectedCategories.length === 1) {
-      const qs = params.toString();
-      router.push(`/catalog/${selectedCategories[0]}${qs ? `?${qs}` : ""}`);
-      return;
-    }
-    if (selectedCategories.length > 1) {
-      params.set("categories", selectedCategories.join(","));
-    }
-    const qs = params.toString();
-    router.push(qs ? `/catalog?${qs}` : "/catalog");
+    const marz = selectedMarzes.join(",");
+    const [single] = selectedCategories;
+    router.push(
+      selectedCategories.length === 1
+        ? withQuery(`/catalog/${single}`, { marz })
+        : withQuery("/catalog", { marz, categories: selectedCategories.join(",") }),
+    );
   }
 
   return (
@@ -68,23 +65,19 @@ export function Hero({ categories }: { categories: Category[] }) {
                 selected={selectedCategories}
                 onChange={setSelectedCategories}
                 allLabel={t("allCategories")}
-                countLabel={(count) => t("selectedCount", { count })}
+                countLabel={(count) => tFilters("selectedCount", { count })}
                 icon={<Search className="h-4 w-4 shrink-0 text-muted-foreground" />}
-                className="h-auto w-full min-w-0 flex-1 rounded-none border-0 px-5 py-4 hover:bg-muted/25 [&>svg:last-child]:hidden"
+                className={FIELD_CLASS}
               />
 
               <div className="hidden w-px self-stretch bg-border sm:block" />
               <div className="h-px w-full bg-border sm:hidden" />
 
-              <MultiCombobox
-                label={tFilters("marzLabel")}
-                options={MARZES.map((m) => ({ value: m, label: tMarz(m) }))}
+              <MarzCombobox
                 selected={selectedMarzes}
                 onChange={setSelectedMarzes}
-                allLabel={t("allMarzes")}
-                countLabel={(count) => t("selectedCount", { count })}
                 icon={<MapPin className="h-4 w-4 shrink-0 text-muted-foreground" />}
-                className="h-auto w-full min-w-0 flex-1 rounded-none border-0 px-5 py-4 hover:bg-muted/25 [&>svg:last-child]:hidden"
+                className={FIELD_CLASS}
               />
 
               <Button onClick={handleSearch} size="lg" className="m-2 shrink-0 sm:my-0">

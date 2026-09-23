@@ -1,11 +1,12 @@
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import { getTranslations } from "next-intl/server";
-import { getBlogPost, resolveLocale } from "@/features/blog/posts";
+import { getBlogPost } from "@/features/blog/posts";
 import { Breadcrumbs } from "@/shared/components/Breadcrumbs";
 import { photoOrPlaceholder } from "@/shared/lib/photo";
 import { getRequestLocale } from "@/i18n/locale";
-import { jsonLdHtml, SITE_URL } from "@/shared/config/seo";
+import { SITE_URL } from "@/shared/config/seo";
+import { JsonLd } from "@/shared/components/JsonLd";
 import { getPathname } from "@/i18n/navigation";
 import { BRAND } from "@/shared/config/site";
 
@@ -15,9 +16,7 @@ export async function ArticleScreen({ slug }: { slug: string }) {
   const post = getBlogPost(slug, lang);
   if (!post) notFound();
 
-  const resolved = resolveLocale(slug, lang);
-  if (!resolved) notFound();
-  const { default: Content } = await import(`@/content/blog/${slug}/${resolved}.mdx`);
+  const { default: Content } = await import(`@/content/blog/${slug}/${post.locale}.mdx`);
 
   const url = new URL(getPathname({ href: `/blog/${slug}`, locale: lang }), SITE_URL).toString();
   const jsonLd = {
@@ -36,7 +35,7 @@ export async function ArticleScreen({ slug }: { slug: string }) {
 
   return (
     <article className="max-w-[820px]">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLdHtml(jsonLd) }} />
+      <JsonLd data={jsonLd} />
       <Breadcrumbs
         locale={lang}
         items={[

@@ -1,3 +1,9 @@
+export type SearchParams = Record<string, string | string[] | undefined>;
+
+export function stringParam(value: string | string[] | undefined): string {
+  return typeof value === "string" ? value : "";
+}
+
 export const MAX_PAGE = 10_000;
 const MAX_QUERY = 100;
 

@@ -1,6 +1,6 @@
 import { getTranslations } from "next-intl/server";
 import { Container } from "@/shared/components/container";
-import { Eyebrow } from "@/shared/components/eyebrow";
+import { SectionTitle } from "@/shared/components/SectionTitle";
 import { buttonVariants } from "@/shared/components/ui/button";
 import { CONTACT_EMAIL, WHATSAPP_URL } from "@/shared/config/site";
 
@@ -13,11 +13,12 @@ export async function AdvertiseSection() {
   return (
     <section id="advertise" className="scroll-mt-24 border-t border-border py-24 md:py-32">
       <Container>
-        <div className="mb-14 max-w-lg">
-          <Eyebrow className="mb-4">{t("eyebrow")}</Eyebrow>
-          <h2 className="font-serif text-[length:var(--text-section)] leading-[1.1] text-foreground">{t("title")}</h2>
-          <p className="mt-4 text-sm leading-relaxed text-muted-foreground">{t("description")}</p>
-        </div>
+        <SectionTitle
+          className="mb-14 max-w-lg"
+          eyebrow={t("eyebrow")}
+          title={t("title")}
+          description={t("description")}
+        />
 
         <div className="grid grid-cols-1 gap-10 border-b border-border pb-16 md:grid-cols-3">
           {FORMAT_KEYS.map((key) => (

@@ -2,7 +2,7 @@ import { getTranslations } from "next-intl/server";
 import { PageHeader } from "@/shared/components/PageHeader";
 import { ProseSection } from "@/shared/components/ProseSection";
 import { Container } from "@/shared/components/container";
-import { Eyebrow } from "@/shared/components/eyebrow";
+import { SectionTitle } from "@/shared/components/SectionTitle";
 import { HowItWorks } from "@/features/landing/HowItWorks";
 import { CTA } from "@/features/landing/CTA";
 import { AdvertiseSection } from "@/features/advertise/AdvertiseSection";
@@ -37,12 +37,7 @@ export async function AboutScreen() {
 
       <section className="border-t border-border py-24 md:py-32">
         <Container>
-          <div className="mb-14 max-w-lg">
-            <Eyebrow className="mb-4">{t("why.eyebrow")}</Eyebrow>
-            <h2 className="font-serif text-[length:var(--text-section)] leading-[1.1] text-foreground">
-              {t("why.title")}
-            </h2>
-          </div>
+          <SectionTitle className="mb-14 max-w-lg" eyebrow={t("why.eyebrow")} title={t("why.title")} />
 
           <div className="grid grid-cols-1 gap-10 border-b border-border pb-16 md:grid-cols-3">
             {WHY_KEYS.map((key) => (

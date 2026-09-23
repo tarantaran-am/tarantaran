@@ -8,7 +8,8 @@ import { getVendor } from "@/shared/lib/queries";
 import { getCategory } from "@/shared/lib/categories";
 import { marzLabel } from "@/shared/lib/marz-label";
 import { SOCIAL_NETWORKS } from "@/shared/config/social";
-import { jsonLdHtml, localizedAlternates, SITE_URL } from "@/shared/config/seo";
+import { localizedAlternates, SITE_URL } from "@/shared/config/seo";
+import { JsonLd } from "@/shared/components/JsonLd";
 import { getRequestLocale } from "@/i18n/locale";
 
 export async function VendorScreen({ categorySlug, slug }: { categorySlug: string; slug: string }) {
@@ -51,7 +52,7 @@ export async function VendorScreen({ categorySlug, slug }: { categorySlug: strin
 
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLdHtml(jsonLd) }} />
+      <JsonLd data={jsonLd} />
 
       <div className="mb-8">
         <Breadcrumbs

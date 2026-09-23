@@ -5,7 +5,7 @@ import { BlogCard } from "@/features/blog/BlogCard";
 import { getBlogPosts } from "@/features/blog/posts";
 import { getRequestLocale } from "@/i18n/locale";
 import { Container } from "@/shared/components/container";
-import { Eyebrow } from "@/shared/components/eyebrow";
+import { SectionTitle } from "@/shared/components/SectionTitle";
 
 export async function BlogTeaser() {
   const t = await getTranslations("BlogTeaser");
@@ -15,10 +15,7 @@ export async function BlogTeaser() {
     <section className="bg-card">
       <Container>
         <div className="mb-14 flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
-          <div>
-            <Eyebrow className="mb-4">{t("eyebrow")}</Eyebrow>
-            <h2 className="font-serif text-[length:var(--text-section)] leading-[1.1] text-foreground">{t("title")}</h2>
-          </div>
+          <SectionTitle eyebrow={t("eyebrow")} title={t("title")} />
           <Link
             href="/blog"
             className="group flex items-center gap-2 self-start pb-1 text-sm text-foreground sm:self-auto"

@@ -139,17 +139,12 @@ function categoriesWhere(categories: string | undefined): Prisma.VendorWhereInpu
   return slugs.length > 0 ? { category: { in: slugs.filter(isCategory) } } : {};
 }
 
-export async function getVendorsByCategory(
-  categorySlug: CategorySlug,
+async function findVendorPage(
+  where: Prisma.VendorWhereInput,
   locale: Locale,
-  filters: VendorFilters = {},
+  requestedPage: number | undefined,
 ): Promise<VendorPage> {
-  const page = normalizePage(filters.page);
-  const where: Prisma.VendorWhereInput = {
-    isPublished: true,
-    category: categorySlug,
-    ...marzWhere(filters.marz),
-  };
+  const page = normalizePage(requestedPage);
   const [rows, total] = await Promise.all([
     prisma.vendor.findMany({
       where,
@@ -166,6 +161,18 @@ export async function getVendorsByCategory(
     totalPages: Math.max(1, Math.ceil(total / PAGE_SIZE)),
     total,
   };
+}
+
+export async function getVendorsByCategory(
+  categorySlug: CategorySlug,
+  locale: Locale,
+  filters: VendorFilters = {},
+): Promise<VendorPage> {
+  return findVendorPage(
+    { isPublished: true, category: categorySlug, ...marzWhere(filters.marz) },
+    locale,
+    filters.page,
+  );
 }
 
 export const getVendor = cache(
@@ -195,34 +202,21 @@ const SEARCH_FIELDS = [
 ] as const satisfies (keyof Prisma.VendorWhereInput)[];
 
 export async function getCatalogVendors(locale: Locale, filters: CatalogFilters = {}): Promise<VendorPage> {
-  const page = normalizePage(filters.page);
   const query = normalizeQuery(filters.query);
-  const where: Prisma.VendorWhereInput = {
-    isPublished: true,
-    ...marzWhere(filters.marz),
-    ...categoriesWhere(filters.categories),
-    ...(query
-      ? {
-          OR: SEARCH_FIELDS.map((field) => ({ [field]: { contains: query, mode: "insensitive" } })),
-        }
-      : {}),
-  };
-  const [rows, total] = await Promise.all([
-    prisma.vendor.findMany({
-      where,
-      orderBy: DEFAULT_ORDER,
-      select: vendorSelect,
-      skip: (page - 1) * PAGE_SIZE,
-      take: PAGE_SIZE,
-    }),
-    prisma.vendor.count({ where }),
-  ]);
-  return {
-    vendors: rows.map((r) => toVendor(r, locale)),
-    page,
-    totalPages: Math.max(1, Math.ceil(total / PAGE_SIZE)),
-    total,
-  };
+  return findVendorPage(
+    {
+      isPublished: true,
+      ...marzWhere(filters.marz),
+      ...categoriesWhere(filters.categories),
+      ...(query
+        ? {
+            OR: SEARCH_FIELDS.map((field) => ({ [field]: { contains: query, mode: "insensitive" } })),
+          }
+        : {}),
+    },
+    locale,
+    filters.page,
+  );
 }
 
 export async function getVendorPaths(): Promise<{ category: CategorySlug; slug: string }[]> {

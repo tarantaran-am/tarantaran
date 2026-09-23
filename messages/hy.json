@@ -54,9 +54,7 @@
       "cityName": "Հայաստան",
       "cityLabel": "11 տարածաշրջան"
     },
-    "allCategories": "Բոլոր կատեգորիաները",
-    "allMarzes": "Ամբողջ Հայաստանը",
-    "selectedCount": "Ընտրված է՝ {count}"
+    "allCategories": "Բոլոր կատեգորիաները"
   },
   "BlogTeaser": {
     "eyebrow": "Օգտակար",
@@ -127,9 +125,7 @@
   },
   "CategoryVendorList": {
     "empty": "Այս զտիչներով ոչինչ չի գտնվել։",
-    "apply": "Ցուցադրել",
-    "allMarzes": "Ամբողջ Հայաստանը",
-    "selectedCount": "Ընտրված է՝ {count}"
+    "apply": "Ցուցադրել"
   },
   "BlogIndexPage": {
     "title": "Հարսանիքին նախապատրաստվելու ուղեցույց",
@@ -238,11 +234,9 @@
     "filters": {
       "allCategories": "Բոլոր կատեգորիաները",
       "apply": "Ցուցադրել",
-      "allMarzes": "Ամբողջ Հայաստանը",
       "searchPlaceholder": "Որոնում ըստ անվան և նկարագրության",
       "categoriesLabel": "Կատեգորիաներ՝",
-      "clearCategories": "Մաքրել",
-      "selectedCount": "Ընտրված է՝ {count}"
+      "clearCategories": "Մաքրել"
     },
     "found": "Գտնվել է՝ {count}",
     "empty": "Այս զտիչներով ոչինչ չի գտնվել։"
@@ -361,7 +355,9 @@
   },
   "Filters": {
     "categoryLabel": "Կապալառուի կատեգորիա",
-    "marzLabel": "Մարզ"
+    "marzLabel": "Մարզ",
+    "allMarzes": "Ամբողջ Հայաստանը",
+    "selectedCount": "Ընտրված է՝ {count}"
   },
   "VendorPage": {
     "website": "Կայք",

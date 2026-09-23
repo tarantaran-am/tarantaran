@@ -54,9 +54,7 @@
       "cityName": "Armenia",
       "cityLabel": "11 regions"
     },
-    "allCategories": "All categories",
-    "allMarzes": "All Armenia",
-    "selectedCount": "{count} selected"
+    "allCategories": "All categories"
   },
   "BlogTeaser": {
     "eyebrow": "Guides",
@@ -127,9 +125,7 @@
   },
   "CategoryVendorList": {
     "empty": "No vendors match these filters.",
-    "apply": "Apply",
-    "allMarzes": "All Armenia",
-    "selectedCount": "{count} selected"
+    "apply": "Apply"
   },
   "BlogIndexPage": {
     "title": "A guide to wedding planning",
@@ -238,11 +234,9 @@
     "filters": {
       "allCategories": "All categories",
       "apply": "Show",
-      "allMarzes": "All Armenia",
       "searchPlaceholder": "Search by name and description",
       "categoriesLabel": "Categories:",
-      "clearCategories": "Clear",
-      "selectedCount": "{count} selected"
+      "clearCategories": "Clear"
     },
     "found": "Found: {count}",
     "empty": "Nothing matches these filters."
@@ -361,7 +355,9 @@
   },
   "Filters": {
     "categoryLabel": "Vendor category",
-    "marzLabel": "Region"
+    "marzLabel": "Region",
+    "allMarzes": "All Armenia",
+    "selectedCount": "{count} selected"
   },
   "VendorPage": {
     "website": "Website",

@@ -1,4 +1,6 @@
 import "server-only";
+import type { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
 import { env } from "@/env";
 import { getPathname } from "@/i18n/navigation";
 import { routing } from "@/i18n/routing";
@@ -32,5 +34,22 @@ export async function localizedAlternates(path: string) {
         "x-default": getPathname({ href: path, locale: routing.defaultLocale }),
       },
     },
+  };
+}
+
+type MetadataKeys = { title: string; description: string };
+
+const META_KEYS: MetadataKeys = { title: "metaTitle", description: "metaDescription" };
+
+// `generateMetadata` for a page whose title and description live in one translation namespace.
+export function staticPageMetadata(namespace: string, path: string, keys: Partial<MetadataKeys> = {}) {
+  const { title, description } = { ...META_KEYS, ...keys };
+  return async function generateMetadata(): Promise<Metadata> {
+    const t = await getTranslations(namespace);
+    return {
+      title: t(title),
+      description: t(description),
+      ...(await localizedAlternates(path)),
+    };
   };
 }

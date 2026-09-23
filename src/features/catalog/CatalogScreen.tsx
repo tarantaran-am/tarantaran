@@ -9,22 +9,20 @@ import { CatalogFilters } from "@/features/catalog/CatalogFilters";
 import { getCatalogVendors } from "@/shared/lib/queries";
 import { getCategories } from "@/shared/lib/categories";
 import { getRequestLocale } from "@/i18n/locale";
-import { parseList } from "@/shared/lib/listing-params";
-
-type SearchParams = Record<string, string | string[] | undefined>;
+import { parseList, stringParam, type SearchParams } from "@/shared/lib/listing-params";
+import { withQuery } from "@/shared/lib/url";
 
 export async function CatalogScreen({ searchParams: params }: { searchParams: SearchParams }) {
   const lang = await getRequestLocale();
   const t = await getTranslations("CatalogPage");
   const tCrumbs = await getTranslations("Breadcrumbs");
-  const marz = typeof params.marz === "string" ? params.marz : "";
-  const categoriesParam = typeof params.categories === "string" ? params.categories : "";
-  const query = typeof params.q === "string" ? params.q : "";
-  const page = Number(params.page) || 1;
+  const marz = stringParam(params.marz);
+  const categoriesParam = stringParam(params.categories);
+  const query = stringParam(params.q);
 
-  const [allCategories, { vendors, total, totalPages }] = await Promise.all([
+  const [allCategories, { vendors, page, total, totalPages }] = await Promise.all([
     getCategories(),
-    getCatalogVendors(lang, { marz, categories: categoriesParam, query, page }),
+    getCatalogVendors(lang, { marz, categories: categoriesParam, query, page: Number(params.page) }),
   ]);
 
   const selectedCategorySlugs = parseList(categoriesParam);
@@ -32,23 +30,8 @@ export async function CatalogScreen({ searchParams: params }: { searchParams: Se
     .filter((c) => selectedCategorySlugs.includes(c.slug))
     .map((c) => c.namePlural);
 
-  function pageHref(p: number) {
-    const qs = new URLSearchParams();
-    if (marz) qs.set("marz", marz);
-    if (categoriesParam) qs.set("categories", categoriesParam);
-    if (query) qs.set("q", query);
-    if (p > 1) qs.set("page", String(p));
-    const s = qs.toString();
-    return s ? `/catalog?${s}` : "/catalog";
-  }
-
-  function hrefWithoutCategories() {
-    const qs = new URLSearchParams();
-    if (marz) qs.set("marz", marz);
-    if (query) qs.set("q", query);
-    const s = qs.toString();
-    return s ? `/catalog?${s}` : "/catalog";
-  }
+  const pageHref = (p: number) =>
+    withQuery("/catalog", { marz, categories: categoriesParam, q: query, page: p > 1 ? p : undefined });
 
   return (
     <>
@@ -67,7 +50,7 @@ export async function CatalogScreen({ searchParams: params }: { searchParams: Se
           <span className="text-xs text-muted-foreground">{t("filters.categoriesLabel")}</span>
           <span className="text-xs text-foreground">{selectedCategoryNames.join(", ")}</span>
           <Link
-            href={hrefWithoutCategories()}
+            href={withQuery("/catalog", { marz, q: query })}
             className="inline-flex items-center gap-1 text-xs text-muted-foreground transition-colors hover:text-foreground"
           >
             <X className="h-3 w-3" />

@@ -7,8 +7,8 @@ import { CategoryVendorList } from "@/features/catalog/CategoryVendorList";
 import { getVendorsByCategory } from "@/shared/lib/queries";
 import { getCategory } from "@/shared/lib/categories";
 import { getRequestLocale } from "@/i18n/locale";
-
-type SearchParams = Record<string, string | string[] | undefined>;
+import { stringParam, type SearchParams } from "@/shared/lib/listing-params";
+import { withQuery } from "@/shared/lib/url";
 
 export async function CategoryScreen({
   categorySlug,
@@ -23,21 +23,13 @@ export async function CategoryScreen({
   const category = await getCategory(categorySlug);
   if (!category) notFound();
 
-  const { marz = "", page = "" } = searchParams;
-  const filters = {
-    marz: typeof marz === "string" ? marz : "",
-    page: Number(page) || 1,
-  };
+  const marz = stringParam(searchParams.marz);
+  const { vendors, page, totalPages } = await getVendorsByCategory(category.slug, lang, {
+    marz,
+    page: Number(searchParams.page),
+  });
 
-  const { vendors, totalPages } = await getVendorsByCategory(category.slug, lang, filters);
-
-  function pageHref(p: number) {
-    const params = new URLSearchParams();
-    if (filters.marz) params.set("marz", filters.marz);
-    if (p > 1) params.set("page", String(p));
-    const qs = params.toString();
-    return qs ? `/catalog/${categorySlug}?${qs}` : `/catalog/${categorySlug}`;
-  }
+  const pageHref = (p: number) => withQuery(`/catalog/${category.slug}`, { marz, page: p > 1 ? p : undefined });
 
   return (
     <>
@@ -56,9 +48,9 @@ export async function CategoryScreen({
         description={category.description}
       />
 
-      <CategoryVendorList vendors={vendors} marz={filters.marz} />
+      <CategoryVendorList vendors={vendors} marz={marz} />
 
-      <Pagination page={filters.page} totalPages={totalPages} buildHref={pageHref} />
+      <Pagination page={page} totalPages={totalPages} buildHref={pageHref} />
     </>
   );
 }

@@ -8,7 +8,8 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/shared/components/ui/breadcrumb";
-import { jsonLdHtml, SITE_URL } from "@/shared/config/seo";
+import { SITE_URL } from "@/shared/config/seo";
+import { JsonLd } from "@/shared/components/JsonLd";
 import { Locale } from "@/shared/model/types";
 
 export type Crumb = {
@@ -30,7 +31,7 @@ export function Breadcrumbs({ items, locale }: { items: Crumb[]; locale: Locale 
 
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLdHtml(jsonLd) }} />
+      <JsonLd data={jsonLd} />
       <Breadcrumb>
         <BreadcrumbList>
           {items.map((item, index) => (

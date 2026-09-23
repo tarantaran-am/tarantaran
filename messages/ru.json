@@ -54,9 +54,7 @@
       "cityName": "Армения",
       "cityLabel": "11 регионов"
     },
-    "allCategories": "Все категории",
-    "allMarzes": "Вся Армения",
-    "selectedCount": "Выбрано: {count}"
+    "allCategories": "Все категории"
   },
   "BlogTeaser": {
     "eyebrow": "Полезное",
@@ -127,9 +125,7 @@
   },
   "CategoryVendorList": {
     "empty": "По этим фильтрам ничего не найдено.",
-    "apply": "Показать",
-    "allMarzes": "Вся Армения",
-    "selectedCount": "Выбрано: {count}"
+    "apply": "Показать"
   },
   "BlogIndexPage": {
     "title": "Гид по подготовке к свадьбе",
@@ -238,11 +234,9 @@
     "filters": {
       "allCategories": "Все категории",
       "apply": "Показать",
-      "allMarzes": "Вся Армения",
       "searchPlaceholder": "Поиск по названию и описанию",
       "categoriesLabel": "Категории:",
-      "clearCategories": "Сбросить",
-      "selectedCount": "Выбрано: {count}"
+      "clearCategories": "Сбросить"
     },
     "found": "Найдено: {count}",
     "empty": "По этим фильтрам ничего не найдено."
@@ -361,7 +355,9 @@
   },
   "Filters": {
     "categoryLabel": "Категория подрядчика",
-    "marzLabel": "Марз"
+    "marzLabel": "Марз",
+    "allMarzes": "Вся Армения",
+    "selectedCount": "Выбрано: {count}"
   },
   "VendorPage": {
     "website": "Сайт",

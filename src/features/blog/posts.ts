@@ -44,7 +44,7 @@ function readMeta(slug: string, locale: Locale): BlogPostMeta | undefined {
   };
 }
 
-export function resolveLocale(slug: string, locale: Locale): Locale | undefined {
+function resolveLocale(slug: string, locale: Locale): Locale | undefined {
   if (!isSafeSlug(slug)) return undefined;
   for (const candidate of [locale, ...FALLBACK]) {
     if (fs.existsSync(path.join(BLOG_DIR, slug, `${candidate}.mdx`))) return candidate;

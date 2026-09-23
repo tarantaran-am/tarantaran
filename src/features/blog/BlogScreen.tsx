@@ -6,8 +6,7 @@ import { SearchField } from "@/shared/components/SearchField";
 import { filterBlogPosts, getBlogPosts } from "@/features/blog/posts";
 import { isRubric } from "@/features/blog/rubrics";
 import { getRequestLocale } from "@/i18n/locale";
-
-type SearchParams = Record<string, string | string[] | undefined>;
+import { stringParam, type SearchParams } from "@/shared/lib/listing-params";
 
 export async function BlogScreen({ searchParams: params }: { searchParams: SearchParams }) {
   const lang = await getRequestLocale();
@@ -15,7 +14,7 @@ export async function BlogScreen({ searchParams: params }: { searchParams: Searc
   const tCrumbs = await getTranslations("Breadcrumbs");
 
   const rubric = isRubric(params.rubric) ? params.rubric : undefined;
-  const query = typeof params.q === "string" ? params.q : "";
+  const query = stringParam(params.q);
 
   const posts = filterBlogPosts(getBlogPosts(lang), { rubric, query });
 

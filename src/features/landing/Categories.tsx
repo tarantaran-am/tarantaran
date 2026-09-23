@@ -5,7 +5,7 @@ import { CategoryCard } from "@/features/landing/CategoryCard";
 import { getVendorCountByCategory } from "@/shared/lib/queries";
 import { getCategories } from "@/shared/lib/categories";
 import { Container } from "@/shared/components/container";
-import { Eyebrow } from "@/shared/components/eyebrow";
+import { SectionTitle } from "@/shared/components/SectionTitle";
 
 function bentoClassName(indexInCycle: number): string {
   switch (indexInCycle) {
@@ -32,12 +32,7 @@ export async function Categories() {
   return (
     <section id="categories" className="scroll-mt-16 py-24 md:py-32">
       <Container>
-        <div className="mb-14">
-          <Eyebrow className="mb-4">{t("eyebrow")}</Eyebrow>
-          <h2 className="max-w-lg font-serif text-[length:var(--text-section)] leading-[1.1] text-foreground">
-            {t("title")}
-          </h2>
-        </div>
+        <SectionTitle className="mb-14 max-w-lg" eyebrow={t("eyebrow")} title={t("title")} />
 
         <div className="grid grid-cols-2 gap-3 sm:grid-flow-row-dense sm:auto-rows-[220px] sm:grid-cols-3 lg:auto-rows-[260px]">
           {categories.map((cat, i) => (
