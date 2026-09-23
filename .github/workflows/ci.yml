@@ -5,6 +5,12 @@ on:
   push:
     branches: [main]
 
+env:
+  DATABASE_URL: ${{ secrets.DATABASE_URL }}
+  VISITOR_HASH_SALT: ${{ secrets.VISITOR_HASH_SALT }}
+  NEXT_PUBLIC_APP_URL: ${{ secrets.NEXT_PUBLIC_APP_URL }}
+  NEXT_PUBLIC_SENTRY_DSN: ${{ secrets.NEXT_PUBLIC_SENTRY_DSN }}
+
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
