@@ -373,5 +373,14 @@
   "VendorPage": {
     "website": "Сайт",
     "links": "Контакты"
+  },
+  "LeadNotification": {
+    "title": "Новая заявка с {brand}",
+    "name": "Имя",
+    "phone": "Телефон",
+    "contactVia": "Способ связи",
+    "call": "звонок",
+    "eventDate": "Дата мероприятия",
+    "message": "Сообщение"
   }
 }

@@ -373,5 +373,14 @@
   "VendorPage": {
     "website": "Կայք",
     "links": "Կոնտակտներ"
+  },
+  "LeadNotification": {
+    "title": "Նոր հարցում {brand}-ից",
+    "name": "Անուն",
+    "phone": "Հեռախոս",
+    "contactVia": "Կապի եղանակ",
+    "call": "զանգ",
+    "eventDate": "Միջոցառման ամսաթիվ",
+    "message": "Հաղորդագրություն"
   }
 }

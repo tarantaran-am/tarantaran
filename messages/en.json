@@ -373,5 +373,14 @@
   "VendorPage": {
     "website": "Website",
     "links": "Links"
+  },
+  "LeadNotification": {
+    "title": "New request from {brand}",
+    "name": "Name",
+    "phone": "Phone",
+    "contactVia": "Preferred contact",
+    "call": "phone call",
+    "eventDate": "Event date",
+    "message": "Message"
   }
 }
