@@ -16,6 +16,7 @@ export async function Footer() {
     ],
     [t("sections.vendors")]: [{ label: t("links.listProfile"), href: "/for-vendors" }],
     [t("sections.help")]: [
+      { label: t("links.faq"), href: "/faq" },
       { label: t("links.contacts"), href: "/contacts" },
       { label: t("links.privacy"), href: "/privacy" },
       { label: t("links.terms"), href: "/terms" },

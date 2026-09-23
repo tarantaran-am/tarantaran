@@ -32,6 +32,7 @@
       "howItWorks": "How it works",
       "blog": "Blog",
       "listProfile": "List your profile",
+      "faq": "FAQ",
       "contacts": "Contacts",
       "privacy": "Privacy",
       "terms": "Terms"
@@ -414,5 +415,92 @@
     "call": "phone call",
     "eventDate": "Event date",
     "message": "Message"
+  },
+  "FaqPage": {
+    "metaTitle": "FAQ",
+    "metaDescription": "Answers to common questions about Taran Taran: contacting vendors, sending requests and getting listed in the directory.",
+    "eyebrow": "Help",
+    "title": "Frequently asked questions",
+    "description": "How Taran Taran works for couples and for vendors. Can't find an answer? Message us.",
+    "sections": {
+      "couples": {
+        "eyebrow": "Couples",
+        "title": "For couples",
+        "items": {
+          "cost": {
+            "q": "How much does it cost to use Taran Taran?",
+            "a": "It's free for couples. We don't charge a booking fee and add nothing to the vendor's price."
+          },
+          "contact": {
+            "q": "How do I contact a vendor?",
+            "a": "On the vendor's page, press “Show contacts” to see their phone number and social media. Or press “Send a request”, enter your name, phone number and date, and your request will go to the vendor."
+          },
+          "afterRequest": {
+            "q": "What happens after I send a request?",
+            "a": "Your request goes to the vendor, who then gets in touch with you — by phone, or on WhatsApp or Telegram if you ticked them in the form."
+          },
+          "noReply": {
+            "q": "The vendor isn't replying. What should I do?",
+            "a": "Message us via the <contacts>contacts page</contacts> — we'll suggest who else to contact."
+          },
+          "booking": {
+            "q": "Can I book and pay for services through the site?",
+            "a": "No. You agree the price, contract, deposit and all other details directly with the vendor. We don't accept payment for their services."
+          },
+          "vetting": {
+            "q": "Do you vet vendors?",
+            "a": "We review every listing before publishing it: contact details, description and portfolio. The vendor is responsible for the quality of their services, though, so look through their work and sign a contract before booking."
+          },
+          "regions": {
+            "q": "Are there vendors outside Yerevan?",
+            "a": "Yes. The <catalog>directory</catalog> has a filter by region, and many vendors work across Armenia — it's noted on their listings."
+          },
+          "discount": {
+            "q": "Is it true I can get a discount?",
+            "a": "Yes: tell the vendor you found them on Taran Taran — many vendors offer a discount for it. Check the amount and terms with the vendor."
+          },
+          "data": {
+            "q": "What happens to my data?",
+            "a": "The name and phone number from your request are used only so that the vendor you chose can contact you, and are kept for 12 months. See the <privacy>Privacy Policy</privacy> for details."
+          }
+        }
+      },
+      "vendors": {
+        "eyebrow": "Vendors",
+        "title": "For vendors",
+        "items": {
+          "join": {
+            "q": "How do I get listed?",
+            "a": "Message us on <whatsapp>WhatsApp</whatsapp>. We'll set up your listing from your photos and description, review it and publish it."
+          },
+          "price": {
+            "q": "How much does a listing cost?",
+            "a": "Listing is paid. The price and period depend on your category — message us and we'll send you the terms."
+          },
+          "leads": {
+            "q": "How will I receive requests?",
+            "a": "Couples call and message you using the contacts on your listing. Requests sent through the site reach you via a messenger, with the couple's name, phone number and event date."
+          },
+          "edit": {
+            "q": "Can I update my listing?",
+            "a": "Yes. Send us new photos, a new description or new contact details and we'll update your listing."
+          },
+          "advertising": {
+            "q": "Do you offer advertising beyond the listing?",
+            "a": "Yes: an article about you on the blog, a mention in a relevant article or a banner on the site. See the <advertise>advertising section</advertise> for details."
+          },
+          "stats": {
+            "q": "Can I find out how many enquiries I've had?",
+            "a": "Yes. We count how often your contacts were opened and your links followed, and how many requests came through the site. Message us and we'll send you the numbers."
+          }
+        }
+      }
+    },
+    "cta": {
+      "title": "Didn't find an answer?",
+      "desc": "Message us and we'll reply during working hours.",
+      "whatsapp": "Message on WhatsApp",
+      "contacts": "All contacts"
+    }
   }
 }

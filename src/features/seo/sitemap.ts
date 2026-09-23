@@ -8,7 +8,7 @@ import { SITE_URL } from "@/shared/config/seo";
 
 type Entry = MetadataRoute.Sitemap[number];
 
-const STATIC_PATHS = ["/", "/catalog", "/about", "/contacts", "/privacy", "/terms", "/for-vendors", "/blog"];
+const STATIC_PATHS = ["/", "/catalog", "/about", "/contacts", "/privacy", "/terms", "/for-vendors", "/blog", "/faq"];
 
 function entry(path: string, extra: Partial<Entry>): Entry {
   const languages = Object.fromEntries(
