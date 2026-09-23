@@ -11,7 +11,7 @@ export async function AdvertiseSection() {
   const whatsappHref = `${WHATSAPP_URL}?text=${encodeURIComponent(t("whatsappText"))}`;
 
   return (
-    <section id="advertise" className="scroll-mt-24 border-t border-border py-24 md:py-32">
+    <section className="border-t border-border py-24 md:py-32">
       <Container>
         <SectionTitle
           className="mb-14 max-w-lg"

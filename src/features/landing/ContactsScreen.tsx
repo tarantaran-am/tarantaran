@@ -13,7 +13,7 @@ const FOLLOW_LINKS = SOCIAL_LINKS.filter((social) => social.key !== "telegram");
 
 const TOPICS = [
   { key: "vendors", href: "/for-vendors" },
-  { key: "advertising", href: "/for-vendors#advertise" },
+  { key: "advertising", href: "/for-vendors" },
 ] as const;
 
 type Action = { href: string; label: string; external?: boolean };

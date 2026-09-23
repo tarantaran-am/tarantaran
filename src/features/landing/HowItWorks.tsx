@@ -9,7 +9,7 @@ export function HowItWorks() {
   const t = useTranslations("HowItWorks");
 
   return (
-    <section id="how-it-works" className="scroll-mt-16 border-t border-border py-24 md:py-32">
+    <section className="border-t border-border py-24 md:py-32">
       <Container>
         <div className="grid grid-cols-1 items-start gap-16 lg:grid-cols-[1fr_2fr]">
           <SectionTitle

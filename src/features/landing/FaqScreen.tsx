@@ -37,7 +37,7 @@ const answerLinks = {
     </Link>
   ),
   advertise: (chunks: ReactNode) => (
-    <Link href="/for-vendors#advertise" className={linkClass}>
+    <Link href="/for-vendors" className={linkClass}>
       {chunks}
     </Link>
   ),

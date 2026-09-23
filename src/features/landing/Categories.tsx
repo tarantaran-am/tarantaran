@@ -30,7 +30,7 @@ export async function Categories() {
   ]);
 
   return (
-    <section id="categories" className="scroll-mt-16 py-24 md:py-32">
+    <section className="py-24 md:py-32">
       <Container>
         <SectionTitle className="mb-14 max-w-lg" eyebrow={t("eyebrow")} title={t("title")} />
 
