@@ -81,7 +81,7 @@
     },
     "step3": {
       "title": "Send a request",
-      "desc": "Contact the vendor directly or check their availability for your date."
+      "desc": "Send a request with your event date through the site, or contact the vendor using the details on their page."
     }
   },
   "Inspiration": {
@@ -122,7 +122,8 @@
         "phone": "Please enter a phone number, e.g. +374 91 234 567",
         "generic": "Couldn't send. Please try again.",
         "tooMany": "Too many requests in a row. Please try again in an hour or contact the vendor directly."
-      }
+      },
+      "consent": "By pressing “Send”, you agree to your details being passed to the vendor as described in the <link>Privacy Policy</link>."
     },
     "close": "Close",
     "contactsTitle": "Contacts"
@@ -152,7 +153,7 @@
   },
   "ForVendorsPage": {
     "metaTitle": "For vendors",
-    "metaDescription": "List your profile on Taran Taran and get requests from couples directly.",
+    "metaDescription": "List your profile on Taran Taran and get requests from couples.",
     "eyebrow": "For vendors",
     "title": "List your profile and get requests from couples",
     "description": "We set up vendor profiles ourselves. Contact us on WhatsApp to get your page made.",
@@ -187,8 +188,7 @@
     "title": "Taran Taran — Armenia’s wedding marketplace",
     "description": "A directory of vetted wedding vendors across Armenia — portfolios and contacts right on the listing, no endless back-and-forth in DMs.",
     "story": {
-      "p1": "Planning a wedding in Armenia usually means asking around and messaging a dozen people — a venue, a photographer, a decorator, a toastmaster, a dress — each one needing the same questions answered separately. Taran Taran brings vendors together in one directory, with a portfolio and contacts right on the card.",
-      "p2": "Requests go straight to the vendor’s messenger and get logged on our end — so you can see how many requests a vendor actually received, not just what they say about themselves."
+      "p1": "Planning a wedding in Armenia usually means asking around and messaging a dozen people — a venue, a photographer, a decorator, a toastmaster, a dress — each one needing the same questions answered separately. Taran Taran brings vendors together in one directory, with a portfolio and contacts right on the card."
     },
     "why": {
       "eyebrow": "Why Taran Taran",
@@ -198,8 +198,8 @@
         "desc": "Past work, a description and contacts are right on the vendor page — no need to DM just to see whether they fit."
       },
       "direct": {
-        "title": "No middleman",
-        "desc": "Requests go straight to the vendor, no booking markup — we charge for placement, not for the booking itself."
+        "title": "No booking fees",
+        "desc": "You pay nothing for booking — not to us, and nothing on top of the vendor's price. Vendors pay us for their listing."
       },
       "vetted": {
         "title": "Listings are reviewed by hand",
@@ -213,12 +213,44 @@
     "metaDescription": "Get in touch with the Taran Taran team.",
     "eyebrow": "Contacts",
     "title": "Get in touch",
-    "email": "Email: tarantaran.am@gmail.com",
-    "phone": "Phone: +374 43 467 302",
-    "instagram": "Instagram: <link>{handle}</link>",
-    "tiktok": "TikTok: <link>{handle}</link>",
-    "telegram": "Telegram: <link>{handle}</link>",
-    "hours": "Yerevan, Armenia. We reply on weekdays, 10:00–19:00."
+    "description": "We're happy to help with choosing vendors, getting listed in the directory and advertising.",
+    "channels": {
+      "whatsapp": {
+        "title": "WhatsApp & phone",
+        "hint": "The fastest way to reach us.",
+        "action": "Message on WhatsApp",
+        "call": "Call"
+      },
+      "telegram": {
+        "title": "Telegram",
+        "hint": "Message us any time — we reply during working hours.",
+        "action": "Message on Telegram"
+      },
+      "email": {
+        "title": "Email",
+        "hint": "For documents, partnerships and official enquiries.",
+        "action": "Send an email"
+      }
+    },
+    "topics": {
+      "vendors": {
+        "title": "For vendors",
+        "desc": "Want to be listed? Tell us about your business — we'll set up your listing and publish it once it's reviewed.",
+        "link": "How to get listed"
+      },
+      "advertising": {
+        "title": "Advertising",
+        "desc": "Blog articles, mentions and banners — for vendors in the directory and beyond.",
+        "link": "Advertising options"
+      }
+    },
+    "details": {
+      "hoursLabel": "Working hours",
+      "hours": "Mon–Fri, 10:00–19:00",
+      "locationLabel": "Where we are",
+      "location": "Yerevan, Armenia",
+      "followLabel": "Follow us"
+    }
   },
   "PrivacyPage": {
     "eyebrow": "Legal",

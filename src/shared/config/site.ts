@@ -2,7 +2,9 @@ export const BRAND = "Taran Taran";
 
 export const CONTACT_EMAIL = "tarantaran.am@gmail.com";
 
-export const WHATSAPP_URL = "https://wa.me/37443467302";
+export const CONTACT_PHONE = "+374 43 467 302";
+
+export const WHATSAPP_URL = `https://wa.me/${CONTACT_PHONE.replace(/\D/g, "")}`;
 
 export const SOCIAL_LINKS = [
   {

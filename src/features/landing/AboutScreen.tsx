@@ -30,7 +30,6 @@ export async function AboutScreen() {
 
       <ProseSection>
         <p>{t("story.p1")}</p>
-        <p>{t("story.p2")}</p>
       </ProseSection>
 
       <HowItWorks />

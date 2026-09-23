@@ -3,6 +3,7 @@
 import { useActionState, useState, type FormEvent, type ReactNode } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { Dialog } from "@base-ui/react/dialog";
+import { Link } from "@/i18n/navigation";
 import { Button, buttonVariants } from "@/shared/components/ui/button";
 import { Input } from "@/shared/components/ui/input";
 import { Textarea } from "@/shared/components/ui/textarea";
@@ -166,6 +167,21 @@ function LeadForm({ vendorId, vendorName }: { vendorId: string; vendorName: stri
       <Button type="submit" size="lg" className="w-full" disabled={pending}>
         {pending ? t("form.submitting") : t("form.submit")}
       </Button>
+
+      <p className="-mt-2 text-xs leading-relaxed text-muted-foreground">
+        {t.rich("form.consent", {
+          link: (chunks) => (
+            // A new tab, so reading the policy doesn't lose what was typed into the form.
+            <Link
+              href="/privacy"
+              target="_blank"
+              className="underline decoration-foreground/30 underline-offset-2 transition-colors hover:decoration-foreground"
+            >
+              {chunks}
+            </Link>
+          ),
+        })}
+      </p>
     </form>
   );
 }
