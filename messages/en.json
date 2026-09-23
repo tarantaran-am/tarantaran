@@ -104,17 +104,27 @@
   "LeadActions": {
     "showContacts": "Show contacts",
     "mentionUsHint": "Mention you found them on Taran Taran — many vendors offer a discount for it.",
-    "disclaimer": "We recommend communicating through the platform — it makes disputes easier to resolve if something goes wrong.",
     "submitted": {
       "title": "Message sent",
       "desc": "The vendor will receive it and get in touch with you shortly."
     },
     "form": {
+      "open": "Send a request",
+      "eventDate": "Event date (optional)",
       "name": "Your name",
       "phone": "Phone",
+      "contactVia": "Please contact me via",
       "message": "What you'd like to discuss (optional)",
-      "submit": "Send"
-    }
+      "submit": "Send",
+      "submitting": "Sending…",
+      "errors": {
+        "name": "Please enter your name",
+        "phone": "Please enter a phone number, e.g. +374 91 234 567",
+        "generic": "Couldn't send. Please try again."
+      }
+    },
+    "close": "Close",
+    "contactsTitle": "Contacts"
   },
   "VendorGallery": {
     "photoLabel": "Photo {index}",

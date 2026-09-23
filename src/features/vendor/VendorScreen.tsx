@@ -87,7 +87,13 @@ export async function VendorScreen({ categorySlug, slug }: { categorySlug: strin
         </div>
 
         <div className="flex flex-col gap-5 xl:sticky xl:top-24">
-          <VendorContacts vendorId={vendor.id} phone={vendor.phone} address={vendor.address} links={links} />
+          <VendorContacts
+            vendorId={vendor.id}
+            vendorName={vendor.name}
+            phone={vendor.phone}
+            address={vendor.address}
+            links={links}
+          />
         </div>
       </div>
     </>

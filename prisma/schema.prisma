@@ -76,6 +76,7 @@ model Vendor {
   createdAt     DateTime       @default(now()) @map("created_at")
   photos        Photo[]
   contactEvents ContactEvent[]
+  leads         VendorLead[]
 
   @@index([category, isPublished])
   @@map("vendors")
@@ -108,4 +109,22 @@ model ContactEvent {
   @@unique([vendorId, kind, day, visitorHash])
   @@index([vendorId, day])
   @@map("vendor_contact_events")
+}
+
+/// A request sent to a vendor from the "send a request" form on the vendor page.
+model VendorLead {
+  id              String    @id @default(dbgenerated("gen_random_uuid()"))
+  vendorId        String    @map("vendor_id")
+  vendor          Vendor    @relation(fields: [vendorId], references: [id], onDelete: Cascade)
+  name            String
+  phone           String
+  eventDate       DateTime? @map("event_date") @db.Date
+  message         String?
+  contactWhatsapp Boolean   @default(false) @map("contact_whatsapp")
+  contactTelegram Boolean   @default(false) @map("contact_telegram")
+  locale          String
+  createdAt       DateTime  @default(now()) @map("created_at")
+
+  @@index([vendorId, createdAt])
+  @@map("vendor_leads")
 }
