@@ -9,7 +9,7 @@ export function BlogCard({ post }: { post: BlogPostMeta }) {
 
   return (
     <Link href={`/blog/${post.slug}`} className="group block">
-      <div className="relative mb-4 aspect-[3/2] overflow-hidden rounded-[20px] bg-muted">
+      <div className="relative mb-4 aspect-golden overflow-hidden rounded-[20px] bg-muted">
         <Image
           src={photoOrPlaceholder(post.cover)}
           alt={post.title}

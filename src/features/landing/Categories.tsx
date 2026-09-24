@@ -42,7 +42,7 @@ export async function Categories() {
               name={cat.namePlural}
               count={t("vendorCount", { count: counts[cat.slug] ?? 0 })}
               photo={cat.cover}
-              className={`aspect-[3/4] sm:aspect-auto sm:h-full ${bentoClassName(i % 7)}`}
+              className={`aspect-golden-portrait sm:aspect-auto sm:h-full ${bentoClassName(i % 7)}`}
             />
           ))}
         </div>

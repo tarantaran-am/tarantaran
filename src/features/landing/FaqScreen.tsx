@@ -73,7 +73,10 @@ export async function FaqScreen() {
       <Container className="pb-24 md:pb-32">
         <div className="flex flex-col gap-20 md:gap-28">
           {SECTIONS.map(({ key, items }) => (
-            <section key={key} className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,4fr)_minmax(0,7fr)] lg:gap-24">
+            <section
+              key={key}
+              className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.618fr)] lg:gap-24"
+            >
               <div className="lg:sticky lg:top-28 lg:self-start">
                 <Eyebrow className="mb-4">{t(`sections.${key}.eyebrow`)}</Eyebrow>
                 <h2 className="font-serif text-[length:var(--text-section)] leading-[1.1] text-foreground">

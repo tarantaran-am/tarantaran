@@ -56,7 +56,7 @@ export function VendorContacts({
 
           <a
             href={`tel:${phone.replace(/\s/g, "")}`}
-            className="mt-6 flex items-center justify-center gap-2 border border-border px-5 py-3.5 text-sm font-medium text-foreground"
+            className="mt-6 flex items-center justify-center gap-2 rounded-3xl border border-border px-5 py-3.5 text-sm font-medium text-foreground"
           >
             <Phone className="h-4 w-4" />
             {phone}

@@ -10,13 +10,18 @@
   --font-sans: var(--font-sans-base), var(--font-sans-armenian), system-ui, -apple-system, sans-serif;
   --font-serif: var(--font-serif-base), var(--font-serif-armenian), Georgia, "Times New Roman", serif;
 
-  --text-display: clamp(2.6rem, 5vw, 4.6rem);
-  --text-hero-cta: clamp(2.4rem, 6vw, 5rem);
-  --text-section: clamp(2rem, 4vw, 3.4rem);
-  --text-section-sm: clamp(1.6rem, 3vw, 2.2rem);
-  --text-page: clamp(1.7rem, 3vw, 2.6rem);
-  --text-article: clamp(2rem, 4vw, 3rem);
-  --text-vendor: clamp(1.8rem, 3vw, 2.6rem);
+  /* Golden-ratio modular scale: each step is √φ ≈ 1.272, two steps are φ ≈ 1.618.
+     1rem → 1.272 → 1.618 → 2.058 → 2.618 → 3.33 → 4.236 → 5.388 */
+  --text-display: clamp(2.618rem, 5vw, 4.236rem);
+  --text-hero-cta: clamp(2.618rem, 6vw, 5.388rem);
+  --text-section: clamp(2.058rem, 4vw, 3.33rem);
+  --text-section-sm: clamp(1.618rem, 3vw, 2.058rem);
+  --text-page: clamp(1.618rem, 3vw, 2.618rem);
+  --text-article: clamp(2.058rem, 4vw, 2.618rem);
+  --text-vendor: clamp(1.618rem, 3vw, 2.618rem);
+
+  --aspect-golden: 1.618 / 1;
+  --aspect-golden-portrait: 1 / 1.618;
 
   --color-tone-sand: var(--muted);
   --color-sidebar-ring: var(--sidebar-ring);

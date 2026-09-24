@@ -26,7 +26,7 @@ export async function ContactsScreen() {
       <PageHeader eyebrow={t("eyebrow")} title={t("title")} description={t("description")} />
 
       <Container className="pb-24 md:pb-32">
-        <div className="grid grid-cols-1 gap-16 lg:grid-cols-[minmax(0,4fr)_minmax(0,7fr)] lg:gap-24">
+        <div className="grid grid-cols-1 gap-16 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.618fr)] lg:gap-24">
           <div className="order-2 flex flex-col gap-12 lg:order-1">
             <dl className="flex flex-col gap-6">
               <Detail label={t("details.hoursLabel")}>{t("details.hours")}</Detail>

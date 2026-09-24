@@ -9,8 +9,8 @@ export async function Inspiration() {
   return (
     <section className="bg-muted py-24 md:py-32">
       <Container>
-        <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-20">
-          <div className="relative order-2 aspect-[4/3] overflow-hidden bg-muted lg:order-1">
+        <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-[minmax(0,1.618fr)_minmax(0,1fr)] lg:gap-20">
+          <div className="relative order-2 aspect-golden overflow-hidden bg-muted lg:order-1">
             <Image
               src="/backgrounds/inspiration.jpg"
               alt={t("imageAlt")}
@@ -18,7 +18,7 @@ export async function Inspiration() {
               sizes="(min-width: 1024px) 50vw, 100vw"
               className="object-cover"
             />
-            <div className="absolute right-0 bottom-0 hidden aspect-[3/4] w-40 overflow-hidden border-4 border-muted sm:block md:w-52">
+            <div className="absolute right-0 bottom-0 hidden aspect-golden-portrait w-40 overflow-hidden border-4 border-muted sm:block md:w-52">
               <Image
                 src="/backgrounds/inspiration-1.jpg"
                 alt={t("bouquetAlt")}

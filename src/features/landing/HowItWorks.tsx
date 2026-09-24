@@ -11,7 +11,7 @@ export function HowItWorks() {
   return (
     <section className="border-t border-border py-24 md:py-32">
       <Container>
-        <div className="grid grid-cols-1 items-start gap-16 lg:grid-cols-[1fr_2fr]">
+        <div className="grid grid-cols-1 items-start gap-16 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.618fr)]">
           <SectionTitle
             eyebrow={t("eyebrow")}
             title={

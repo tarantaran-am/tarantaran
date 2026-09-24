@@ -66,7 +66,7 @@ export async function VendorScreen({ categorySlug, slug }: { categorySlug: strin
         />
       </div>
 
-      <div className="grid grid-cols-1 items-start gap-10 xl:grid-cols-[1fr_340px] xl:gap-12">
+      <div className="grid grid-cols-1 items-start gap-10 xl:grid-cols-[minmax(0,1.618fr)_minmax(300px,1fr)] xl:gap-12">
         <div>
           <VendorGallery photos={vendor.photos} name={vendor.name} />
 
