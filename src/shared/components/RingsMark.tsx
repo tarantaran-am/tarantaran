@@ -1,6 +1,8 @@
-export function RingsMark({ className }: { className?: string }) {
+import type { ComponentProps } from "react";
+
+export function RingsMark(props: ComponentProps<"svg">) {
   return (
-    <svg viewBox="0 0 70.9 72" aria-hidden className={className} fill="currentColor">
+    <svg viewBox="0 0 70.9 72" aria-hidden fill="currentColor" {...props}>
       <polygon points="27 0 21 0 19 3 29 3 27 0" />
       <path d="M53.2,11.3,54.9,13,57,15.1,59.1,13l1.3-1.3.8-.8a2.9,2.9,0,1,0-4.1-4.1A2.9,2.9,0,1,0,53,10.9Z" />
       <path d="M7,62.9a3,3,0,0,0-4.1,0,3,3,0,0,0,0,4.1l.3.3L4.9,69,7,71.1,9.1,69l1.3-1.3.8-.8a3,3,0,0,0,0-4.1A3,3,0,0,0,7,62.9Z" />
