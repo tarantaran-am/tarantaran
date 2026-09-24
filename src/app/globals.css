@@ -2,7 +2,7 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
-@custom-variant dark (&:is(.dark *));
+@custom-variant dark (&:where(.dark, .dark *));
 
 @theme inline {
   --color-background: var(--background);
@@ -62,6 +62,7 @@ body {
 }
 
 :root {
+  color-scheme: light;
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
@@ -97,37 +98,38 @@ body {
 }
 
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
+  color-scheme: dark;
+  --background: oklch(0.17 0.006 40);
+  --foreground: oklch(0.95 0.006 75);
+  --card: oklch(0.205 0.007 40);
+  --card-foreground: oklch(0.95 0.006 75);
+  --popover: oklch(0.225 0.008 40);
+  --popover-foreground: oklch(0.95 0.006 75);
+  --primary: oklch(0.6 0.13 3.3);
+  --primary-foreground: oklch(0.985 0.003 67.8);
+  --secondary: oklch(0.25 0.008 40);
+  --secondary-foreground: oklch(0.95 0.006 75);
+  --muted: oklch(0.235 0.008 40);
+  --muted-foreground: oklch(0.72 0.01 70);
+  --accent: oklch(0.26 0.009 40);
+  --accent-foreground: oklch(0.95 0.006 75);
   --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
+  --border: oklch(1 0 0 / 11%);
   --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
+  --ring: oklch(0.6 0.01 70);
   --chart-1: oklch(0.865 0.127 207.078);
   --chart-2: oklch(0.715 0.143 215.221);
   --chart-3: oklch(0.609 0.126 221.723);
   --chart-4: oklch(0.52 0.105 223.128);
   --chart-5: oklch(0.45 0.085 224.283);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+  --sidebar: oklch(0.205 0.007 40);
+  --sidebar-foreground: oklch(0.95 0.006 75);
+  --sidebar-primary: oklch(0.6 0.13 3.3);
+  --sidebar-primary-foreground: oklch(0.985 0.003 67.8);
+  --sidebar-accent: oklch(0.26 0.009 40);
+  --sidebar-accent-foreground: oklch(0.95 0.006 75);
+  --sidebar-border: oklch(1 0 0 / 11%);
+  --sidebar-ring: oklch(0.6 0.01 70);
 }
 
 @layer base {
@@ -144,4 +146,9 @@ body {
   html {
     @apply font-sans;
   }
+}
+
+/* The shared photo placeholder is a light beige SVG; dim it so empty photos don't glare in dark mode. */
+.dark img[src*="placeholder-photo"] {
+  filter: brightness(0.3);
 }

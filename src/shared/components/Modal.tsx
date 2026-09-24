@@ -19,9 +19,9 @@ export function Modal({
     <Dialog.Root onOpenChange={(open) => onOpenChange?.(open)}>
       <Dialog.Trigger render={trigger} />
       <Dialog.Portal>
-        <Dialog.Backdrop className="fixed inset-0 z-50 bg-foreground/40" />
+        <Dialog.Backdrop className="fixed inset-0 z-50 bg-black/40 dark:bg-black/60" />
         {/* The popup unmounts on close, so its content starts fresh on every opening. */}
-        <Dialog.Popup className="fixed top-1/2 left-1/2 z-50 max-h-[calc(100dvh-2rem)] w-[calc(100%-2rem)] max-w-md -translate-x-1/2 -translate-y-1/2 overflow-y-auto rounded-3xl bg-background p-6 shadow-lg md:p-8">
+        <Dialog.Popup className="fixed top-1/2 left-1/2 z-50 max-h-[calc(100dvh-2rem)] w-[calc(100%-2rem)] max-w-md -translate-x-1/2 -translate-y-1/2 overflow-y-auto rounded-3xl bg-background p-6 shadow-lg md:p-8 dark:bg-popover dark:ring-1 dark:ring-border">
           <Dialog.Close
             aria-label={closeLabel}
             className="absolute top-5 right-5 text-muted-foreground transition-colors hover:text-foreground"

@@ -40,7 +40,7 @@ export function Hero({ categories }: { categories: Category[] }) {
         fill
         priority
         sizes="100vw"
-        className="object-cover object-bottom"
+        className="object-cover object-bottom dark:brightness-[0.32]"
       />
 
       <div className="relative z-10 w-full px-6 pt-28 pb-16 md:px-12 lg:px-16 lg:py-32 xl:px-20">

@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { notFound } from "next/navigation";
 import { locale as localeParam } from "next/root-params";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
@@ -9,6 +9,7 @@ import { fontVariables } from "@/app/fonts";
 import { SITE_URL, ogLocale } from "@/shared/config/seo";
 import { Header } from "@/shared/components/Header";
 import { Footer } from "@/shared/components/Footer";
+import { themeScript } from "@/shared/lib/theme";
 import { cn } from "cn";
 
 export const revalidate = 3600;
@@ -16,6 +17,13 @@ export const revalidate = 3600;
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
 }
+
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+    { media: "(prefers-color-scheme: dark)", color: "#141110" },
+  ],
+};
 
 export async function generateMetadata(): Promise<Metadata> {
   const locale = await localeParam();
@@ -47,7 +55,10 @@ export default async function RootLayout({ children }: LayoutProps<"/[locale]">)
   }
 
   return (
-    <html lang={locale} className={cn("h-full antialiased", fontVariables)}>
+    <html lang={locale} className={cn("h-full antialiased", fontVariables)} suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+      </head>
       <body className="flex min-h-full flex-col bg-background font-sans text-foreground">
         <NextIntlClientProvider>
           <Header />

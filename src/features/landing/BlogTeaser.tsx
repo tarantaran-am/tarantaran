@@ -12,7 +12,7 @@ export async function BlogTeaser() {
   const posts = getBlogPosts(await getRequestLocale()).slice(0, 3);
 
   return (
-    <section className="bg-card">
+    <section>
       <Container>
         <div className="mb-14 flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
           <SectionTitle eyebrow={t("eyebrow")} title={t("title")} />

@@ -5,6 +5,7 @@ import { BRAND } from "@/shared/config/site";
 import { buttonVariants } from "@/shared/components/ui/button";
 import { Eyebrow } from "@/shared/components/eyebrow";
 import { fontVariables } from "./fonts";
+import { themeScript } from "@/shared/lib/theme";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -14,7 +15,10 @@ export const metadata: Metadata = {
 
 export default function GlobalNotFound() {
   return (
-    <html lang="en" className={fontVariables}>
+    <html lang="en" className={fontVariables} suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+      </head>
       <body className="flex min-h-full items-center justify-center bg-background font-sans text-foreground antialiased">
         <div className="max-w-sm px-6 py-24 text-center">
           <Eyebrow className="mb-4">404</Eyebrow>

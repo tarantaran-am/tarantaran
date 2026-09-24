@@ -18,7 +18,8 @@
       "listProfile": "Разместить профиль"
     },
     "openMenu": "Открыть меню",
-    "language": "Язык"
+    "language": "Язык",
+    "toggleTheme": "Переключить светлую/тёмную тему"
   },
   "Footer": {
     "sections": {

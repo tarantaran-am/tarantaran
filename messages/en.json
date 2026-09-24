@@ -18,7 +18,8 @@
       "listProfile": "List your profile"
     },
     "openMenu": "Open menu",
-    "language": "Language"
+    "language": "Language",
+    "toggleTheme": "Switch light/dark theme"
   },
   "Footer": {
     "sections": {

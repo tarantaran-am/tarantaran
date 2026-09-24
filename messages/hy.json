@@ -18,7 +18,8 @@
       "listProfile": "Տեղադրել պրոֆիլ"
     },
     "openMenu": "Բացել մենյուն",
-    "language": "Լեզու"
+    "language": "Լեզու",
+    "toggleTheme": "Փոխել բաց/մուգ թեման"
   },
   "Footer": {
     "sections": {

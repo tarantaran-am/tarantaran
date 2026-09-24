@@ -11,6 +11,7 @@ import { buttonVariants } from "@/shared/components/ui/button";
 import { cn } from "cn";
 import { controlTrigger } from "@/shared/components/control-styles";
 import { Logo } from "@/shared/components/Logo";
+import { ThemeToggle } from "@/shared/components/ThemeToggle";
 
 const LOCALE_LABELS: Record<string, string> = {
   hy: "Հայ",
@@ -57,7 +58,8 @@ export function Header() {
             ))}
           </nav>
 
-          <div className="hidden items-center gap-6 lg:flex">
+          <div className="hidden items-center gap-4 lg:flex">
+            <ThemeToggle />
             <Select items={LOCALE_LABELS} value={locale} onValueChange={(next) => next && switchLocale(next)}>
               <SelectTrigger aria-label={t("language")} className={controlTrigger}>
                 <SelectValue />
@@ -75,15 +77,18 @@ export function Header() {
             </Link>
           </div>
 
-          <button
-            className="text-foreground lg:hidden"
-            onClick={() => setMobileOpen(!mobileOpen)}
-            aria-label={t("openMenu")}
-            aria-expanded={mobileOpen}
-            aria-controls="mobile-menu"
-          >
-            {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-          </button>
+          <div className="flex items-center gap-4 lg:hidden">
+            <ThemeToggle />
+            <button
+              className="text-foreground"
+              onClick={() => setMobileOpen(!mobileOpen)}
+              aria-label={t("openMenu")}
+              aria-expanded={mobileOpen}
+              aria-controls="mobile-menu"
+            >
+              {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            </button>
+          </div>
         </div>
       </Container>
 
