@@ -119,12 +119,17 @@
       "submit": "Send",
       "submitting": "Sending…",
       "errors": {
+        "eventDate": "Choose a date from today up to 3 years ahead.",
         "name": "Please enter your name",
-        "phone": "Please enter a phone number, e.g. +374 91 234 567",
+        "phone": "Check the number: it looks like some digits are missing.",
         "generic": "Couldn't send. Please try again.",
-        "tooMany": "Too many requests in a row. Please try again in an hour or contact the vendor directly."
+        "tooMany": "Too many requests in a row. Please try again in an hour or contact the vendor directly.",
+        "message": "The message must be at most {max} characters."
       },
-      "consent": "By pressing “Send”, you agree to your details being passed to the vendor as described in the <link>Privacy Policy</link>."
+      "consent": "By pressing “Send”, you agree to your details being passed to the vendor as described in the <link>Privacy Policy</link>.",
+      "phoneCountry": "Country code",
+      "otherCountry": "Other country",
+      "otherCountryPlaceholder": "Country code and number"
     },
     "close": "Close",
     "contactsTitle": "Contacts"

@@ -29,7 +29,7 @@ export async function Footer() {
         <div className="mb-14 grid grid-cols-2 gap-8 md:grid-cols-5">
           <div className="col-span-2 md:col-span-1">
             <Link href="/" className="mb-4 inline-block">
-              <Logo className="text-base" />
+              <Logo className="text-[15px]" />
             </Link>
             <p className="max-w-[200px] text-xs leading-relaxed text-muted-foreground">{t("tagline")}</p>
           </div>

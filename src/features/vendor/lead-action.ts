@@ -9,12 +9,15 @@ import { env } from "@/env";
 import { routing } from "@/i18n/routing";
 import { prisma } from "@/shared/lib/db";
 import { clientIp } from "@/shared/lib/client-ip";
+import { formatFullPhone, isValidPhone } from "@/shared/lib/phone";
+import { MESSAGE_MAX_LENGTH, isEventDateInRange } from "@/features/vendor/lead-limits";
 import { notifyNewLead } from "@/features/vendor/lead-notification";
 
 export type LeadField = "name" | "phone" | "eventDate" | "message";
 
 export type LeadValues = {
   name: string;
+  phoneCountry: string;
   phone: string;
   eventDate: string;
   message: string;
@@ -29,18 +32,10 @@ export type LeadFormState =
 
 const RATE_LIMIT = { max: 20, windowMs: 60 * 60 * 1000 };
 
-const PHONE = /^\+?[\d\s()-]+$/;
-
 const leadSchema = z.object({
   name: z.string().trim().min(1).max(100),
-  phone: z
-    .string()
-    .trim()
-    .max(30)
-    .regex(PHONE)
-    .refine((value) => (value.match(/\d/g)?.length ?? 0) >= 8),
-  eventDate: z.union([z.literal(""), z.iso.date()]),
-  message: z.string().trim().max(2000),
+  eventDate: z.union([z.literal(""), z.iso.date().refine((date) => isEventDateInRange(date))]),
+  message: z.string().trim().max(MESSAGE_MAX_LENGTH),
 });
 
 const contextSchema = z.object({ vendorId: z.uuid(), locale: z.enum(routing.locales) });
@@ -58,6 +53,7 @@ export async function submitLead(
 ): Promise<LeadFormState> {
   const values: LeadValues = {
     name: text(formData, "name"),
+    phoneCountry: text(formData, "phoneCountry"),
     phone: text(formData, "phone"),
     eventDate: text(formData, "eventDate"),
     message: text(formData, "message"),
@@ -70,13 +66,17 @@ export async function submitLead(
 
   const context = contextSchema.safeParse({ vendorId, locale });
   const parsed = leadSchema.safeParse(values);
+  // Checked apart from the schema so a bad phone is reported together with any other invalid field.
+  const phoneValid = isValidPhone(values.phoneCountry, values.phone);
   if (!context.success) return { status: "error", values, invalid: [] };
-  if (!parsed.success) {
-    const invalid = [...new Set(parsed.error.issues.map((issue) => issue.path[0] as LeadField))];
-    return { status: "invalid", values, invalid };
+  if (!parsed.success || !phoneValid) {
+    const invalid = new Set(parsed.error?.issues.map((issue) => issue.path[0] as LeadField));
+    if (!phoneValid) invalid.add("phone");
+    return { status: "invalid", values, invalid: [...invalid] };
   }
 
-  const { name, phone, eventDate, message } = parsed.data;
+  const { name, eventDate, message } = parsed.data;
+  const phone = formatFullPhone(values.phoneCountry, values.phone);
   const visitorHash = createHash("sha256")
     .update(`${env.VISITOR_HASH_SALT}|${clientIp(await headers())}`)
     .digest("hex");
