@@ -1,6 +1,6 @@
 export const BRAND = "Taran Taran";
 
-export const CONTACT_EMAIL = "tarantaran.am@gmail.com";
+export const CONTACT_EMAIL = "hello@tarantaran.am";
 
 export const CONTACT_PHONE = "+374 43 467 302";
 
