@@ -67,23 +67,24 @@ export async function setPhotoVisible(photoId: string, visible: boolean): Promis
   refresh(photo.vendorId);
 }
 
-// Swaps the photo with its neighbour, renumbering the whole list so gaps and ties from old imports disappear.
-export async function movePhoto(photoId: string, direction: -1 | 1): Promise<void> {
-  const photo = await findPhoto(photoId);
-  const ordered = await prisma.photo.findMany({
-    where: { vendorId: photo.vendorId },
-    orderBy: [{ sortOrder: "asc" }, { id: "asc" }],
-    select: { id: true },
-  });
-  const from = ordered.findIndex(({ id }) => id === photoId);
-  const to = from + direction;
-  if (to < 0 || to >= ordered.length) return;
+// Saves the order the admin arranged, by drag and drop or the arrow buttons. The list must be
+// exactly the vendor's photos, so a stale page can't drop or duplicate one.
+export async function reorderPhotos(vendorId: string, photoIds: string[]): Promise<void> {
+  await requireAdmin();
+  const current = await prisma.photo.findMany({ where: { vendorId }, select: { id: true } });
+  const known = new Set(current.map(({ id }) => id));
+  if (
+    photoIds.length !== known.size ||
+    new Set(photoIds).size !== known.size ||
+    !photoIds.every((id) => known.has(id))
+  ) {
+    throw new Error("The photo list changed; reload the page and try again.");
+  }
 
-  [ordered[from], ordered[to]] = [ordered[to]!, ordered[from]!];
   await prisma.$transaction(
-    ordered.map(({ id }, index) => prisma.photo.update({ where: { id }, data: { sortOrder: index } })),
+    photoIds.map((id, index) => prisma.photo.update({ where: { id }, data: { sortOrder: index } })),
   );
-  refresh(photo.vendorId);
+  refresh(vendorId);
 }
 
 export async function deletePhoto(photoId: string): Promise<void> {

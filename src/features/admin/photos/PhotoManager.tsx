@@ -5,7 +5,7 @@ import Image from "next/image";
 import { ChevronLeft, ChevronRight, Eye, EyeOff, Star, Trash2, Upload } from "lucide-react";
 import { cn } from "cn";
 import { buttonVariants } from "@/shared/components/ui/button";
-import { addPhoto, deletePhoto, movePhoto, requestPhotoUpload, setCoverPhoto, setPhotoVisible } from "./actions";
+import { addPhoto, deletePhoto, reorderPhotos, requestPhotoUpload, setCoverPhoto, setPhotoVisible } from "./actions";
 import { MAX_PHOTOS } from "./limits";
 import { preparePhoto, uploadToSignedUrl } from "./prepare-photo";
 
@@ -18,6 +18,59 @@ export function PhotoManager({ vendorId, photos }: { vendorId: string; photos: A
   const [dragging, setDragging] = useState(false);
   const [pending, startTransition] = useTransition();
   const inputRef = useRef<HTMLInputElement>(null);
+
+  // The order shown, which drag and drop changes live; it resets whenever the server sends new photos.
+  const serverOrder = photos.map((photo) => photo.id);
+  const [order, setOrder] = useState(serverOrder);
+  const [syncedOrder, setSyncedOrder] = useState(serverOrder.join());
+  if (syncedOrder !== serverOrder.join()) {
+    setSyncedOrder(serverOrder.join());
+    setOrder(serverOrder);
+  }
+  const photoById = new Map(photos.map((photo) => [photo.id, photo]));
+  const ordered = order.flatMap((id) => photoById.get(id) ?? []);
+  const [draggedId, setDraggedId] = useState<string | null>(null);
+  const [orderError, setOrderError] = useState(false);
+
+  function saveOrder(next: string[]) {
+    setOrder(next);
+    setOrderError(false);
+    startTransition(async () => {
+      try {
+        await reorderPhotos(vendorId, next);
+      } catch {
+        setOrder(serverOrder);
+        setOrderError(true);
+      }
+    });
+  }
+
+  function moveBy(id: string, delta: -1 | 1) {
+    const next = [...order];
+    const from = next.indexOf(id);
+    const to = from + delta;
+    if (to < 0 || to >= next.length) return;
+    [next[from], next[to]] = [next[to]!, next[from]!];
+    saveOrder(next);
+  }
+
+  // While a photo is dragged over another, it takes that one's place: before it or after it,
+  // depending on which half the pointer is in.
+  function dragOverPhoto(event: DragEvent<HTMLElement>, targetId: string) {
+    if (!draggedId) return;
+    event.preventDefault();
+    if (targetId === draggedId) return;
+    const { left, width } = event.currentTarget.getBoundingClientRect();
+    const after = event.clientX > left + width / 2;
+    const rest = order.filter((id) => id !== draggedId);
+    rest.splice(rest.indexOf(targetId) + (after ? 1 : 0), 0, draggedId);
+    if (rest.join() !== order.join()) setOrder(rest);
+  }
+
+  function endPhotoDrag() {
+    setDraggedId(null);
+    if (order.join() !== serverOrder.join()) saveOrder(order);
+  }
 
   const updateUpload = (key: string, change: Partial<Upload> | null) =>
     setUploads((current) =>
@@ -46,9 +99,13 @@ export function PhotoManager({ vendorId, photos }: { vendorId: string; photos: A
     }
   }
 
+  // Files dragged in from the computer, as opposed to a photo being moved within the grid.
+  const isFileDrag = (event: DragEvent) => event.dataTransfer.types.includes("Files");
+
   function onDrop(event: DragEvent) {
     event.preventDefault();
     setDragging(false);
+    if (!isFileDrag(event)) return;
     const files = [...event.dataTransfer.files].filter((file) => file.type.startsWith("image/"));
     if (files.length > 0) void uploadFiles(files);
   }
@@ -64,7 +121,7 @@ export function PhotoManager({ vendorId, photos }: { vendorId: string; photos: A
           <p className="mt-1 text-sm text-muted-foreground">
             {photos.length === 0
               ? "Фото пока нет. Первое загруженное станет обложкой."
-              : `На сайте ${visibleCount} из ${photos.length}. Порядок здесь — порядок в галерее.`}
+              : `На сайте ${visibleCount} из ${photos.length}. Перетаскивайте фото, чтобы поменять порядок в галерее.`}
           </p>
         </div>
         <button
@@ -89,8 +146,15 @@ export function PhotoManager({ vendorId, photos }: { vendorId: string; photos: A
         />
       </div>
 
+      {orderError && (
+        <p role="alert" className="text-sm text-destructive">
+          Не удалось сохранить порядок. Обновите страницу и попробуйте ещё раз.
+        </p>
+      )}
+
       <div
         onDragOver={(event) => {
+          if (!isFileDrag(event)) return;
           event.preventDefault();
           setDragging(true);
         }}
@@ -101,32 +165,39 @@ export function PhotoManager({ vendorId, photos }: { vendorId: string; photos: A
           dragging ? "border-foreground bg-muted/60" : "border-border",
         )}
       >
-        {photos.map((photo, index) => (
+        {ordered.map((photo, index) => (
           <figure
             key={photo.id}
+            draggable
+            onDragStart={(event) => {
+              event.dataTransfer.effectAllowed = "move";
+              // Firefox starts a drag only when some data is set.
+              event.dataTransfer.setData("text/plain", photo.id);
+              setDraggedId(photo.id);
+            }}
+            onDragOver={(event) => dragOverPhoto(event, photo.id)}
+            onDrop={(event) => event.preventDefault()}
+            onDragEnd={endPhotoDrag}
             className={cn(
-              "group relative aspect-[4/5] overflow-hidden rounded-2xl bg-muted",
+              "group relative aspect-[4/5] cursor-grab overflow-hidden rounded-2xl bg-muted active:cursor-grabbing",
               !photo.isApproved && "opacity-45",
+              draggedId === photo.id && "opacity-30 ring-2 ring-foreground",
             )}
           >
-            <Image src={photo.url} alt="" fill sizes="220px" className="object-cover" />
+            <Image src={photo.url} alt="" fill sizes="220px" draggable={false} className="object-cover" />
             <div className="absolute top-2 left-2 flex gap-1">
               {photo.isCover && <Badge>Обложка</Badge>}
               {!photo.isApproved && <Badge>Скрыто</Badge>}
             </div>
             <figcaption className="absolute inset-x-2 bottom-2 flex justify-between gap-1 rounded-xl bg-background/90 p-1 opacity-100 transition-opacity lg:opacity-0 lg:group-focus-within:opacity-100 lg:group-hover:opacity-100">
               <div className="flex">
-                <IconButton
-                  label="Левее"
-                  disabled={pending || index === 0}
-                  onClick={() => run(() => movePhoto(photo.id, -1))}
-                >
+                <IconButton label="Левее" disabled={pending || index === 0} onClick={() => moveBy(photo.id, -1)}>
                   <ChevronLeft />
                 </IconButton>
                 <IconButton
                   label="Правее"
-                  disabled={pending || index === photos.length - 1}
-                  onClick={() => run(() => movePhoto(photo.id, 1))}
+                  disabled={pending || index === ordered.length - 1}
+                  onClick={() => moveBy(photo.id, 1)}
                 >
                   <ChevronRight />
                 </IconButton>
