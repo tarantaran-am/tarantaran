@@ -11,6 +11,7 @@ export const routing = defineRouting({
   localeDetection: true,
 });
 
-export function toLocale(value: string): Locale {
+// `value` is undefined outside the [locale] routes, e.g. in the admin, which has its own root layout.
+export function toLocale(value: string | undefined): Locale {
   return hasLocale(routing.locales, value) ? value : routing.defaultLocale;
 }

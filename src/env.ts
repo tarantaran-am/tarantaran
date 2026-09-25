@@ -12,6 +12,12 @@ const schema = z.object({
   TELEGRAM_BOT_TOKEN: z.string().min(1).optional(),
   TELEGRAM_CHAT_ID: z.string().min(1).optional(),
 
+  SUPABASE_URL: z.url().optional(),
+  SUPABASE_SERVICE_ROLE_KEY: z.string().min(1).optional(),
+
+  ADMIN_PASSWORD_HASH: z.string().startsWith("scrypt:").optional(),
+  ADMIN_SESSION_SECRET: z.string().min(32).optional(),
+
   NEXT_PUBLIC_APP_URL: z.url(),
   NEXT_PUBLIC_SENTRY_DSN: z.url(),
 });
