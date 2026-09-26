@@ -4,6 +4,7 @@ import { getLocale } from "next-intl/server";
 import type { Account, AccountRole } from "@/generated/prisma/client";
 import { redirect } from "@/i18n/navigation";
 import { prisma } from "@/shared/lib/db";
+import { rememberRole } from "./role-cookie";
 import { createSupabaseServerClient } from "./supabase";
 
 export type AuthUser = { id: string; email: string; name: string | null };
@@ -50,6 +51,8 @@ export function createAccount(user: AuthUser, role: AccountRole, locale: string)
 // Where a fresh sign-in lands: the account, or the role pick for someone who has none yet.
 // The role is asked only after signing in, so one person can never end up with two of them.
 export async function afterSignInPath(userId: string): Promise<"/account" | "/signup"> {
-  const account = await prisma.account.findUnique({ where: { id: userId }, select: { id: true } });
-  return account ? "/account" : "/signup";
+  const account = await prisma.account.findUnique({ where: { id: userId }, select: { role: true } });
+  if (!account) return "/signup";
+  await rememberRole(account.role);
+  return "/account";
 }

@@ -1,5 +1,6 @@
 import type { NextRequest } from "next/server";
 import { toLocale } from "@/i18n/routing";
+import { forgetRole } from "@/features/auth/role-cookie";
 import { isSameOrigin, redirectToPage } from "@/features/auth/routes";
 import { createSupabaseServerClient } from "@/features/auth/supabase";
 
@@ -9,7 +10,10 @@ export async function POST(request: NextRequest) {
   const formData = await request.formData();
   const locale = toLocale(formData.get("locale")?.toString());
 
-  if (isSameOrigin(request)) await (await createSupabaseServerClient()).auth.signOut();
+  if (isSameOrigin(request)) {
+    await (await createSupabaseServerClient()).auth.signOut();
+    await forgetRole();
+  }
 
   return redirectToPage(request, locale, "", 303);
 }

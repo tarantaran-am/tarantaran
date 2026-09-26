@@ -7,7 +7,7 @@ import {
   isAuthSessionMissingError,
   type SupabaseClient,
 } from "@supabase/supabase-js";
-import { isSessionCookieName } from "@/shared/lib/auth-cookie";
+import { ROLE_COOKIE, isSessionCookieName } from "@/shared/lib/auth-cookie";
 import { supabaseAuthConfig } from "./supabase";
 
 type CookieToSet = { name: string; value: string; options: CookieOptions };
@@ -40,7 +40,8 @@ export async function refreshAuthSession(request: NextRequest): Promise<ApplyAut
   // Anything short of a clear rejection (network failure, rate limit, outage) keeps it for the next request.
   if (!(await hasValidSession(supabase))) {
     for (const { name } of request.cookies.getAll()) {
-      if (isSessionCookieName(name) && !cookiesToSet.some((cookie) => cookie.name === name)) {
+      const stale = isSessionCookieName(name) || name === ROLE_COOKIE;
+      if (stale && !cookiesToSet.some((cookie) => cookie.name === name)) {
         cookiesToSet.push({ name, value: "", options: { path: "/", maxAge: 0 } });
       }
     }

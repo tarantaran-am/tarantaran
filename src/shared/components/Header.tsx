@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useTranslations, useLocale } from "next-intl";
-import { Menu, UserRound, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { Link, usePathname, useRouter } from "@/i18n/navigation";
 import { routing } from "@/i18n/routing";
 import { Container } from "@/shared/components/container";
@@ -11,7 +11,9 @@ import { buttonVariants } from "@/shared/components/ui/button";
 import { cn } from "cn";
 import { controlTrigger } from "@/shared/components/control-styles";
 import { Logo } from "@/shared/components/Logo";
-import { useSignedIn } from "@/shared/lib/use-signed-in";
+import { ButtonSkeleton } from "@/shared/components/ButtonSkeleton";
+import { useAuthHint } from "@/shared/lib/use-auth-hint";
+import { useMinimumDelay } from "@/shared/lib/use-minimum-delay";
 
 const LOCALE_LABELS: Record<string, string> = {
   hy: "Հայ",
@@ -26,8 +28,16 @@ export function Header() {
   const router = useRouter();
 
   const [mobileOpen, setMobileOpen] = useState(false);
-  const signedIn = useSignedIn();
-  const accountLabel = signedIn ? t("nav.account") : t("nav.login");
+  // null until the browser has read the cookies: the header is cached and shared, the server never knows.
+  const authHint = useAuthHint();
+  // The skeletons stay for at least 200ms after the page starts loading: a shorter flash reads as a glitch.
+  const auth = useMinimumDelay(450) ? authHint : null;
+  const authLink =
+    auth === "guest"
+      ? { href: "/login" as const, label: t("nav.login") }
+      : { href: "/account" as const, label: t("nav.account") };
+  // For vendors and guests: a signed-in bride or groom has no profile to list.
+  const showListProfile = auth !== "couple";
 
   const navLinks = [
     { label: t("nav.catalog"), href: "/catalog" },
@@ -73,14 +83,41 @@ export function Header() {
                 ))}
               </SelectContent>
             </Select>
-            <AccountIconLink signedIn={signedIn} label={accountLabel} />
-            <Link href="/for-vendors" className={buttonVariants()}>
-              {t("nav.listProfile")}
-            </Link>
+            <div className="flex items-center gap-3">
+              {auth === null ? (
+                <>
+                  <ButtonSkeleton>{t("nav.listProfile")}</ButtonSkeleton>
+                  <ButtonSkeleton className="min-w-24">{authLink.label}</ButtonSkeleton>
+                </>
+              ) : (
+                <>
+                  {showListProfile && (
+                    <Link href="/for-vendors" className={buttonVariants()}>
+                      {t("nav.listProfile")}
+                    </Link>
+                  )}
+                  <Link href={authLink.href} className={cn(buttonVariants({ variant: "outline" }), "min-w-24")}>
+                    {authLink.label}
+                  </Link>
+                </>
+              )}
+            </div>
           </div>
 
           <div className="flex items-center gap-4 lg:hidden">
-            <AccountIconLink signedIn={signedIn} label={accountLabel} onClick={() => setMobileOpen(false)} />
+            {auth === null ? (
+              <ButtonSkeleton size="sm" className="min-w-20">
+                {authLink.label}
+              </ButtonSkeleton>
+            ) : (
+              <Link
+                href={authLink.href}
+                onClick={() => setMobileOpen(false)}
+                className={cn(buttonVariants({ variant: "outline", size: "sm" }), "min-w-20")}
+              >
+                {authLink.label}
+              </Link>
+            )}
             <button
               className="text-foreground"
               onClick={() => setMobileOpen(!mobileOpen)}
@@ -131,35 +168,16 @@ export function Header() {
                 </SelectContent>
               </Select>
             </div>
-            <div className="border-t border-border pt-5">
-              <Link href="/for-vendors" className={cn(buttonVariants({ size: "lg" }), "w-full")}>
-                {t("nav.listProfile")}
-              </Link>
-            </div>
+            {showListProfile && (
+              <div className="border-t border-border pt-5">
+                <Link href="/for-vendors" className={cn(buttonVariants({ size: "lg" }), "w-full")}>
+                  {t("nav.listProfile")}
+                </Link>
+              </div>
+            )}
           </div>
         </div>
       )}
     </header>
-  );
-}
-
-// Always shown, so the cached header does not shift once the browser learns the visitor is signed in:
-// only the target and the fill change.
-function AccountIconLink({ signedIn, label, onClick }: { signedIn: boolean; label: string; onClick?: () => void }) {
-  return (
-    <Link
-      href={signedIn ? "/account" : "/login"}
-      aria-label={label}
-      title={label}
-      onClick={onClick}
-      className={cn(
-        "flex size-9 items-center justify-center rounded-full border transition-colors duration-200",
-        signedIn
-          ? "border-primary bg-primary text-primary-foreground hover:bg-primary/85"
-          : "border-border text-foreground hover:border-foreground/30 hover:bg-muted",
-      )}
-    >
-      <UserRound className="size-[18px]" strokeWidth={1.5} />
-    </Link>
   );
 }

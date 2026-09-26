@@ -60,6 +60,19 @@
   --radius-2xl: calc(var(--radius) * 1.8);
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
+
+  /* A band sweeping left to right across a loading placeholder. It starts 0.5s into the sweep
+     (negative delay), so the band is already crossing on the first frame instead of waiting
+     off-screen, and moves linearly, so it does not crawl at the edges. */
+  --animate-shimmer: shimmer 1.2s linear -0.5s infinite;
+  @keyframes shimmer {
+    from {
+      transform: translateX(-100%);
+    }
+    to {
+      transform: translateX(100%);
+    }
+  }
 }
 
 body {
