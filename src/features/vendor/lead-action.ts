@@ -1,14 +1,13 @@
 "use server";
 
-import { createHash } from "node:crypto";
 import { after } from "next/server";
 import { headers } from "next/headers";
 import * as Sentry from "@sentry/nextjs";
 import { z } from "zod";
-import { env } from "@/env";
 import { routing } from "@/i18n/routing";
 import { prisma } from "@/shared/lib/db";
 import { clientIp } from "@/shared/lib/client-ip";
+import { saltedHash } from "@/shared/lib/salted-hash";
 import { formatFullPhone, isValidPhone } from "@/shared/lib/phone";
 import { MESSAGE_MAX_LENGTH, isEventDateInRange } from "@/features/vendor/lead-limits";
 import { notifyNewLead } from "@/features/vendor/lead-notification";
@@ -77,9 +76,7 @@ export async function submitLead(
 
   const { name, eventDate, message } = parsed.data;
   const phone = formatFullPhone(values.phoneCountry, values.phone);
-  const visitorHash = createHash("sha256")
-    .update(`${env.VISITOR_HASH_SALT}|${clientIp(await headers())}`)
-    .digest("hex");
+  const visitorHash = saltedHash(clientIp(await headers()));
 
   try {
     const recent = await prisma.vendorLead.count({

@@ -15,7 +15,9 @@
       "howItWorks": "How it works",
       "blog": "Blog",
       "forVendors": "For vendors",
-      "listProfile": "List your profile"
+      "listProfile": "List your profile",
+      "login": "Sign in",
+      "account": "Account"
     },
     "openMenu": "Open menu",
     "language": "Language"
@@ -506,6 +508,94 @@
       "desc": "Message us and we'll reply during working hours.",
       "whatsapp": "Message on WhatsApp",
       "contacts": "All contacts"
+    }
+  },
+  "Auth": {
+    "continueWithGoogle": "Continue with Google",
+    "imageAlt": "A bride and groom walking across a mountain meadow at sunset",
+    "caption": "Everything for your day, in one place",
+    "legal": "By continuing, you accept the <terms>terms of use</terms> and <privacy>privacy policy</privacy>.",
+    "soon": "Coming soon",
+    "roles": {
+      "couple": {
+        "title": "I'm the bride / groom",
+        "description": "Planning my wedding and looking for vendors",
+        "cabinet": "Couple account"
+      },
+      "vendor": {
+        "title": "I'm a vendor",
+        "description": "Photographer, venue, host or another pro",
+        "cabinet": "Vendor account"
+      }
+    },
+    "signup": {
+      "metaTitle": "Sign up",
+      "eyebrow": "Sign up",
+      "title": "One step left",
+      "description": "Tell us who you are and we'll set up your account for it.",
+      "roleLegend": "Who are you?",
+      "submit": "Continue"
+    },
+    "login": {
+      "metaTitle": "Sign in",
+      "eyebrow": "Sign in",
+      "title": "Welcome",
+      "description": "Sign in or create an account — with Google or a link by email.",
+      "errors": {
+        "google": "Couldn't sign in with Google. Please try again — if it keeps happening, let us know.",
+        "link": "This sign-in link has expired or was already used. Request a new one."
+      }
+    },
+    "account": {
+      "metaTitle": "Account",
+      "memberSince": "Member since {date}",
+      "signOut": "Sign out"
+    },
+    "couple": {
+      "invite": {
+        "title": "Wedding invitation website",
+        "imageAlt": "Lace wedding invitations",
+        "description": "A beautiful page for your wedding instead of paper cards: send the link to guests on WhatsApp or Telegram.",
+        "point1": "Schedule, venue on the map and dress code",
+        "point2": "Guests RSVP in one click",
+        "point3": "All replies in one list",
+        "note": "We're building the invitation builder — it will appear right here."
+      }
+    },
+    "vendor": {
+      "profile": {
+        "title": "Your catalog profile",
+        "imageAlt": "A wedding photographer at work",
+        "description": "Soon you'll manage your Taran Taran page yourself. For now we set up profiles for you — message us and we'll take care of it.",
+        "point1": "Photos and a description of your work",
+        "point2": "Requests from couples straight to your page",
+        "point3": "Contacts and social links one tap away",
+        "cta": "Message us on WhatsApp"
+      }
+    },
+    "or": "or",
+    "email": {
+      "label": "Email",
+      "placeholder": "you@example.com",
+      "submit": "Email me a sign-in link",
+      "sending": "Sending…",
+      "sentTitle": "Check your inbox",
+      "sentText": "We've sent a sign-in link to <b>{email}</b>.",
+      "sentHint": "Can't find it? Check your Spam or Promotions folder.",
+      "again": "Send again",
+      "errors": {
+        "invalid": "Please check the email address.",
+        "captcha": "The check didn't go through. Please try again.",
+        "limited": "Too many attempts. Please try again in an hour.",
+        "error": "We couldn't send the email. Please try again later."
+      }
+    },
+    "confirm": {
+      "metaTitle": "Sign in",
+      "eyebrow": "Sign in",
+      "title": "Confirm sign-in",
+      "description": "Press the button to sign in to Taran Taran.",
+      "submit": "Sign in"
     }
   }
 }

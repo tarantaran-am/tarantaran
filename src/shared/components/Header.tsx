@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useTranslations, useLocale } from "next-intl";
-import { Menu, X } from "lucide-react";
+import { Menu, UserRound, X } from "lucide-react";
 import { Link, usePathname, useRouter } from "@/i18n/navigation";
 import { routing } from "@/i18n/routing";
 import { Container } from "@/shared/components/container";
@@ -11,6 +11,7 @@ import { buttonVariants } from "@/shared/components/ui/button";
 import { cn } from "cn";
 import { controlTrigger } from "@/shared/components/control-styles";
 import { Logo } from "@/shared/components/Logo";
+import { useSignedIn } from "@/shared/lib/use-signed-in";
 
 const LOCALE_LABELS: Record<string, string> = {
   hy: "Հայ",
@@ -25,6 +26,8 @@ export function Header() {
   const router = useRouter();
 
   const [mobileOpen, setMobileOpen] = useState(false);
+  const signedIn = useSignedIn();
+  const accountLabel = signedIn ? t("nav.account") : t("nav.login");
 
   const navLinks = [
     { label: t("nav.catalog"), href: "/catalog" },
@@ -70,20 +73,24 @@ export function Header() {
                 ))}
               </SelectContent>
             </Select>
+            <AccountIconLink signedIn={signedIn} label={accountLabel} />
             <Link href="/for-vendors" className={buttonVariants()}>
               {t("nav.listProfile")}
             </Link>
           </div>
 
-          <button
-            className="text-foreground lg:hidden"
-            onClick={() => setMobileOpen(!mobileOpen)}
-            aria-label={t("openMenu")}
-            aria-expanded={mobileOpen}
-            aria-controls="mobile-menu"
-          >
-            {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-          </button>
+          <div className="flex items-center gap-4 lg:hidden">
+            <AccountIconLink signedIn={signedIn} label={accountLabel} onClick={() => setMobileOpen(false)} />
+            <button
+              className="text-foreground"
+              onClick={() => setMobileOpen(!mobileOpen)}
+              aria-label={t("openMenu")}
+              aria-expanded={mobileOpen}
+              aria-controls="mobile-menu"
+            >
+              {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            </button>
+          </div>
         </div>
       </Container>
 
@@ -133,5 +140,26 @@ export function Header() {
         </div>
       )}
     </header>
+  );
+}
+
+// Always shown, so the cached header does not shift once the browser learns the visitor is signed in:
+// only the target and the fill change.
+function AccountIconLink({ signedIn, label, onClick }: { signedIn: boolean; label: string; onClick?: () => void }) {
+  return (
+    <Link
+      href={signedIn ? "/account" : "/login"}
+      aria-label={label}
+      title={label}
+      onClick={onClick}
+      className={cn(
+        "flex size-9 items-center justify-center rounded-full border transition-colors duration-200",
+        signedIn
+          ? "border-primary bg-primary text-primary-foreground hover:bg-primary/85"
+          : "border-border text-foreground hover:border-foreground/30 hover:bg-muted",
+      )}
+    >
+      <UserRound className="size-[18px]" strokeWidth={1.5} />
+    </Link>
   );
 }
