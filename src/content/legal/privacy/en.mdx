@@ -1,4 +1,4 @@
-Last updated: 24 September 2026.
+Last updated: 26 September 2026.
 
 This policy explains what data [tarantaran.am](https://tarantaran.am) collects, why, who it is shared with and how long it is kept. Data is processed in accordance with the Law of the Republic of Armenia on Protection of Personal Data.
 
@@ -19,6 +19,20 @@ We use this data for one purpose: to deliver your request to the vendor you chos
 
 Once sent, the request goes to the vendor you chose. From that point on, the vendor processes your data independently and is responsible for doing so. We do not use requests for advertising or mailing lists, and we never sell them.
 
+## Account and sign-in
+
+You can sign in with Google or with a one-time link we email you. We don't store passwords. When you sign in, we receive:
+
+- your email address;
+- when you sign in with Google, the name and profile photo link that Google shares;
+- the account type you choose (bride or groom, or vendor), the site language and the date you signed up.
+
+We need this data so you can sign in to your account and use it. The legal basis is your consent, which you give by signing in. The Supabase sign-in service keeps a log of sign-ins with their time and IP address.
+
+Sign-in link emails are sent by Resend. Before an email is sent, Cloudflare Turnstile checks that the form is filled in by a person and not a program; to do this, it receives your IP address and browser details.
+
+To delete your account, write to [hello@tarantaran.am](mailto:hello@tarantaran.am).
+
 ## Vendor page statistics
 
 We count how often visitors open a vendor's contacts and follow their links, so we can show vendors how useful their listing is. For this we store the action, its date and the site language. So that one visitor is not counted twice in a day, we also store a hash — a value derived one-way from the IP address and browser details that changes every day. It cannot be used to recover the IP address or identify the visitor.
@@ -26,6 +40,8 @@ We count how often visitors open a vendor's contacts and follow their links, so 
 ## Spam protection
 
 To limit the number of requests sent from one address, a hash of the IP address is stored with each request. The IP address itself is not stored.
+
+For the same reason, when you request a sign-in link, a hash of your IP address and a hash of your email address are kept for about an hour.
 
 ## Technical data
 
@@ -35,6 +51,7 @@ To limit the number of requests sent from one address, a hash of the IP address 
 ## Cookies and browser storage
 
 - The `NEXT_LOCALE` cookie remembers your chosen language.
+- The `sb-…-auth-token` cookies keep you signed in until you sign out. While you sign in with Google, short-lived `sb-…-code-verifier` cookies are also set.
 - After you send a request, your name and phone number are saved in your browser's storage so you don't have to type them again next time. This data stays on your device only; to delete it, clear the site data in your browser settings.
 
 The site uses no advertising or analytics cookies.
@@ -42,12 +59,14 @@ The site uses no advertising or analytics cookies.
 ## Who we share data with
 
 - **The vendor** your request is addressed to, as described above.
-- **Providers that keep the site running:** Supabase (database), Vercel (hosting), Sentry (error monitoring) and Telegram (service notifications). They process data only to provide their services. The database and hosting servers are located in the European Union (Germany), so data is transferred outside Armenia.
+- **Providers that keep the site running:** Supabase (database and sign-in), Vercel (hosting), Sentry (error monitoring), Telegram (service notifications), Resend (email delivery), Cloudflare (bot protection) and Google (Google sign-in). They process data only to provide their services. The database, hosting and email servers are located in the European Union (Germany and Ireland), so data is transferred outside Armenia. Google and Cloudflare may also process data in other countries, including the United States.
 - **Public authorities**, only where the law expressly requires it.
 
 ## How long we keep data
 
 - Requests are kept for 12 months from the date they are sent and then deleted.
+- Account data is kept while you use your account and deleted at your request.
+- The hashes that protect sign-in from spam are kept for about an hour.
 - Vendor page statistics cannot identify anyone and are kept indefinitely.
 - Technical data is kept for the periods set by the respective service providers.
 

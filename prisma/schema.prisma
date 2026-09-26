@@ -43,6 +43,11 @@ enum Marz {
   vayots_dzor
 }
 
+enum AccountRole {
+  couple
+  vendor
+}
+
 enum ContactEventKind {
   reveal
   instagram
@@ -130,4 +135,30 @@ model VendorLead {
   @@index([vendorId, createdAt])
   @@index([visitorHash, createdAt])
   @@map("vendor_leads")
+}
+
+/// A couple or vendor who signed up with Google. `id` is the Supabase Auth user id: Supabase keeps
+/// the session, this row keeps what the site needs to know about the person.
+model Account {
+  id        String      @id
+  email     String
+  name      String?
+  role      AccountRole
+  locale    String
+  createdAt DateTime    @default(now()) @map("created_at")
+
+  @@map("accounts")
+}
+
+/// One row per "email me a sign-in link" request, only to rate-limit them per visitor and per address.
+model AuthEmailRequest {
+  id          String   @id @default(dbgenerated("gen_random_uuid()"))
+  /// sha256(salt | IP) and sha256(salt | email): neither is stored in the clear.
+  visitorHash String   @map("visitor_hash")
+  emailHash   String   @map("email_hash")
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  @@index([visitorHash, createdAt])
+  @@index([emailHash, createdAt])
+  @@map("auth_email_requests")
 }

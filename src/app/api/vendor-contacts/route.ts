@@ -1,9 +1,8 @@
-import { createHash } from "node:crypto";
 import { z } from "zod";
-import { env } from "@/env";
 import { routing } from "@/i18n/routing";
 import { prisma } from "@/shared/lib/db";
 import { clientIp } from "@/shared/lib/client-ip";
+import { saltedHash } from "@/shared/lib/salted-hash";
 import { CONTACT_EVENT_KINDS } from "@/shared/config/social";
 
 const bodySchema = z.object({
@@ -38,7 +37,7 @@ export async function POST(request: Request) {
 
   const ip = clientIp(request.headers);
   const day = YEREVAN_DAY.format(new Date());
-  const visitorHash = createHash("sha256").update(`${env.VISITOR_HASH_SALT}|${day}|${ip}|${userAgent}`).digest("hex");
+  const visitorHash = saltedHash(day, ip, userAgent);
 
   await prisma.contactEvent.createMany({
     data: [{ vendorId, kind, locale, day: new Date(day), visitorHash }],

@@ -11,6 +11,9 @@ import { buttonVariants } from "@/shared/components/ui/button";
 import { cn } from "cn";
 import { controlTrigger } from "@/shared/components/control-styles";
 import { Logo } from "@/shared/components/Logo";
+import { ButtonSkeleton } from "@/shared/components/ButtonSkeleton";
+import { useAuthHint } from "@/shared/lib/use-auth-hint";
+import { useMinimumDelay } from "@/shared/lib/use-minimum-delay";
 
 const LOCALE_LABELS: Record<string, string> = {
   hy: "Հայ",
@@ -25,6 +28,16 @@ export function Header() {
   const router = useRouter();
 
   const [mobileOpen, setMobileOpen] = useState(false);
+  // null until the browser has read the cookies: the header is cached and shared, the server never knows.
+  const authHint = useAuthHint();
+  // The skeletons stay for at least 200ms after the page starts loading: a shorter flash reads as a glitch.
+  const auth = useMinimumDelay(450) ? authHint : null;
+  const authLink =
+    auth === "guest"
+      ? { href: "/login" as const, label: t("nav.login") }
+      : { href: "/account" as const, label: t("nav.account") };
+  // For vendors and guests: a signed-in bride or groom has no profile to list.
+  const showListProfile = auth !== "couple";
 
   const navLinks = [
     { label: t("nav.catalog"), href: "/catalog" },
@@ -70,20 +83,51 @@ export function Header() {
                 ))}
               </SelectContent>
             </Select>
-            <Link href="/for-vendors" className={buttonVariants()}>
-              {t("nav.listProfile")}
-            </Link>
+            <div className="flex items-center gap-3">
+              {auth === null ? (
+                <>
+                  <ButtonSkeleton>{t("nav.listProfile")}</ButtonSkeleton>
+                  <ButtonSkeleton className="min-w-24">{authLink.label}</ButtonSkeleton>
+                </>
+              ) : (
+                <>
+                  {showListProfile && (
+                    <Link href="/for-vendors" className={buttonVariants()}>
+                      {t("nav.listProfile")}
+                    </Link>
+                  )}
+                  <Link href={authLink.href} className={cn(buttonVariants({ variant: "outline" }), "min-w-24")}>
+                    {authLink.label}
+                  </Link>
+                </>
+              )}
+            </div>
           </div>
 
-          <button
-            className="text-foreground lg:hidden"
-            onClick={() => setMobileOpen(!mobileOpen)}
-            aria-label={t("openMenu")}
-            aria-expanded={mobileOpen}
-            aria-controls="mobile-menu"
-          >
-            {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-          </button>
+          <div className="flex items-center gap-4 lg:hidden">
+            {auth === null ? (
+              <ButtonSkeleton size="sm" className="min-w-20">
+                {authLink.label}
+              </ButtonSkeleton>
+            ) : (
+              <Link
+                href={authLink.href}
+                onClick={() => setMobileOpen(false)}
+                className={cn(buttonVariants({ variant: "outline", size: "sm" }), "min-w-20")}
+              >
+                {authLink.label}
+              </Link>
+            )}
+            <button
+              className="text-foreground"
+              onClick={() => setMobileOpen(!mobileOpen)}
+              aria-label={t("openMenu")}
+              aria-expanded={mobileOpen}
+              aria-controls="mobile-menu"
+            >
+              {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            </button>
+          </div>
         </div>
       </Container>
 
@@ -124,11 +168,13 @@ export function Header() {
                 </SelectContent>
               </Select>
             </div>
-            <div className="border-t border-border pt-5">
-              <Link href="/for-vendors" className={cn(buttonVariants({ size: "lg" }), "w-full")}>
-                {t("nav.listProfile")}
-              </Link>
-            </div>
+            {showListProfile && (
+              <div className="border-t border-border pt-5">
+                <Link href="/for-vendors" className={cn(buttonVariants({ size: "lg" }), "w-full")}>
+                  {t("nav.listProfile")}
+                </Link>
+              </div>
+            )}
           </div>
         </div>
       )}

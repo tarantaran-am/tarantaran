@@ -7,7 +7,9 @@ const isDevServer = process.env.NODE_ENV === "development";
 
 const csp = [
   "default-src 'self'",
-  `script-src 'self' 'unsafe-inline'${isDevServer ? " 'unsafe-eval'" : ""}`,
+  // Cloudflare Turnstile guards the "email me a sign-in link" form: its script and its iframe.
+  `script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com${isDevServer ? " 'unsafe-eval'" : ""}`,
+  "frame-src https://challenges.cloudflare.com",
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data: blob: https://*.supabase.co",
   "font-src 'self' data:",
