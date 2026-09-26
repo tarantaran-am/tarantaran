@@ -25,11 +25,18 @@ const schema = z.object({
   NEXT_PUBLIC_SENTRY_DSN: z.url(),
 });
 
-const parsed = schema.safeParse(process.env);
+type Env = z.infer<typeof schema>;
 
-if (!parsed.success) {
-  console.error("Invalid environment variables:", z.flattenError(parsed.error).fieldErrors);
-  throw new Error("Invalid environment variables");
+function validate(): Env {
+  const parsed = schema.safeParse(process.env);
+  if (!parsed.success) {
+    console.error("Invalid environment variables:", z.flattenError(parsed.error).fieldErrors);
+    throw new Error("Invalid environment variables");
+  }
+  return parsed.data;
 }
 
-export const env = parsed.data;
+// CI checks the code, not the configuration: it runs with a throwaway database, the site URL and no
+// real secrets, so it skips validation. Keyed to GitHub Actions itself rather than a flag of our own,
+// so it cannot be switched off by mistake where the site runs; Vercel still validates everything.
+export const env: Env = process.env.GITHUB_ACTIONS === "true" ? (process.env as unknown as Env) : validate();

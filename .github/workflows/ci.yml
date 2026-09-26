@@ -5,11 +5,9 @@ on:
   push:
     branches: [main]
 
-env:
-  DATABASE_URL: ${{ secrets.DATABASE_URL }}
-  VISITOR_HASH_SALT: ${{ secrets.VISITOR_HASH_SALT }}
-  NEXT_PUBLIC_APP_URL: ${{ secrets.NEXT_PUBLIC_APP_URL }}
-  NEXT_PUBLIC_SENTRY_DSN: ${{ secrets.NEXT_PUBLIC_SENTRY_DSN }}
+# No secrets on purpose: CI checks the code in isolation and never touches production. Env
+# validation is skipped under GitHub Actions (see src/env.ts); the build itself is checked by
+# Vercel on every push.
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -26,21 +24,33 @@ jobs:
           node-version-file: .nvmrc
           cache: npm
 
-      - name: Restore Next.js build cache
-        uses: actions/cache@v6
-        with:
-          path: .next/cache
-          key: nextjs-${{ hashFiles('package-lock.json') }}-${{ hashFiles('src/**') }}
-          restore-keys: nextjs-${{ hashFiles('package-lock.json') }}-
-
       - run: npm ci
       - run: npm run typecheck
       - run: npm run lint
       - run: npm run format:check
       - run: npm test
-      - run: npm run build
+
   e2e:
     runs-on: ubuntu-latest
+    # A throwaway database that lives only for this run: the site is built and served against it.
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_USER: ci
+          POSTGRES_PASSWORD: ci
+          POSTGRES_DB: ci
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U ci"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      DATABASE_URL: postgresql://ci:ci@localhost:5432/ci
+      DIRECT_URL: postgresql://ci:ci@localhost:5432/ci
+      NEXT_PUBLIC_APP_URL: http://localhost:3000
     steps:
       - uses: actions/checkout@v7
 
@@ -49,7 +59,17 @@ jobs:
           node-version-file: .nvmrc
           cache: npm
 
+      - name: Restore Next.js build cache
+        uses: actions/cache@v6
+        with:
+          path: .next/cache
+          key: nextjs-${{ hashFiles('package-lock.json') }}-${{ hashFiles('src/**') }}
+          restore-keys: nextjs-${{ hashFiles('package-lock.json') }}-
+
       - run: npm ci
+
+      # Also proves every migration applies to an empty database.
+      - run: npx prisma migrate deploy
 
       - name: Resolve Playwright version
         id: pw
