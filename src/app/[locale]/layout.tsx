@@ -2,10 +2,12 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { locale as localeParam } from "next/root-params";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
+import { Analytics } from "@vercel/analytics/next";
 import { getTranslations } from "next-intl/server";
 import "../globals.css";
 import { routing } from "@/i18n/routing";
 import { fontVariables } from "@/app/fonts";
+import { isProductionDeployment } from "@/shared/config/deployment";
 import { SITE_URL, ogLocale } from "@/shared/config/seo";
 import { Header } from "@/shared/components/Header";
 import { Footer } from "@/shared/components/Footer";
@@ -54,6 +56,8 @@ export default async function RootLayout({ children }: LayoutProps<"/[locale]">)
           <main className="flex-1">{children}</main>
           <Footer />
         </NextIntlClientProvider>
+        {/* Cookieless page view stats in Vercel; only production, so previews and local runs don't count. */}
+        {isProductionDeployment && <Analytics />}
       </body>
     </html>
   );

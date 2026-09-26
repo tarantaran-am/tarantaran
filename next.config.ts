@@ -2,6 +2,7 @@ import type { NextConfig } from "next";
 import { withSentryConfig } from "@sentry/nextjs/config";
 import createNextIntlPlugin from "next-intl/plugin";
 import createMDX from "@next/mdx";
+import { isProductionDeployment } from "./src/shared/config/deployment";
 
 const isDevServer = process.env.NODE_ENV === "development";
 
@@ -50,7 +51,9 @@ const nextConfig: NextConfig = {
     return [
       {
         source: "/:path*",
-        headers: securityHeaders,
+        headers: isProductionDeployment
+          ? securityHeaders
+          : [...securityHeaders, { key: "X-Robots-Tag", value: "noindex" }],
       },
     ];
   },

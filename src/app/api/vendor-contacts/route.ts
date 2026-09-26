@@ -3,6 +3,7 @@ import { routing } from "@/i18n/routing";
 import { prisma } from "@/shared/lib/db";
 import { clientIp } from "@/shared/lib/client-ip";
 import { saltedHash } from "@/shared/lib/salted-hash";
+import { isProductionDeployment } from "@/shared/config/deployment";
 import { CONTACT_EVENT_KINDS } from "@/shared/config/social";
 
 const bodySchema = z.object({
@@ -21,6 +22,10 @@ export async function POST(request: Request) {
   if (!origin || URL.parse(origin)?.host !== request.headers.get("host")) {
     return new Response(null, { status: 403 });
   }
+
+  // These stats are shown to vendors, so clicks from local runs, previews and the staging site
+  // (which shares the production database) must not count.
+  if (!isProductionDeployment) return new Response(null, { status: 204 });
 
   const userAgent = request.headers.get("user-agent") ?? "";
   if (!userAgent || BOT_UA.test(userAgent)) return new Response(null, { status: 204 });
