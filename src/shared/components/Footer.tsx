@@ -14,7 +14,10 @@ export async function Footer() {
       { label: t("links.about"), href: "/about" },
       { label: t("links.blog"), href: "/blog" },
     ],
-    [t("sections.vendors")]: [{ label: t("links.listProfile"), href: "/for-vendors" }],
+    [t("sections.services")]: [
+      { label: t("links.invitations"), href: "/invitations/new" },
+      { label: t("links.listProfile"), href: "/for-vendors" },
+    ],
     [t("sections.help")]: [
       { label: t("links.faq"), href: "/faq" },
       { label: t("links.contacts"), href: "/contacts" },

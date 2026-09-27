@@ -27,13 +27,14 @@
     "sections": {
       "catalog": "Каталог",
       "company": "Компания",
-      "vendors": "Подрядчикам",
+      "services": "Сервисы",
       "help": "Помощь"
     },
     "links": {
       "about": "О нас",
       "howItWorks": "Как это работает",
       "blog": "Блог",
+      "invitations": "Приглашения",
       "listProfile": "Разместить профиль",
       "faq": "Частые вопросы",
       "contacts": "Контакты",

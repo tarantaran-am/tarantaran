@@ -27,13 +27,14 @@
     "sections": {
       "catalog": "Catalog",
       "company": "Company",
-      "vendors": "For vendors",
+      "services": "Services",
       "help": "Help"
     },
     "links": {
       "about": "About",
       "howItWorks": "How it works",
       "blog": "Blog",
+      "invitations": "Invitations",
       "listProfile": "List your profile",
       "faq": "FAQ",
       "contacts": "Contacts",
