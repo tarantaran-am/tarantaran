@@ -33,7 +33,7 @@ export async function BlogScreen({ searchParams: params }: { searchParams: Searc
       ) : (
         <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 xl:grid-cols-3">
           {posts.map((post, i) => (
-            <BlogCard key={post.slug} post={post} heading="h2" priority={i === 0} />
+            <BlogCard key={post.slug} post={post} heading="h2" priority={i < 3} />
           ))}
         </div>
       )}

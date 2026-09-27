@@ -39,7 +39,8 @@ export function Hero({ categories }: { categories: Category[] }) {
         src="/backgrounds/bg.jpg"
         alt={t("imageAlt")}
         fill
-        priority
+        loading="eager"
+        fetchPriority="high"
         sizes="100vw"
         quality={BACKDROP_QUALITY}
         className="object-cover object-bottom"

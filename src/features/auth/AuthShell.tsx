@@ -26,7 +26,8 @@ export function AuthShell({
         src="/backgrounds/bg-auth.jpg"
         alt={imageAlt}
         fill
-        priority
+        loading="eager"
+        fetchPriority="high"
         sizes="100vw"
         quality={BACKDROP_QUALITY}
         className="-z-10 scale-[1.02] object-cover object-bottom blur-[2px]"

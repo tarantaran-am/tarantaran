@@ -12,7 +12,7 @@ export function BlogCard({
   post: BlogPostMeta;
   // h2 right under the page's h1 on /blog, h3 under a section's h2 elsewhere.
   heading?: "h2" | "h3";
-  // The first card's cover is the page's LCP: fetch it at once instead of lazily.
+  // First-row covers are the same size, so any of them can end up as the page's LCP: fetch them at once.
   priority?: boolean;
 }) {
   const t = useTranslations("BlogIndexPage");

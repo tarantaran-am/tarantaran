@@ -56,7 +56,15 @@ export async function ArticleScreen({ slug }: { slug: string }) {
       </time>
 
       <div className="relative mt-8 mb-10 aspect-golden overflow-hidden bg-muted">
-        <Image src={photoOrPlaceholder(post.cover)} alt={post.title} fill sizes="820px" className="object-cover" />
+        <Image
+          src={photoOrPlaceholder(post.cover)}
+          alt={post.title}
+          fill
+          sizes="820px"
+          loading="eager"
+          fetchPriority="high"
+          className="object-cover"
+        />
       </div>
 
       <Content />

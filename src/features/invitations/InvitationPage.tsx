@@ -131,7 +131,7 @@ function Names({ view, t, className }: { view: InvitationView; t: InvitationTran
 function Photo({ url, className, sizes }: { url: string; className: string; sizes: string }) {
   return (
     <div className={cn("relative overflow-hidden", className)}>
-      <Image src={url} alt="" fill sizes={sizes} className="object-cover" priority />
+      <Image src={url} alt="" fill sizes={sizes} className="object-cover" loading="eager" fetchPriority="high" />
     </div>
   );
 }
@@ -188,7 +188,17 @@ function MinimalHero({ view, theme, t }: { view: InvitationView; theme: Invitati
 function PhotoHero({ view, t, date }: { view: InvitationView; t: InvitationTranslator; date: string }) {
   return (
     <header className="relative flex min-h-[var(--screen)] flex-col justify-end overflow-hidden bg-[#2b2320] text-white">
-      {view.photoUrl && <Image src={view.photoUrl} alt="" fill sizes="100vw" className="object-cover" priority />}
+      {view.photoUrl && (
+        <Image
+          src={view.photoUrl}
+          alt=""
+          fill
+          sizes="100vw"
+          className="object-cover"
+          loading="eager"
+          fetchPriority="high"
+        />
+      )}
       <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-black/10" />
       <div className="relative mx-auto w-full max-w-md px-6 pb-16">
         <p className="text-[11px] tracking-[0.3em] uppercase opacity-80">{t("invite")}</p>

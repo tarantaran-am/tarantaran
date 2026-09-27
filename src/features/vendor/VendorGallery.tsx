@@ -35,7 +35,8 @@ export function VendorGallery({ photos: approved, name }: { photos: string[]; na
           src={current}
           alt={name}
           fill
-          priority
+          loading="eager"
+          fetchPriority="high"
           sizes="(min-width: 1024px) 60vw, 100vw"
           className="object-contain"
         />

@@ -6,7 +6,14 @@ import { photoOrPlaceholder } from "@/shared/lib/photo";
 import { marzLabel } from "@/shared/lib/marz-label";
 import type { Vendor } from "@/shared/model/types";
 
-export function VendorCard({ vendor }: { vendor: Vendor }) {
+export function VendorCard({
+  vendor,
+  priority = false,
+}: {
+  vendor: Vendor;
+  // First-row covers are the same size, so any of them can end up as the page's LCP: fetch them at once.
+  priority?: boolean;
+}) {
   const tMarz = useTranslations("Marz");
   const tCategory = useTranslations("Category");
   const region = marzLabel(vendor.marzes, tMarz);
@@ -22,6 +29,8 @@ export function VendorCard({ vendor }: { vendor: Vendor }) {
           alt={vendor.name}
           fill
           sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+          loading={priority ? "eager" : "lazy"}
+          fetchPriority={priority ? "high" : undefined}
           className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
         />
         <div className="absolute top-4 left-4 flex gap-2">

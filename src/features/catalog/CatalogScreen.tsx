@@ -65,8 +65,8 @@ export async function CatalogScreen({ searchParams: params }: { searchParams: Se
         <p className="py-16 text-center text-sm text-muted-foreground">{t("empty")}</p>
       ) : (
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3">
-          {vendors.map((vendor) => (
-            <VendorCard key={vendor.id} vendor={vendor} />
+          {vendors.map((vendor, i) => (
+            <VendorCard key={vendor.id} vendor={vendor} priority={i < 3} />
           ))}
         </div>
       )}
