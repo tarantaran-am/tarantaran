@@ -651,7 +651,7 @@
     "uploading": "Uploading…",
     "photoSignIn": "You can add a photo after signing in.",
     "photoSaveFirst": "Save the invitation to add a photo.",
-    "photoError": "Couldn't upload the photo. JPG, PNG or WebP, at least 800 px on the short side.",
+    "photoError": "Couldn't upload the photo. JPG, PNG, WebP or HEIC (iPhone photos), at least 800 px on the short side.",
     "message": "A note to your guests",
     "messagePlaceholder": "Dear friends! We would be happy to share this day with you.",
     "schedule": "Schedule",

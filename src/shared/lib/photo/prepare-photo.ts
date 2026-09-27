@@ -2,14 +2,26 @@ import { MIN_SHORT_SIDE, PHOTO_LONG_SIDE, PHOTO_QUALITY, type PhotoExtension } f
 
 export type PreparedPhoto = { blob: Blob; extension: PhotoExtension };
 
+const HEIC_TYPES = new Set(["image/heic", "image/heif"]);
+const isHeic = (file: File) => HEIC_TYPES.has(file.type) || /\.hei[cf]$/i.test(file.name);
+
+// Chrome, Firefox and Android can't open HEIC, the format iPhones save photos in, so those files go
+// through libheif. It is about 3 MB and loads only when such a file is picked. The CSP build is the
+// one without eval, which the site's Content-Security-Policy would block.
+async function openPhoto(file: File): Promise<ImageBitmap> {
+  if (!isHeic(file)) return createImageBitmap(file, { imageOrientation: "from-image" });
+  const { heicTo } = await import("heic-to/csp");
+  return heicTo({ blob: file, type: "bitmap", options: { imageOrientation: "from-image" } });
+}
+
 // Scales a photo down in the browser and re-encodes it, so uploads stay small and the phone's
 // EXIF rotation is baked in. WebP where the browser can encode it, JPEG otherwise.
 export async function preparePhoto(file: File): Promise<PreparedPhoto> {
   let bitmap: ImageBitmap;
   try {
-    bitmap = await createImageBitmap(file, { imageOrientation: "from-image" });
+    bitmap = await openPhoto(file);
   } catch {
-    throw new Error("Браузер не смог открыть файл. Подойдут JPG, PNG или WebP.");
+    throw new Error("Браузер не смог открыть файл. Подойдут JPG, PNG, WebP или HEIC.");
   }
 
   const { width, height } = bitmap;

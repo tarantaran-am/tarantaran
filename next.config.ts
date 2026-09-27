@@ -12,6 +12,8 @@ const csp = [
   // Cloudflare Turnstile guards the "email me a sign-in link" form: its script and its iframe.
   `script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com${isDevServer ? " 'unsafe-eval'" : ""}`,
   "frame-src https://challenges.cloudflare.com",
+  // The HEIC decoder for iPhone photos runs in a worker it creates from a blob: URL.
+  "worker-src 'self' blob:",
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data: blob: https://*.supabase.co",
   "font-src 'self' data:",

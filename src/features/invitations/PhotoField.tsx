@@ -4,6 +4,7 @@ import { useRef, useState } from "react";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { Button } from "@/shared/components/ui/button";
+import { PHOTO_ACCEPT } from "@/shared/lib/photo/limits";
 import { preparePhoto, uploadToSignedUrl } from "@/shared/lib/photo/prepare-photo";
 import { removeInvitationPhoto, requestInvitationPhotoUpload, setInvitationPhoto } from "./actions";
 
@@ -68,7 +69,7 @@ export function PhotoField({
       <input
         ref={input}
         type="file"
-        accept="image/jpeg,image/png,image/webp"
+        accept={PHOTO_ACCEPT}
         className="hidden"
         onChange={(event) => {
           const file = event.target.files?.[0];
