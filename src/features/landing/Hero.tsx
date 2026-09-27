@@ -11,6 +11,7 @@ import { Button } from "@/shared/components/ui/button";
 import { MultiCombobox } from "@/shared/components/MultiCombobox";
 import { MarzCombobox } from "@/shared/components/MarzCombobox";
 import { withQuery } from "@/shared/lib/url";
+import { BACKDROP_QUALITY } from "@/shared/config/images";
 
 const FIELD_CLASS =
   "h-auto w-full min-w-0 flex-1 rounded-none border-0 px-5 py-4 hover:bg-muted/25 [&>svg:last-child]:hidden";
@@ -40,6 +41,7 @@ export function Hero({ categories }: { categories: Category[] }) {
         fill
         priority
         sizes="100vw"
+        quality={BACKDROP_QUALITY}
         className="object-cover object-bottom"
       />
 

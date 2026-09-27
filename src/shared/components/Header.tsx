@@ -41,6 +41,7 @@ export function Header() {
 
   const navLinks = [
     { label: t("nav.catalog"), href: "/catalog" },
+    { label: t("nav.invitations"), href: "/invitations/new" },
     { label: t("nav.about"), href: "/about" },
     { label: t("nav.blog"), href: "/blog" },
     { label: t("nav.forVendors"), href: "/for-vendors" },
@@ -58,19 +59,20 @@ export function Header() {
             <Logo className="text-[15px]" />
           </Link>
 
-          <nav className="hidden items-center gap-9 lg:flex">
+          {/* The full bar needs about 1100px with the Armenian labels; narrower screens get the menu button. */}
+          <nav className="hidden items-center gap-7 xl:flex 2xl:gap-9">
             {navLinks.map((item) => (
               <Link
                 key={item.label}
                 href={item.href}
-                className="text-sm text-muted-foreground transition-colors duration-200 hover:text-foreground"
+                className="text-sm whitespace-nowrap text-muted-foreground transition-colors duration-200 hover:text-foreground"
               >
                 {item.label}
               </Link>
             ))}
           </nav>
 
-          <div className="hidden items-center gap-6 lg:flex">
+          <div className="hidden items-center gap-6 xl:flex">
             <Select items={LOCALE_LABELS} value={locale} onValueChange={(next) => next && switchLocale(next)}>
               <SelectTrigger aria-label={t("language")} className={controlTrigger}>
                 <SelectValue />
@@ -104,7 +106,7 @@ export function Header() {
             </div>
           </div>
 
-          <div className="flex items-center gap-4 lg:hidden">
+          <div className="flex items-center gap-4 xl:hidden">
             {auth === null ? (
               <ButtonSkeleton size="sm" className="min-w-20">
                 {authLink.label}
@@ -132,7 +134,7 @@ export function Header() {
       </Container>
 
       {mobileOpen && (
-        <div id="mobile-menu" className="border-t border-border bg-background lg:hidden">
+        <div id="mobile-menu" className="border-t border-border bg-background xl:hidden">
           <div className="flex max-h-[calc(100vh-4rem)] flex-col gap-7 overflow-y-auto px-6 py-7">
             <div className="flex flex-col gap-4">
               {navLinks.map((item) => (

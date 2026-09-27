@@ -7,7 +7,7 @@ import { cn } from "cn";
 import { buttonVariants } from "@/shared/components/ui/button";
 import { addPhoto, deletePhoto, reorderPhotos, requestPhotoUpload, setCoverPhoto, setPhotoVisible } from "./actions";
 import { MAX_PHOTOS } from "./limits";
-import { preparePhoto, uploadToSignedUrl } from "./prepare-photo";
+import { preparePhoto, uploadToSignedUrl } from "@/shared/lib/photo/prepare-photo";
 
 export type AdminPhoto = { id: string; url: string; isCover: boolean; isApproved: boolean };
 

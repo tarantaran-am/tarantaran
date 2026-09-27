@@ -7,6 +7,8 @@ import { WHATSAPP_URL } from "@/shared/config/site";
 import { Container } from "@/shared/components/container";
 import { Eyebrow } from "@/shared/components/eyebrow";
 import { Button, buttonVariants } from "@/shared/components/ui/button";
+import { InvitationsPanel } from "@/features/invitations/InvitationsPanel";
+import { LocalDraftNotice } from "@/features/invitations/LocalDraftNotice";
 import { initials } from "./initials";
 
 export async function AccountScreen({ account }: { account: Account }) {
@@ -41,27 +43,17 @@ export async function AccountScreen({ account }: { account: Account }) {
           </form>
         </header>
 
-        <div className="pt-10 md:pt-12">
-          {account.role === "couple" ? <CoupleDashboard soon={t("soon")} /> : <VendorDashboard soon={t("soon")} />}
+        <div className="flex flex-col gap-10 pt-10 md:pt-12">
+          {/* Signing in lands here for every role: a guest's invitation draft is picked up from here. */}
+          <LocalDraftNotice />
+          {account.role === "couple" ? (
+            <InvitationsPanel accountId={account.id} />
+          ) : (
+            <VendorDashboard soon={t("soon")} />
+          )}
         </div>
       </Container>
     </div>
-  );
-}
-
-async function CoupleDashboard({ soon }: { soon: string }) {
-  const t = await getTranslations("Auth.couple");
-
-  return (
-    <Feature
-      soon={soon}
-      image="/backgrounds/inspiration-1.jpg"
-      imageAlt={t("invite.imageAlt")}
-      title={t("invite.title")}
-      description={t("invite.description")}
-      points={[t("invite.point1"), t("invite.point2"), t("invite.point3")]}
-      footer={<p className="text-sm leading-relaxed text-muted-foreground">{t("invite.note")}</p>}
-    />
   );
 }
 

@@ -13,5 +13,6 @@ export default async function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: "/((?!api|trpc|_next|_vercel|admin|.*\\..*).*)",
+  // Invitations (/i/...) have no locale in their path: they speak the language the couple chose.
+  matcher: "/((?!api|trpc|_next|_vercel|admin|i/|.*\\..*).*)",
 };

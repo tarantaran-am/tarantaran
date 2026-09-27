@@ -45,3 +45,5 @@ export function ModalHeader({ title, description }: { title: ReactNode; descript
     </div>
   );
 }
+
+export const ModalClose = Dialog.Close;

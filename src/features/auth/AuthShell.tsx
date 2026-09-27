@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import Image from "next/image";
 import { Eyebrow } from "@/shared/components/eyebrow";
+import { BACKDROP_QUALITY } from "@/shared/config/images";
 
 // Sign-in and sign-up: a full-bleed photo with the form card on top. The card sits in the wider
 // golden-ratio column on the sky; the caption sits in the narrow one, low on the dark hills.
@@ -27,6 +28,7 @@ export function AuthShell({
         fill
         priority
         sizes="100vw"
+        quality={BACKDROP_QUALITY}
         className="-z-10 scale-[1.02] object-cover object-bottom blur-[2px]"
       />
       <div

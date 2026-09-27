@@ -3,6 +3,7 @@ import { withSentryConfig } from "@sentry/nextjs/config";
 import createNextIntlPlugin from "next-intl/plugin";
 import createMDX from "@next/mdx";
 import { isProductionDeployment } from "./src/shared/config/deployment";
+import { BACKDROP_QUALITY, DEFAULT_QUALITY } from "./src/shared/config/images";
 
 const isDevServer = process.env.NODE_ENV === "development";
 
@@ -14,7 +15,8 @@ const csp = [
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data: blob: https://*.supabase.co",
   "font-src 'self' data:",
-  `connect-src 'self' https://*.sentry.io${isDevServer ? " ws: wss:" : ""}`,
+  // Photos are uploaded from the browser straight to Supabase Storage by a signed URL.
+  `connect-src 'self' https://*.sentry.io https://*.supabase.co${isDevServer ? " ws: wss:" : ""}`,
   "frame-ancestors 'none'",
   "base-uri 'self'",
   "form-action 'self'",
@@ -58,6 +60,11 @@ const nextConfig: NextConfig = {
     ];
   },
   images: {
+    // AVIF where the browser supports it (about a fifth lighter than WebP), WebP otherwise.
+    formats: ["image/avif", "image/webp"],
+    qualities: [BACKDROP_QUALITY, DEFAULT_QUALITY],
+    // The defaults plus 2560, so large screens get a step between 2048 and 3840.
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 2560, 3840],
     remotePatterns: [
       {
         protocol: "https",

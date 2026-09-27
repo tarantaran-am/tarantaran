@@ -17,7 +17,8 @@
       "forVendors": "For vendors",
       "listProfile": "List your profile",
       "login": "Sign in",
-      "account": "Profile"
+      "account": "Profile",
+      "invitations": "Invitations"
     },
     "openMenu": "Open menu",
     "language": "Language"
@@ -269,13 +270,6 @@
     "eyebrow": "Legal",
     "title": "Terms of use",
     "metaDescription": "Terms of use for the platform and vendor listings on Taran Taran."
-  },
-  "InvitePage": {
-    "metaTitle": "Wedding invitation",
-    "metaDescription": "This section is under development.",
-    "eyebrow": "Invitation",
-    "title": "Wedding invitation",
-    "description": "This section is under development — an invitation builder will appear here later."
   },
   "CatalogPage": {
     "metaTitle": "Wedding vendor catalog",
@@ -551,17 +545,6 @@
       "memberSince": "Member since {date}",
       "signOut": "Sign out"
     },
-    "couple": {
-      "invite": {
-        "title": "Wedding invitation website",
-        "imageAlt": "Lace wedding invitations",
-        "description": "A beautiful page for your wedding instead of paper cards: send the link to guests on WhatsApp or Telegram.",
-        "point1": "Schedule, venue on the map and dress code",
-        "point2": "Guests RSVP in one click",
-        "point3": "All replies in one list",
-        "note": "We're building the invitation builder — it will appear right here."
-      }
-    },
     "vendor": {
       "profile": {
         "title": "Your catalog profile",
@@ -596,6 +579,163 @@
       "title": "Confirm sign-in",
       "description": "Press the button to sign in to Taran Taran.",
       "submit": "Sign in"
+    }
+  },
+  "Invitation": {
+    "invite": "We invite you to our wedding",
+    "and": "and",
+    "countdown": {
+      "title": "Until the wedding",
+      "days": "{count, plural, one {day} other {days}}",
+      "hours": "{count, plural, one {hour} other {hours}}",
+      "minutes": "{count, plural, one {minute} other {minutes}}",
+      "seconds": "{count, plural, one {second} other {seconds}}"
+    },
+    "when": "When and where",
+    "directions": "Get directions",
+    "schedule": "Schedule",
+    "dressCode": "Dress code",
+    "rsvp": {
+      "title": "Will you come?",
+      "deadline": "Please reply by {date}",
+      "name": "Your name",
+      "attending": "Joyfully accept",
+      "declining": "Regretfully decline",
+      "guests": "How many of you, including you",
+      "comment": "Wishes or a question (optional)",
+      "submit": "Send reply",
+      "sending": "Sending…",
+      "thanks": "Thank you! We've got your reply.",
+      "another": "Reply for another guest",
+      "closed": "Replies are closed.",
+      "errors": {
+        "invalid": "Please enter your name and choose an answer.",
+        "limited": "Too many replies from this device. Please try later.",
+        "error": "Couldn't send your reply. Please try again."
+      }
+    },
+    "past": "Thank you for being with us!",
+    "madeWith": "Invitation made on {brand}",
+    "unavailable": {
+      "title": "Invitation unavailable",
+      "text": "It may have been unpublished, or the link is wrong."
+    }
+  },
+  "Invitations": {
+    "metaTitle": "Invitations",
+    "newTitle": "New invitation",
+    "editTitle": "Invitation",
+    "design": "Design",
+    "template": "Template",
+    "templates": {
+      "classic": "Classic",
+      "minimal": "Minimal",
+      "photo": "Full-screen photo"
+    },
+    "language": "Invitation language",
+    "couple": "Your names",
+    "partnerOne": "First name",
+    "partnerTwo": "Second name",
+    "when": "Date and time",
+    "date": "Date",
+    "time": "Starts at",
+    "venue": "Venue",
+    "venueName": "Name",
+    "venueAddress": "Address",
+    "mapUrl": "Map link",
+    "mapHint": "Open the place in Google or Yandex Maps, tap Share and paste the link here. Guests will get directions from it.",
+    "photo": "Your photo",
+    "upload": "Upload a photo",
+    "replace": "Replace photo",
+    "remove": "Remove",
+    "uploading": "Uploading…",
+    "photoSignIn": "You can add a photo after signing in.",
+    "photoSaveFirst": "Save the invitation to add a photo.",
+    "photoError": "Couldn't upload the photo. JPG, PNG or WebP, at least 800 px on the short side.",
+    "message": "A note to your guests",
+    "messagePlaceholder": "Dear friends! We would be happy to share this day with you.",
+    "schedule": "Schedule",
+    "addItem": "Add an item",
+    "itemPlaceholder": "E.g. ceremony",
+    "removeItem": "Remove item",
+    "dressCode": "Dress code",
+    "rsvpDeadline": "Take replies until",
+    "rsvpDeadlineHint": "Optional. Without a date, guests can reply until the wedding day.",
+    "placeholders": {
+      "partnerOne": "Anna",
+      "partnerTwo": "David",
+      "venueName": "Venue"
+    },
+    "editor": "Editor",
+    "preview": "Preview",
+    "save": "Save",
+    "saving": "Saving…",
+    "saved": "Saved",
+    "publish": "Publish",
+    "publishing": "Publishing…",
+    "unpublish": "Unpublish",
+    "open": "Open invitation",
+    "guests": "Guest replies",
+    "localSaved": "The draft is kept in this browser.",
+    "signInToPublish": "Sign in to publish the invitation — your draft stays here.",
+    "signInAndPublish": "Sign in and publish",
+    "errors": {
+      "invalid": "Please check the highlighted fields.",
+      "limit": "You can keep up to 5 invitations. Delete some in your account.",
+      "blocked": "This invitation was taken down by an administrator.",
+      "error": "Something went wrong. Please try again."
+    },
+    "published": {
+      "title": "Your invitation is live",
+      "note": "You can still edit it: changes appear at the same link right away.",
+      "copy": "Copy link",
+      "copied": "Copied",
+      "whatsapp": "WhatsApp",
+      "telegram": "Telegram"
+    },
+    "status": {
+      "draft": "Draft",
+      "published": "Published",
+      "blocked": "Taken down"
+    },
+    "delete": "Delete",
+    "panel": {
+      "title": "My invitations",
+      "create": "Create an invitation",
+      "empty": "Make an invitation for your guests: names, date, venue and replies, all on one page.",
+      "edit": "Edit",
+      "localDraft": "You have an unsaved invitation draft.",
+      "continue": "Continue",
+      "replies": "{count, plural, one {# reply} other {# replies}}"
+    },
+    "guestsPage": {
+      "title": "Guest replies",
+      "coming": "Coming",
+      "people": "{count, plural, one {# person} other {# people}}",
+      "declined": "Can't come",
+      "empty": "No replies yet.",
+      "name": "Name",
+      "answer": "Reply",
+      "count": "Guests",
+      "comment": "Comment",
+      "yes": "Coming",
+      "no": "Can't come",
+      "csv": "Download CSV",
+      "back": "Back to invitation"
+    },
+    "afterPublish": {
+      "title": "What you get after publishing",
+      "link": "Your own link like <url></url> — send it to guests on WhatsApp or Telegram, and the chat shows a neat card with your names and date.",
+      "edit": "You can change the invitation at any time: edits appear at the same link right away. Unpublishing or deleting it takes a couple of taps too.",
+      "replies": "Guests reply right on the page: whether they're coming and how many of them. All replies gather in your account, and you can download them as a spreadsheet.",
+      "private": "Only people with the link can see the invitation. All of this is free."
+    },
+    "deleteDialog": {
+      "title": "Delete the invitation?",
+      "text": "Guest replies go with it, and the link will stop working. This can't be undone.",
+      "cancel": "Cancel",
+      "deleting": "Deleting…",
+      "close": "Close"
     }
   }
 }
