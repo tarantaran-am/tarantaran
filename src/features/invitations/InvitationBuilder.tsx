@@ -320,6 +320,7 @@ function Builder({ initial, saved, photoUrl: initialPhoto, signedIn, messagesByL
             maxLength={600}
             value={draft.message ?? ""}
             placeholder={t("messagePlaceholder")}
+            aria-label={t("message")}
             aria-invalid={isInvalid("message")}
             onChange={(event) => set("message", event.target.value)}
           />
@@ -344,6 +345,7 @@ function Builder({ initial, saved, photoUrl: initialPhoto, signedIn, messagesByL
                 value={item.title}
                 maxLength={80}
                 placeholder={t("itemPlaceholder")}
+                aria-label={t("itemLabel")}
                 aria-invalid={isInvalid("schedule")}
                 onChange={(event) =>
                   set(
@@ -385,6 +387,7 @@ function Builder({ initial, saved, photoUrl: initialPhoto, signedIn, messagesByL
           <Input
             value={draft.dressCode ?? ""}
             maxLength={200}
+            aria-label={t("dressCode")}
             aria-invalid={isInvalid("dressCode")}
             onChange={(event) => set("dressCode", event.target.value)}
           />
@@ -396,6 +399,7 @@ function Builder({ initial, saved, photoUrl: initialPhoto, signedIn, messagesByL
               type="date"
               value={draft.rsvpDeadline ?? ""}
               className="max-w-48"
+              aria-label={t("rsvpDeadline")}
               aria-invalid={isInvalid("rsvpDeadline")}
               onChange={(event) => set("rsvpDeadline", event.target.value)}
             />

@@ -660,6 +660,7 @@
     "schedule": "Программа дня",
     "addItem": "Добавить пункт",
     "itemPlaceholder": "Например, церемония",
+    "itemLabel": "Событие",
     "removeItem": "Удалить пункт",
     "dressCode": "Дресс-код",
     "rsvpDeadline": "Принимать ответы до",

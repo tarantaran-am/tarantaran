@@ -660,6 +660,7 @@
     "schedule": "Schedule",
     "addItem": "Add an item",
     "itemPlaceholder": "E.g. ceremony",
+    "itemLabel": "Event",
     "removeItem": "Remove item",
     "dressCode": "Dress code",
     "rsvpDeadline": "Take replies until",
