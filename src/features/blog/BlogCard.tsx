@@ -4,7 +4,17 @@ import { photoOrPlaceholder } from "@/shared/lib/photo";
 import { Link } from "@/i18n/navigation";
 import type { BlogPostMeta } from "./posts";
 
-export function BlogCard({ post }: { post: BlogPostMeta }) {
+export function BlogCard({
+  post,
+  heading: Heading = "h3",
+  priority = false,
+}: {
+  post: BlogPostMeta;
+  // h2 right under the page's h1 on /blog, h3 under a section's h2 elsewhere.
+  heading?: "h2" | "h3";
+  // The first card's cover is the page's LCP: fetch it at once instead of lazily.
+  priority?: boolean;
+}) {
   const t = useTranslations("BlogIndexPage");
 
   return (
@@ -15,15 +25,17 @@ export function BlogCard({ post }: { post: BlogPostMeta }) {
           alt={post.title}
           fill
           sizes="(min-width: 1024px) 33vw, 100vw"
+          loading={priority ? "eager" : "lazy"}
+          fetchPriority={priority ? "high" : undefined}
           className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
         />
         <span className="absolute top-3 left-3 rounded-full bg-background/95 px-3 py-1 text-[10px] tracking-wider text-foreground uppercase">
           {t(`rubrics.${post.rubric}`)}
         </span>
       </div>
-      <h3 className="mb-2 text-[15px] leading-snug font-medium text-foreground transition-colors group-hover:text-primary">
+      <Heading className="mb-2 text-[15px] leading-snug font-medium text-foreground transition-colors group-hover:text-primary">
         {post.title}
-      </h3>
+      </Heading>
       <p className="text-sm leading-relaxed text-muted-foreground">{post.excerpt}</p>
     </Link>
   );
