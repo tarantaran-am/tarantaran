@@ -1,31 +1,20 @@
 "use client";
 
 import { useState } from "react";
-import { useTranslations, useLocale } from "next-intl";
+import { useTranslations } from "next-intl";
 import { Menu, X } from "lucide-react";
-import { Link, usePathname, useRouter } from "@/i18n/navigation";
-import { routing } from "@/i18n/routing";
+import { Link } from "@/i18n/navigation";
 import { Container } from "@/shared/components/container";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/shared/components/ui/select";
 import { buttonVariants } from "@/shared/components/ui/button";
 import { cn } from "cn";
-import { controlTrigger } from "@/shared/components/control-styles";
+import { LocaleDropdown, LocaleList } from "@/shared/components/LocaleSwitcher";
 import { Logo } from "@/shared/components/Logo";
 import { ButtonSkeleton } from "@/shared/components/ButtonSkeleton";
 import { useAuthHint } from "@/shared/lib/use-auth-hint";
 import { useMinimumDelay } from "@/shared/lib/use-minimum-delay";
 
-const LOCALE_LABELS: Record<string, string> = {
-  hy: "Հայ",
-  ru: "Рус",
-  en: "Eng",
-};
-
 export function Header() {
   const t = useTranslations("Header");
-  const locale = useLocale();
-  const pathname = usePathname();
-  const router = useRouter();
 
   const [mobileOpen, setMobileOpen] = useState(false);
   // null until the browser has read the cookies: the header is cached and shared, the server never knows.
@@ -46,10 +35,6 @@ export function Header() {
     { label: t("nav.blog"), href: "/blog" },
     { label: t("nav.forVendors"), href: "/for-vendors" },
   ];
-
-  function switchLocale(nextLocale: string) {
-    router.replace(pathname, { locale: nextLocale });
-  }
 
   return (
     <header className="fixed top-0 right-0 left-0 z-50 border-b border-border bg-background/96">
@@ -73,18 +58,7 @@ export function Header() {
           </nav>
 
           <div className="hidden items-center gap-6 xl:flex">
-            <Select items={LOCALE_LABELS} value={locale} onValueChange={(next) => next && switchLocale(next)}>
-              <SelectTrigger aria-label={t("language")} className={controlTrigger}>
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent align="end" className="p-1.5">
-                {routing.locales.map((l) => (
-                  <SelectItem key={l} value={l}>
-                    {LOCALE_LABELS[l]}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+            <LocaleDropdown />
             <div className="flex items-center gap-3">
               {auth === null ? (
                 <>
@@ -149,26 +123,7 @@ export function Header() {
               ))}
             </div>
             <div className="border-t border-border pt-5">
-              <Select
-                items={LOCALE_LABELS}
-                value={locale}
-                onValueChange={(l) => {
-                  if (!l) return;
-                  switchLocale(l);
-                  setMobileOpen(false);
-                }}
-              >
-                <SelectTrigger aria-label={t("language")} className={cn(controlTrigger, "w-full")}>
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent className="p-1.5">
-                  {routing.locales.map((l) => (
-                    <SelectItem key={l} value={l}>
-                      {LOCALE_LABELS[l]}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+              <LocaleList onNavigate={() => setMobileOpen(false)} />
             </div>
             {showListProfile && (
               <div className="border-t border-border pt-5">
