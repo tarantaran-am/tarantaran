@@ -56,11 +56,12 @@ export async function ArticleScreen({ slug }: { slug: string }) {
       </time>
 
       <div className="relative mt-8 mb-10 aspect-golden overflow-hidden bg-muted">
+        {/* sizes follows the article column: 820px at most, beside the 210px sidebar from lg, full width below. */}
         <Image
           src={photoOrPlaceholder(post.cover)}
           alt={post.title}
           fill
-          sizes="820px"
+          sizes="(min-width: 1280px) 820px, (min-width: 1024px) calc(100vw - 394px), 100vw"
           loading="eager"
           fetchPriority="high"
           className="object-cover"

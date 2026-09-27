@@ -624,6 +624,8 @@
   },
   "Invitations": {
     "metaTitle": "Invitations",
+    "newMetaTitle": "Online Wedding Invitation",
+    "newMetaDescription": "Make an online wedding invitation for free: names, date, venue and guest replies on one page. Share it with a link.",
     "newTitle": "New invitation",
     "editTitle": "Invitation",
     "design": "Design",
