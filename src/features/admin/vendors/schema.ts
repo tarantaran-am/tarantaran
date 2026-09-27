@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from "@/shared/lib/zod";
 import { CATEGORIES } from "@/shared/config/category";
 import { MARZES } from "@/shared/config/marz";
 import { SOCIAL_NETWORKS } from "@/shared/config/social";

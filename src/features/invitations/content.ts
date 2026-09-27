@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from "@/shared/lib/zod";
 import { isEventDateInRange } from "@/features/vendor/lead-limits";
 
 // What a couple fills in, shared by the builder in the browser and the actions that save it.

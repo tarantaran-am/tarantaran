@@ -17,7 +17,7 @@ export const THEMES: Record<InvitationTemplateName, InvitationTheme> = {
   // Cream paper, serif headings, burgundy accents.
   classic: {
     page: "bg-[#faf6f0] text-[#2e2724]",
-    muted: "text-[#2e2724]/60",
+    muted: "text-[#2e2724]/70",
     accent: "text-[#8e3b55]",
     line: "border-[#2e2724]/12",
     card: "bg-white/70",
@@ -41,7 +41,7 @@ export const THEMES: Record<InvitationTemplateName, InvitationTheme> = {
   // The couple's photo over the whole first screen, the details on warm paper below it.
   photo: {
     page: "bg-[#f6f2ed] text-[#221d1b]",
-    muted: "text-[#221d1b]/60",
+    muted: "text-[#221d1b]/70",
     accent: "text-[#6f4e37]",
     line: "border-[#221d1b]/12",
     card: "bg-white/80",
