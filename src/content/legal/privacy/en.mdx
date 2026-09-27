@@ -1,4 +1,4 @@
-Last updated: 26 September 2026.
+Last updated: 27 September 2026.
 
 This policy explains what data [tarantaran.am](https://tarantaran.am) collects, why, who it is shared with and how long it is kept. Data is processed in accordance with the Law of the Republic of Armenia on Protection of Personal Data.
 
@@ -33,6 +33,12 @@ Sign-in link emails are sent by Resend. Before an email is sent, Cloudflare Turn
 
 To delete your account, write to [hello@tarantaran.am](mailto:hello@tarantaran.am).
 
+## Wedding invitations
+
+If you create an invitation, we keep what you put in it: names, date and time, venue, schedule, dress code, text and photo. A published invitation can be seen by anyone who has its link; search engines don't show it.
+
+When a guest replies to an invitation, we keep their name, reply, number of guests and comment, if they left one. Only the couple who created the invitation sees these replies. To limit replies from one device, a hash of the IP address is stored with each reply.
+
 ## Vendor page statistics
 
 We count how often visitors open a vendor's contacts and follow their links, so we can show vendors how useful their listing is. For this we store the action, its date and the site language. So that one visitor is not counted twice in a day, we also store a hash — a value derived one-way from the IP address and browser details that changes every day. It cannot be used to recover the IP address or identify the visitor.
@@ -53,6 +59,7 @@ For the same reason, when you request a sign-in link, a hash of your IP address 
 
 - The `NEXT_LOCALE` cookie remembers your chosen language.
 - The `sb-…-auth-token` cookies keep you signed in until you sign out. While you sign in with Google, short-lived `sb-…-code-verifier` cookies are also set.
+- An invitation draft, until you sign in, is kept in your browser's storage and stays on your device only.
 - After you send a request, your name and phone number are saved in your browser's storage so you don't have to type them again next time. This data stays on your device only; to delete it, clear the site data in your browser settings.
 
 The site uses no advertising or analytics cookies.
@@ -67,6 +74,7 @@ The site uses no advertising or analytics cookies.
 
 - Requests are kept for 12 months from the date they are sent and then deleted.
 - Account data is kept while you use your account and deleted at your request.
+- Invitations and guest replies are deleted 6 months after the wedding date. The couple can delete an invitation with its replies earlier.
 - The hashes that protect sign-in from spam are kept for about an hour.
 - Vendor page statistics cannot identify anyone and are kept indefinitely.
 - Technical data is kept for the periods set by the respective service providers.

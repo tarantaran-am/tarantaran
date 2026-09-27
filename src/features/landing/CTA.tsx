@@ -5,6 +5,7 @@ import { Container } from "@/shared/components/container";
 import { Eyebrow } from "@/shared/components/eyebrow";
 import { buttonVariants } from "@/shared/components/ui/button";
 import { Link } from "@/i18n/navigation";
+import { BACKDROP_QUALITY } from "@/shared/config/images";
 
 export function CTA() {
   const t = useTranslations("CTA");
@@ -18,6 +19,7 @@ export function CTA() {
         aria-hidden="true"
         fill
         sizes="100vw"
+        quality={BACKDROP_QUALITY}
         className="object-cover object-top opacity-[0.18]"
       />
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-foreground/60" />

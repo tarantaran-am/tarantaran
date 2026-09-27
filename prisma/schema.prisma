@@ -48,6 +48,12 @@ enum AccountRole {
   vendor
 }
 
+enum InvitationTemplate {
+  classic
+  minimal
+  photo
+}
+
 enum ContactEventKind {
   reveal
   instagram
@@ -140,12 +146,13 @@ model VendorLead {
 /// A couple or vendor who signed up with Google. `id` is the Supabase Auth user id: Supabase keeps
 /// the session, this row keeps what the site needs to know about the person.
 model Account {
-  id        String      @id
-  email     String
-  name      String?
-  role      AccountRole
-  locale    String
-  createdAt DateTime    @default(now()) @map("created_at")
+  id          String       @id
+  email       String
+  name        String?
+  role        AccountRole
+  locale      String
+  createdAt   DateTime     @default(now()) @map("created_at")
+  invitations Invitation[]
 
   @@map("accounts")
 }
@@ -161,4 +168,58 @@ model AuthEmailRequest {
   @@index([visitorHash, createdAt])
   @@index([emailHash, createdAt])
   @@map("auth_email_requests")
+}
+
+/// A couple's wedding invitation: a page guests open by link and answer on. Drafts are private;
+/// one published invitation per account at a time. Removed 6 months after the wedding.
+model Invitation {
+  id           String             @id @default(dbgenerated("gen_random_uuid()"))
+  accountId    String             @map("account_id")
+  account      Account            @relation(fields: [accountId], references: [id], onDelete: Cascade)
+  /// Given on first publish and never changed: the link is already in guests' chats by then.
+  slug         String?            @unique
+  isPublished  Boolean            @default(false) @map("is_published")
+  /// Taken down by an admin; the couple cannot publish it again.
+  isBlocked    Boolean            @default(false) @map("is_blocked")
+  template     InvitationTemplate
+  language     String
+  partnerOne   String             @map("partner_one")
+  partnerTwo   String             @map("partner_two")
+  /// The ceremony start; weddings are in Armenia, so it is entered and shown in Asia/Yerevan time.
+  startsAt     DateTime           @map("starts_at")
+  venueName    String             @map("venue_name")
+  venueAddress String?            @map("venue_address")
+  mapUrl       String?            @map("map_url")
+  /// [{ time: "16:00", title: "..." }]
+  schedule     Json               @default("[]")
+  dressCode    String?            @map("dress_code")
+  message      String?
+  photoUrl     String?            @map("photo_url")
+  rsvpDeadline DateTime?          @map("rsvp_deadline") @db.Date
+  createdAt    DateTime           @default(now()) @map("created_at")
+  updatedAt    DateTime           @updatedAt @map("updated_at")
+  rsvps        Rsvp[]
+
+  @@index([accountId])
+  @@index([startsAt])
+  @@map("invitations")
+}
+
+/// A guest's answer to an invitation.
+model Rsvp {
+  id           String     @id @default(dbgenerated("gen_random_uuid()"))
+  invitationId String     @map("invitation_id")
+  invitation   Invitation @relation(fields: [invitationId], references: [id], onDelete: Cascade)
+  name         String
+  attending    Boolean
+  /// Including the guest, 0 when not attending.
+  guests       Int
+  comment      String?
+  /// sha256(salt | IP), only used to rate-limit answers.
+  visitorHash  String     @map("visitor_hash")
+  createdAt    DateTime   @default(now()) @map("created_at")
+
+  @@index([invitationId, createdAt])
+  @@index([visitorHash, createdAt])
+  @@map("rsvps")
 }

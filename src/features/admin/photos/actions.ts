@@ -5,9 +5,12 @@ import { revalidatePath } from "next/cache";
 import { prisma } from "@/shared/lib/db";
 import { requireAdmin } from "@/features/admin/auth/dal";
 import { refreshPublicPages } from "@/features/admin/revalidate";
-import { MAX_PHOTOS, type PhotoExtension } from "./limits";
+import { isPhotoExtension, type PhotoExtension } from "@/shared/lib/photo/limits";
+import { bucketStorage } from "@/shared/lib/storage";
+import { MAX_PHOTOS } from "./limits";
 import { z } from "zod";
-import { createSignedUploadUrl, objectExists, pathFromPublicUrl, publicUrl, removeObjects } from "./storage";
+
+const { createSignedUploadUrl, objectExists, pathFromPublicUrl, publicUrl, removeObjects } = bucketStorage("vendors");
 
 // Uploading is two steps: the browser asks for a signed URL, uploads straight to Storage,
 // then reports the file back so it gets a row. Files are named by vendor id and a random id,
@@ -20,7 +23,7 @@ export async function requestPhotoUpload(
 ): Promise<{ path: string; uploadUrl: string } | { error: string }> {
   await requireAdmin();
   if (!isUuid(vendorId)) return { error: "Подрядчик не найден." };
-  if (extension !== "webp" && extension !== "jpg") return { error: "Неподдерживаемый формат." };
+  if (!isPhotoExtension(extension)) return { error: "Неподдерживаемый формат." };
 
   const count = await prisma.photo.count({ where: { vendorId } });
   if (count >= MAX_PHOTOS) return { error: `У подрядчика уже ${MAX_PHOTOS} фото — это максимум.` };

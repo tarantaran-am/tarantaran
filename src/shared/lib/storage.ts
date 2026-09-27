@@ -1,9 +1,6 @@
 import "server-only";
 import { env } from "@/env";
 
-// Vendor photos live in this public Supabase Storage bucket; the old import script used the same one.
-const BUCKET = "vendors";
-
 function config() {
   const { SUPABASE_URL: url, SUPABASE_SERVICE_ROLE_KEY: key } = env;
   if (!url || !key)
@@ -18,20 +15,32 @@ function authHeaders(key: string): Record<string, string> {
   return headers;
 }
 
-export function publicUrl(path: string): string {
-  return `${config().storageUrl}/object/public/${BUCKET}/${path}`;
+// Helpers for one public Supabase Storage bucket: "vendors" holds vendor photos (the old import script
+// used it too), "invitations" the couples' photos.
+export function bucketStorage(bucket: string) {
+  return {
+    publicUrl: (path: string) => publicUrl(bucket, path),
+    pathFromPublicUrl: (url: string) => pathFromPublicUrl(bucket, url),
+    createSignedUploadUrl: (path: string) => createSignedUploadUrl(bucket, path),
+    objectExists: (path: string) => objectExists(bucket, path),
+    removeObjects: (paths: string[]) => removeObjects(bucket, paths),
+  };
+}
+
+function publicUrl(bucket: string, path: string): string {
+  return `${config().storageUrl}/object/public/${bucket}/${path}`;
 }
 
 // The object path inside the bucket for one of our public URLs, or null for anything else.
-export function pathFromPublicUrl(url: string): string | null {
-  const prefix = `${config().storageUrl}/object/public/${BUCKET}/`;
+function pathFromPublicUrl(bucket: string, url: string): string | null {
+  const prefix = `${config().storageUrl}/object/public/${bucket}/`;
   return url.startsWith(prefix) ? url.slice(prefix.length) : null;
 }
 
 // A one-off URL the browser uploads a file to directly, so large photos never pass through our server.
-export async function createSignedUploadUrl(path: string): Promise<string> {
+async function createSignedUploadUrl(bucket: string, path: string): Promise<string> {
   const { storageUrl, key } = config();
-  const response = await fetch(`${storageUrl}/object/upload/sign/${BUCKET}/${path}`, {
+  const response = await fetch(`${storageUrl}/object/upload/sign/${bucket}/${path}`, {
     method: "POST",
     headers: authHeaders(key),
   });
@@ -41,16 +50,16 @@ export async function createSignedUploadUrl(path: string): Promise<string> {
   return `${storageUrl}${url}`;
 }
 
-export async function objectExists(path: string): Promise<boolean> {
+async function objectExists(bucket: string, path: string): Promise<boolean> {
   const { storageUrl, key } = config();
-  const response = await fetch(`${storageUrl}/object/info/${BUCKET}/${path}`, { headers: authHeaders(key) });
+  const response = await fetch(`${storageUrl}/object/info/${bucket}/${path}`, { headers: authHeaders(key) });
   return response.ok;
 }
 
-export async function removeObjects(paths: string[]): Promise<void> {
+async function removeObjects(bucket: string, paths: string[]): Promise<void> {
   if (paths.length === 0) return;
   const { storageUrl, key } = config();
-  const response = await fetch(`${storageUrl}/object/${BUCKET}`, {
+  const response = await fetch(`${storageUrl}/object/${bucket}`, {
     method: "DELETE",
     headers: { ...authHeaders(key), "Content-Type": "application/json" },
     body: JSON.stringify({ prefixes: paths }),
