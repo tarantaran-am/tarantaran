@@ -2,10 +2,7 @@ import "server-only";
 import { env } from "@/env";
 
 function config() {
-  const { SUPABASE_URL: url, SUPABASE_SERVICE_ROLE_KEY: key } = env;
-  if (!url || !key)
-    throw new Error("Supabase Storage is not configured: set SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY");
-  return { storageUrl: `${url.replace(/\/$/, "")}/storage/v1`, key };
+  return { storageUrl: `${env.SUPABASE_URL.replace(/\/$/, "")}/storage/v1`, key: env.SUPABASE_SERVICE_ROLE_KEY };
 }
 
 function authHeaders(key: string): Record<string, string> {
