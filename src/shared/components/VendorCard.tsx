@@ -33,7 +33,7 @@ export function VendorCard({ vendor }: { vendor: Vendor }) {
 
       <div className="p-5">
         <div>
-          <h3 className="text-[15px] font-medium text-foreground">{vendor.name}</h3>
+          <h2 className="text-[15px] font-medium text-foreground">{vendor.name}</h2>
           {region && (
             <div className="mt-1 flex items-center gap-1.5">
               <MapPin className="h-3 w-3 text-muted-foreground" />
