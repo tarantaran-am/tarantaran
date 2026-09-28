@@ -4,6 +4,7 @@ import { SectionHeading } from "@/shared/components/SectionHeading";
 import { Breadcrumbs } from "@/shared/components/Breadcrumbs";
 import { Pagination } from "@/shared/components/Pagination";
 import { CategoryVendorList } from "@/features/catalog/CategoryVendorList";
+import { CategoryGuide } from "@/features/catalog/CategoryGuide";
 import { getVendorsByCategory } from "@/shared/lib/queries";
 import { getCategory } from "@/shared/lib/categories";
 import { getRequestLocale } from "@/i18n/locale";
@@ -44,13 +45,15 @@ export async function CategoryScreen({
             ]}
           />
         }
-        title={category.namePlural}
+        title={category.title}
         description={category.description}
       />
 
       <CategoryVendorList vendors={vendors} marz={marz} />
 
       <Pagination page={page} totalPages={totalPages} buildHref={pageHref} />
+
+      {!marz && page === 1 && <CategoryGuide slug={category.slug} />}
     </>
   );
 }

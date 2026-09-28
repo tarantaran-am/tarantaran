@@ -18,6 +18,7 @@ export async function getCategories(): Promise<Category[]> {
     slug,
     name: t(`${slug}.name`),
     namePlural: t(`${slug}.namePlural`),
+    title: t(`${slug}.title`),
     description: t(`${slug}.description`),
     cover: cover(slug),
   }));
@@ -30,6 +31,7 @@ export async function getCategory(slug: string): Promise<Category | undefined> {
     slug,
     name: t(`${slug}.name`),
     namePlural: t(`${slug}.namePlural`),
+    title: t(`${slug}.title`),
     description: t(`${slug}.description`),
     cover: cover(slug),
   };

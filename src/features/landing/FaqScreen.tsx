@@ -1,10 +1,10 @@
 import type { ReactNode } from "react";
 import { getTranslations } from "next-intl/server";
-import { Plus } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { Container } from "@/shared/components/container";
 import { Eyebrow } from "@/shared/components/eyebrow";
 import { JsonLd } from "@/shared/components/JsonLd";
+import { FaqList, faqJsonLd } from "@/shared/components/FaqList";
 import { PageHeader } from "@/shared/components/PageHeader";
 import { buttonVariants } from "@/shared/components/ui/button";
 import { WHATSAPP_URL } from "@/shared/config/site";
@@ -53,17 +53,14 @@ const stripTags = (text: string) => text.replace(/<\/?[a-z]+>/g, "");
 export async function FaqScreen() {
   const t = await getTranslations("FaqPage");
 
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: SECTIONS.flatMap(({ key, items }) =>
+  const jsonLd = faqJsonLd(
+    SECTIONS.flatMap(({ key, items }) =>
       items.map((item) => ({
-        "@type": "Question",
-        name: t(`sections.${key}.items.${item}.q`),
-        acceptedAnswer: { "@type": "Answer", text: stripTags(t.raw(`sections.${key}.items.${item}.a`) as string) },
+        question: t(`sections.${key}.items.${item}.q`),
+        answer: stripTags(t.raw(`sections.${key}.items.${item}.a`) as string),
       })),
     ),
-  };
+  );
 
   return (
     <>
@@ -84,22 +81,13 @@ export async function FaqScreen() {
                 </h2>
               </div>
 
-              <div className="border-b border-border">
-                {items.map((item) => (
-                  <details key={item} className="group border-t border-border">
-                    <summary className="flex cursor-pointer list-none items-start justify-between gap-6 py-6 text-[15px] font-medium text-foreground transition-colors hover:text-primary [&::-webkit-details-marker]:hidden">
-                      <span>{t(`sections.${key}.items.${item}.q`)}</span>
-                      <Plus
-                        aria-hidden="true"
-                        className="mt-0.5 h-4 w-4 shrink-0 text-muted-foreground transition-transform duration-200 group-open:rotate-45"
-                      />
-                    </summary>
-                    <p className="max-w-2xl pr-10 pb-6 text-sm leading-relaxed text-muted-foreground">
-                      {t.rich(`sections.${key}.items.${item}.a`, answerLinks)}
-                    </p>
-                  </details>
-                ))}
-              </div>
+              <FaqList
+                items={items.map((item) => ({
+                  id: item,
+                  question: t(`sections.${key}.items.${item}.q`),
+                  answer: t.rich(`sections.${key}.items.${item}.a`, answerLinks),
+                }))}
+              />
             </section>
           ))}
         </div>

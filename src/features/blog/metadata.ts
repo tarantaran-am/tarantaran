@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { getRequestLocale } from "@/i18n/locale";
 import { getBlogPost } from "@/features/blog/posts";
-import { localizedAlternates } from "@/shared/config/seo";
+import { localizedAlternates, localizedOpenGraph } from "@/shared/config/seo";
 
 export async function getArticleMetadata(slug: string): Promise<Metadata> {
   const post = getBlogPost(slug, await getRequestLocale());
@@ -10,12 +10,12 @@ export async function getArticleMetadata(slug: string): Promise<Metadata> {
     title: post.title,
     description: post.excerpt,
     ...(await localizedAlternates(`/blog/${slug}`)),
-    openGraph: {
+    openGraph: await localizedOpenGraph({
       title: post.title,
       description: post.excerpt,
       type: "article",
       publishedTime: post.publishedAt,
       images: post.cover ? [post.cover] : undefined,
-    },
+    }),
   };
 }

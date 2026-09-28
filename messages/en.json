@@ -4,8 +4,8 @@
     "wordmark": "TARAN"
   },
   "Metadata": {
-    "title": "Taran Taran — wedding vendors in Armenia",
-    "description": "A directory of wedding vendors in Armenia: venues, photographers, videographers, decor, stylists, dresses and cars. Find the people who will make your day."
+    "title": "Taran Taran — weddings in Armenia: venues, photographers, hosts",
+    "description": "Everything for a wedding in Armenia: wedding venues and restaurants in Yerevan, photographers, videographers, tamadas, decor, dresses, cakes and cars — portfolios and contacts in one place."
   },
   "Format": {},
   "Header": {
@@ -143,7 +143,8 @@
     "openFullscreen": "Open fullscreen",
     "close": "Close",
     "prev": "Previous photo",
-    "next": "Next photo"
+    "next": "Next photo",
+    "photoAlt": "{name}, photo {index}"
   },
   "CategoryVendorList": {
     "empty": "No vendors match these filters.",
@@ -193,7 +194,7 @@
   },
   "AboutPage": {
     "metaTitle": "About us",
-    "metaDescription": "A directory of vetted wedding vendors across Armenia — portfolios and contacts right on the listing, no endless back-and-forth in DMs.",
+    "metaDescription": "Taran Taran brings everything for a wedding in Armenia into one directory: venues, photographers, tamadas, decor. Portfolios and contacts right on the listing.",
     "eyebrow": "About us",
     "title": "Taran Taran — Armenia’s wedding marketplace",
     "description": "A directory of vetted wedding vendors across Armenia — portfolios and contacts right on the listing, no endless back-and-forth in DMs.",
@@ -273,8 +274,8 @@
     "metaDescription": "Terms of use for the platform and vendor listings on Taran Taran."
   },
   "CatalogPage": {
-    "metaTitle": "Wedding vendor catalog",
-    "metaDescription": "Every wedding vendor in Armenia: venues, photographers, décor, hosts and more.",
+    "metaTitle": "Wedding venues and services in Yerevan and Armenia",
+    "metaDescription": "Wedding venues, photographers, videographers, decor, tamadas and hosts, dresses, cakes and cars in Armenia — with portfolios and contacts.",
     "title": "All vendors",
     "description": "Every vendor on the platform in one list. Pick a category or search by name.",
     "filters": {
@@ -327,77 +328,126 @@
     "all": "All Armenia",
     "more": "{first} and {count} more"
   },
+  "MarzIn": {
+    "yerevan": "in Yerevan",
+    "kotayk": "in Kotayk",
+    "ararat": "in Ararat Province",
+    "armavir": "in Armavir and Etchmiadzin",
+    "aragatsotn": "in Aragatsotn",
+    "gegharkunik": "in Gegharkunik and Sevan",
+    "lori": "in Vanadzor and Lori",
+    "shirak": "in Gyumri and Shirak",
+    "syunik": "in Syunik",
+    "tavush": "in Tavush and Dilijan",
+    "vayots_dzor": "in Vayots Dzor",
+    "all": "across Armenia",
+    "armenia": "in Armenia"
+  },
   "Category": {
     "venues": {
       "name": "Venue or restaurant",
       "namePlural": "Venues and restaurants",
-      "description": "Banquet halls, restaurants and celebration venues for any number of guests."
+      "description": "Banquet halls, restaurants and celebration venues for any number of guests.",
+      "title": "Wedding venues and restaurants",
+      "vendorRole": "wedding venue"
     },
     "photographers": {
       "name": "Photographer",
       "namePlural": "Photographers",
-      "description": "Wedding photography in every style, from documentary to fine art."
+      "description": "Wedding photography in every style, from documentary to fine art.",
+      "title": "Wedding photographers",
+      "vendorRole": "wedding photographer"
     },
     "videographers": {
       "name": "Videographer",
       "namePlural": "Videographers",
-      "description": "Wedding videos, clips and full-length films about your day."
+      "description": "Wedding videos, clips and full-length films about your day.",
+      "title": "Wedding videographers",
+      "vendorRole": "wedding videographer"
     },
     "decor": {
       "name": "Decor and florals",
       "namePlural": "Decor, florals and styling",
-      "description": "Venue styling, arches, florals and decor for the ceremony."
+      "description": "Venue styling, arches, florals and decor for the ceremony.",
+      "title": "Wedding decor and florists",
+      "vendorRole": "wedding decor and florals"
     },
     "reels": {
       "name": "Reels maker",
       "namePlural": "Reels makers",
-      "description": "Short vertical wedding videos shot and edited for social media."
+      "description": "Short vertical wedding videos shot and edited for social media.",
+      "title": "Wedding reels makers",
+      "vendorRole": "wedding reels maker"
     },
     "stylists": {
       "name": "Stylist or makeup artist",
       "namePlural": "Stylists, makeup artists and hairdressers",
-      "description": "Bridal hair and makeup, on location or in the studio."
+      "description": "Bridal hair and makeup, on location or in the studio.",
+      "title": "Bridal hair and makeup artists",
+      "vendorRole": "bridal hair and makeup"
     },
     "dresses": {
       "name": "Wedding dress",
       "namePlural": "Wedding dresses",
-      "description": "Bridal salons for buying and renting, with fittings for your figure."
+      "description": "Bridal salons for buying and renting, with fittings for your figure.",
+      "title": "Wedding dresses",
+      "vendorRole": "bridal salon"
     },
     "cakes": {
       "name": "Wedding cake",
       "namePlural": "Cakes",
-      "description": "Custom wedding cakes and dessert tables."
+      "description": "Custom wedding cakes and dessert tables.",
+      "title": "Custom wedding cakes",
+      "vendorRole": "custom wedding cakes"
     },
     "cars": {
       "name": "Car rental",
       "namePlural": "Car rental",
-      "description": "A wedding cortege and a car for the newlyweds on the big day."
+      "description": "A wedding cortege and a car for the newlyweds on the big day.",
+      "title": "Wedding car rental",
+      "vendorRole": "wedding car rental"
     },
     "hosts": {
       "name": "Tamada or host",
       "namePlural": "Tamadas and hosts",
-      "description": "Hosts and tamadas for the wedding celebration in Armenian, Russian and English."
+      "description": "Hosts and tamadas for the wedding celebration in Armenian, Russian and English.",
+      "title": "Wedding tamadas and hosts",
+      "vendorRole": "wedding tamada and host"
     },
     "show": {
       "name": "Entertainment",
       "namePlural": "Entertainment",
-      "description": "Fire shows, light and dance acts for the evening part of the banquet."
+      "description": "Fire shows, light and dance acts for the evening part of the banquet.",
+      "title": "Wedding entertainment",
+      "vendorRole": "wedding entertainment"
     },
     "choreographers": {
       "name": "Choreographer",
       "namePlural": "Choreographers",
-      "description": "Choreography for the first dance and dance numbers for the couple and guests."
+      "description": "Choreography for the first dance and dance numbers for the couple and guests.",
+      "title": "Wedding dance choreographers",
+      "vendorRole": "wedding dance choreographer"
     },
     "catering": {
       "name": "Catering",
       "namePlural": "Catering",
-      "description": "Catering and buffet menus for weddings outside a venue or on top of the banquet."
+      "description": "Catering and buffet menus for weddings outside a venue or on top of the banquet.",
+      "title": "Wedding catering",
+      "vendorRole": "wedding catering"
     },
     "dj": {
       "name": "DJ",
       "namePlural": "DJs",
-      "description": "DJs and sound equipment for the dance part of the evening."
+      "description": "DJs and sound equipment for the dance part of the evening.",
+      "title": "Wedding DJs",
+      "vendorRole": "wedding DJ"
     }
+  },
+  "CategoryPage": {
+    "metaTitle": "{title} in Yerevan and Armenia",
+    "metaDescription": "{title}: portfolios, photos and contacts. {description}",
+    "faq": "Frequently asked questions",
+    "posts": "Worth reading"
   },
   "Filters": {
     "categoryLabel": "Vendor category",
@@ -410,7 +460,9 @@
   },
   "VendorPage": {
     "website": "Website",
-    "links": "Links"
+    "links": "Links",
+    "metaTitle": "{name}, {role} {where}",
+    "metaDescription": "{name}, {role} {where}: portfolio photos, details and contacts."
   },
   "LeadNotification": {
     "title": "New request from {brand}",

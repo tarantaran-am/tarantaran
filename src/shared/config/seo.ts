@@ -25,16 +25,23 @@ export function jsonLdHtml(data: unknown): string {
 
 export async function localizedAlternates(path: string) {
   const locale = await getRequestLocale();
-  const languages = Object.fromEntries(routing.locales.map((l) => [l, getPathname({ href: path, locale: l })]));
+  const href = (l: Locale) => getPathname({ href: path, locale: l });
+  const languages = Object.fromEntries(routing.locales.map((l) => [l, href(l)]));
   return {
     alternates: {
-      canonical: getPathname({ href: path, locale }),
-      languages: {
-        ...languages,
-        "x-default": getPathname({ href: path, locale: routing.defaultLocale }),
-      },
+      canonical: href(locale),
+      languages: { ...languages, "x-default": href(routing.defaultLocale) },
     },
   };
+}
+
+type OpenGraph = NonNullable<Metadata["openGraph"]>;
+
+// Next.js replaces the layout's `openGraph` as a whole when a page sets its own, so pages build theirs with this
+// to keep the site name and locale.
+export async function localizedOpenGraph(openGraph: OpenGraph = {}): Promise<OpenGraph> {
+  const [locale, tBrand] = await Promise.all([getRequestLocale(), getTranslations("Brand")]);
+  return { siteName: tBrand("name"), locale: ogLocale(locale), type: "website", ...openGraph };
 }
 
 type MetadataKeys = { title: string; description: string };

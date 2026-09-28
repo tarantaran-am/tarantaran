@@ -7,7 +7,16 @@ import { Dialog } from "@base-ui/react/dialog";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
 import { PHOTO_PLACEHOLDER } from "@/shared/lib/photo";
 
-export function VendorGallery({ photos: approved, name }: { photos: string[]; name: string }) {
+export function VendorGallery({
+  photos: approved,
+  name,
+  alt,
+}: {
+  photos: string[];
+  name: string;
+  // What the photos show, e.g. "Zohrabyan Photography, wedding photographer in Yerevan"; each adds its number.
+  alt: string;
+}) {
   const t = useTranslations("VendorGallery");
   const [active, setActive] = useState(0);
   const [open, setOpen] = useState(false);
@@ -15,6 +24,7 @@ export function VendorGallery({ photos: approved, name }: { photos: string[]; na
 
   const photos = approved.length > 0 ? approved : [PHOTO_PLACEHOLDER];
   const current = photos[active] ?? PHOTO_PLACEHOLDER;
+  const photoAlt = (index: number) => t("photoAlt", { name: alt, index: index + 1 });
   const step = (delta: number) => setActive((i) => (i + delta + photos.length) % photos.length);
 
   return (
@@ -33,7 +43,7 @@ export function VendorGallery({ photos: approved, name }: { photos: string[]; na
         />
         <Image
           src={current}
-          alt={name}
+          alt={photoAlt(active)}
           fill
           loading="eager"
           fetchPriority="high"
@@ -54,7 +64,7 @@ export function VendorGallery({ photos: approved, name }: { photos: string[]; na
               }`}
               aria-label={t("photoLabel", { index: i + 1 })}
             >
-              <Image src={photo} alt="" fill sizes="120px" className="object-cover" />
+              <Image src={photo} alt={photoAlt(i)} fill sizes="120px" className="object-cover" />
             </button>
           ))}
         </div>
@@ -104,7 +114,7 @@ export function VendorGallery({ photos: approved, name }: { photos: string[]; na
           )}
 
           <div className="relative h-[80vh] w-[90vw] max-w-5xl">
-            <Image src={current} alt={name} fill sizes="90vw" className="object-contain" />
+            <Image src={current} alt={photoAlt(active)} fill sizes="90vw" className="object-contain" />
           </div>
         </Dialog.Popup>
       </Dialog.Portal>

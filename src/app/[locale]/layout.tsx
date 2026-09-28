@@ -8,7 +8,7 @@ import "../globals.css";
 import { routing } from "@/i18n/routing";
 import { fontVariables } from "@/app/fonts";
 import { isProductionDeployment } from "@/shared/config/deployment";
-import { SITE_URL, ogLocale } from "@/shared/config/seo";
+import { SITE_URL, localizedOpenGraph } from "@/shared/config/seo";
 import { Header } from "@/shared/components/Header";
 import { Footer } from "@/shared/components/Footer";
 import { cn } from "cn";
@@ -32,11 +32,7 @@ export async function generateMetadata(): Promise<Metadata> {
       template: `%s — ${tBrand("name")}`,
     },
     description: t("description"),
-    openGraph: {
-      siteName: tBrand("name"),
-      locale: ogLocale(locale),
-      type: "website",
-    },
+    openGraph: await localizedOpenGraph(),
     twitter: { card: "summary_large_image" },
   };
 }

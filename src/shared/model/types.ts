@@ -23,6 +23,8 @@ export interface Category {
   slug: CategorySlug;
   name: string;
   namePlural: string;
+  // "Wedding cakes to order": the page heading, and with the place added, its <title>.
+  title: string;
   description: string;
   cover: string;
 }

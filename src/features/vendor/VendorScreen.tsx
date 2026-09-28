@@ -12,6 +12,7 @@ import { localizedAlternates, SITE_URL } from "@/shared/config/seo";
 import { JsonLd } from "@/shared/components/JsonLd";
 import { VerifiedBadge } from "@/shared/components/VerifiedBadge";
 import { getRequestLocale } from "@/i18n/locale";
+import { getVendorHeadline } from "@/features/vendor/metadata";
 
 export async function VendorScreen({ categorySlug, slug }: { categorySlug: string; slug: string }) {
   const lang = await getRequestLocale();
@@ -24,6 +25,7 @@ export async function VendorScreen({ categorySlug, slug }: { categorySlug: strin
   if (!vendor) notFound();
 
   const region = marzLabel(vendor.marzes, tMarz);
+  const headline = await getVendorHeadline(vendor);
   const links = SOCIAL_NETWORKS.flatMap((network) => {
     const href = vendor.socials[network];
     return href ? [{ network, href }] : [];
@@ -69,7 +71,7 @@ export async function VendorScreen({ categorySlug, slug }: { categorySlug: strin
 
       <div className="grid grid-cols-1 items-start gap-10 xl:grid-cols-[minmax(0,1.618fr)_minmax(300px,1fr)] xl:gap-12">
         <div>
-          <VendorGallery photos={vendor.photos} name={vendor.name} />
+          <VendorGallery photos={vendor.photos} name={vendor.name} alt={headline} />
 
           <div className="mt-10">
             <span className="text-[10px] tracking-wider text-muted-foreground uppercase">{category.name}</span>
@@ -84,7 +86,9 @@ export async function VendorScreen({ categorySlug, slug }: { categorySlug: strin
               </div>
             )}
 
-            <p className="mb-8 max-w-2xl text-sm leading-relaxed text-muted-foreground">{vendor.description}</p>
+            <p className="mb-8 max-w-2xl text-sm leading-relaxed whitespace-pre-line text-muted-foreground">
+              {vendor.description}
+            </p>
           </div>
         </div>
 
