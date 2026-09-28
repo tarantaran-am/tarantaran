@@ -56,7 +56,7 @@ export default async function InvitationRoute({ params }: PageProps<"/i/[slug]">
       }
       footer={
         <a href={SITE_URL} className="underline-offset-4 hover:underline">
-          {t("madeWith", { brand: BRAND })}
+          {t("madeWith")}
         </a>
       }
     />

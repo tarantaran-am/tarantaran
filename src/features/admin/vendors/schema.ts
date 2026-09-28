@@ -21,6 +21,7 @@ export const VENDOR_TEXT_FIELDS = [
 export type VendorFormValues = Record<(typeof VENDOR_TEXT_FIELDS)[number], string> & {
   marzes: string[];
   isPublished: boolean;
+  isVerified: boolean;
 };
 
 const optionalText = (max: number) =>
@@ -58,6 +59,7 @@ export const vendorSchema = z.object({
     typeof socialLink
   >),
   isPublished: z.boolean(),
+  isVerified: z.boolean(),
 });
 
 export type VendorField = keyof VendorFormValues;

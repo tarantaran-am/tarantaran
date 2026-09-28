@@ -84,6 +84,8 @@ model Vendor {
   whatsapp      String?
   website       String?
   isPublished   Boolean        @default(true) @map("is_published")
+  /// Set by an admin after personally contacting the vendor and agreeing on the listing; shown as a badge.
+  isVerified    Boolean        @default(false) @map("is_verified")
   createdAt     DateTime       @default(now()) @map("created_at")
   photos        Photo[]
   contactEvents ContactEvent[]

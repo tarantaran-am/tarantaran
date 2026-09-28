@@ -16,6 +16,7 @@ export interface Vendor {
   socials: Partial<Record<SocialNetwork, string>>;
   cover: string;
   photos: string[];
+  isVerified: boolean;
 }
 
 export interface Category {

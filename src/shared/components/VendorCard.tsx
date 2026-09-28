@@ -4,6 +4,7 @@ import { Link } from "@/i18n/navigation";
 import { MapPin } from "lucide-react";
 import { photoOrPlaceholder } from "@/shared/lib/photo";
 import { marzLabel } from "@/shared/lib/marz-label";
+import { VerifiedBadge } from "@/shared/components/VerifiedBadge";
 import type { Vendor } from "@/shared/model/types";
 
 export function VendorCard({
@@ -42,7 +43,10 @@ export function VendorCard({
 
       <div className="p-5">
         <div>
-          <h2 className="text-[15px] font-medium text-foreground">{vendor.name}</h2>
+          <h2 className="text-[15px] font-medium text-foreground">
+            {vendor.name}
+            {vendor.isVerified && <VerifiedBadge className="-mt-0.5 ml-1.5 size-4" />}
+          </h2>
           {region && (
             <div className="mt-1 flex items-center gap-1.5">
               <MapPin className="h-3 w-3 text-muted-foreground" />

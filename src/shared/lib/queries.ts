@@ -49,6 +49,7 @@ type VendorRow = {
   whatsapp: string | null;
   website: string | null;
   category: CategoryEnum;
+  isVerified: boolean;
   photos: PhotoRow[];
 };
 
@@ -71,6 +72,7 @@ const vendorSelect = {
   whatsapp: true,
   website: true,
   category: true,
+  isVerified: true,
   photos: {
     where: { isApproved: true },
     orderBy: { sortOrder: "asc" },
@@ -97,6 +99,7 @@ function toVendor(row: VendorRow, locale: Locale): Vendor {
     ),
     cover,
     photos: row.photos.map((p) => p.blobUrl),
+    isVerified: row.isVerified,
   };
 }
 

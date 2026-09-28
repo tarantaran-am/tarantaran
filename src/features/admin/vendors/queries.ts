@@ -10,14 +10,26 @@ import type { VendorFormValues } from "./schema";
 
 export type VendorStatusFilter = "all" | "published" | "hidden";
 
-export type VendorListFilters = { query: string; category: string; status: VendorStatusFilter };
+export type VendorVerificationFilter = "all" | "verified" | "unverified";
 
-export async function listVendors({ query, category, status }: VendorListFilters) {
+export type VendorListFilters = {
+  query: string;
+  category: string;
+  status: VendorStatusFilter;
+  verification: VendorVerificationFilter;
+};
+
+export async function listVendors({ query, category, status, verification }: VendorListFilters) {
   await requireAdmin();
 
   const where: Prisma.VendorWhereInput = {
     ...(isCategory(category) ? { category } : {}),
     ...(status === "published" ? { isPublished: true } : status === "hidden" ? { isPublished: false } : {}),
+    ...(verification === "verified"
+      ? { isVerified: true }
+      : verification === "unverified"
+        ? { isVerified: false }
+        : {}),
     ...(query
       ? {
           OR: [
@@ -39,6 +51,7 @@ export async function listVendors({ query, category, status }: VendorListFilters
       nameRu: true,
       category: true,
       isPublished: true,
+      isVerified: true,
       marzes: true,
       _count: { select: { photos: true, leads: true } },
     },
@@ -66,6 +79,7 @@ export async function getVendorFormValues(id: string): Promise<{ values: VendorF
       address: vendor.address ?? "",
       marzes: vendor.marzes,
       isPublished: vendor.isPublished,
+      isVerified: vendor.isVerified,
       ...(Object.fromEntries(SOCIAL_NETWORKS.map((network) => [network, vendor[network] ?? ""])) as Record<
         (typeof SOCIAL_NETWORKS)[number],
         string

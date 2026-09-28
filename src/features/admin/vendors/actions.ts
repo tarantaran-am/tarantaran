@@ -27,6 +27,7 @@ function readForm(formData: FormData): VendorFormValues {
     >),
     marzes: formData.getAll("marzes").filter((value): value is string => typeof value === "string"),
     isPublished: formData.get("isPublished") === "on",
+    isVerified: formData.get("isVerified") === "on",
   };
 }
 

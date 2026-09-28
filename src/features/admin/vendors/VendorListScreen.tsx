@@ -4,7 +4,13 @@ import { buttonVariants } from "@/shared/components/ui/button";
 import { requireAdmin } from "@/features/admin/auth/dal";
 import { AdminPageHeader } from "@/features/admin/AdminPageHeader";
 import { adminControlClass } from "@/features/admin/styles";
-import { getVendorOptions, listVendors, type VendorListFilters, type VendorStatusFilter } from "./queries";
+import {
+  getVendorOptions,
+  listVendors,
+  type VendorListFilters,
+  type VendorStatusFilter,
+  type VendorVerificationFilter,
+} from "./queries";
 
 const STATUS_OPTIONS: { value: VendorStatusFilter; label: string }[] = [
   { value: "all", label: "Все" },
@@ -12,11 +18,19 @@ const STATUS_OPTIONS: { value: VendorStatusFilter; label: string }[] = [
   { value: "hidden", label: "Скрытые" },
 ];
 
+const VERIFICATION_OPTIONS: { value: VendorVerificationFilter; label: string }[] = [
+  { value: "all", label: "Любая проверка" },
+  { value: "verified", label: "Подтверждённые" },
+  { value: "unverified", label: "Не подтверждённые" },
+];
+
 export async function VendorListScreen({ filters }: { filters: VendorListFilters }) {
   await requireAdmin();
   const [vendors, options] = await Promise.all([listVendors(filters), getVendorOptions()]);
   const categoryLabel = new Map(options.categories.map(({ value, label }) => [value, label]));
-  const filtered = Boolean(filters.query || filters.category || filters.status !== "all");
+  const filtered = Boolean(
+    filters.query || filters.category || filters.status !== "all" || filters.verification !== "all",
+  );
 
   return (
     <>
@@ -49,6 +63,13 @@ export async function VendorListScreen({ filters }: { filters: VendorListFilters
         </select>
         <select name="status" defaultValue={filters.status} className={adminControlClass}>
           {STATUS_OPTIONS.map(({ value, label }) => (
+            <option key={value} value={value}>
+              {label}
+            </option>
+          ))}
+        </select>
+        <select name="verified" defaultValue={filters.verification} className={adminControlClass}>
+          {VERIFICATION_OPTIONS.map(({ value, label }) => (
             <option key={value} value={value}>
               {label}
             </option>
@@ -91,7 +112,14 @@ export async function VendorListScreen({ filters }: { filters: VendorListFilters
                   <td className="px-5 py-3 text-right tabular-nums">{vendor._count.photos}</td>
                   <td className="px-5 py-3 text-right tabular-nums">{vendor._count.leads}</td>
                   <td className="px-5 py-3">
-                    <StatusBadge published={vendor.isPublished} />
+                    <div className="flex gap-1.5">
+                      <StatusBadge published={vendor.isPublished} />
+                      {vendor.isVerified && (
+                        <span className="inline-flex rounded-full bg-primary/10 px-2.5 py-0.5 text-xs whitespace-nowrap text-primary">
+                          Подтверждён
+                        </span>
+                      )}
+                    </div>
                   </td>
                 </tr>
               ))}

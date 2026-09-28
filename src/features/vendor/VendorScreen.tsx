@@ -10,6 +10,7 @@ import { marzLabel } from "@/shared/lib/marz-label";
 import { SOCIAL_NETWORKS } from "@/shared/config/social";
 import { localizedAlternates, SITE_URL } from "@/shared/config/seo";
 import { JsonLd } from "@/shared/components/JsonLd";
+import { VerifiedBadge } from "@/shared/components/VerifiedBadge";
 import { getRequestLocale } from "@/i18n/locale";
 
 export async function VendorScreen({ categorySlug, slug }: { categorySlug: string; slug: string }) {
@@ -74,6 +75,7 @@ export async function VendorScreen({ categorySlug, slug }: { categorySlug: strin
             <span className="text-[10px] tracking-wider text-muted-foreground uppercase">{category.name}</span>
             <h1 className="mt-2 mb-3 font-serif text-[length:var(--text-vendor)] leading-[1.1] text-foreground">
               {vendor.name}
+              {vendor.isVerified && <VerifiedBadge className="-mt-1 ml-2 size-[0.7em]" />}
             </h1>
             {region && (
               <div className="mb-6 flex items-center gap-1.5 text-sm text-muted-foreground">

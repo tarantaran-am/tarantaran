@@ -405,6 +405,9 @@
     "allMarzes": "All Armenia",
     "selectedCount": "{count} selected"
   },
+  "VerifiedBadge": {
+    "tooltip": "Verified profile: we have personally contacted this vendor"
+  },
   "VendorPage": {
     "website": "Website",
     "links": "Links"
@@ -616,7 +619,7 @@
       }
     },
     "past": "Thank you for being with us!",
-    "madeWith": "Invitation made on {brand}",
+    "madeWith": "Invitation made on tarantaran.am",
     "unavailable": {
       "title": "Invitation unavailable",
       "text": "It may have been unpublished, or the link is wrong."

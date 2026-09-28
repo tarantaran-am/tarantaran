@@ -22,6 +22,7 @@ const EMPTY_VALUES: VendorFormValues = {
   address: "",
   marzes: [],
   isPublished: false,
+  isVerified: false,
   ...(Object.fromEntries(SOCIAL_NETWORKS.map((network) => [network, ""])) as Record<
     (typeof SOCIAL_NETWORKS)[number],
     string
@@ -198,6 +199,20 @@ export function VendorForm({
             className="size-4 accent-foreground"
           />
           Показывать на сайте
+        </label>
+        <label className="flex cursor-pointer items-start gap-3 text-sm text-foreground">
+          <input
+            type="checkbox"
+            name="isVerified"
+            defaultChecked={values.isVerified}
+            className="mt-0.5 size-4 accent-foreground"
+          />
+          <span>
+            Подтверждён
+            <span className="block text-xs text-muted-foreground">
+              Лично связались и договорились о размещении. На сайте рядом с названием появится галочка.
+            </span>
+          </span>
         </label>
       </Section>
 
