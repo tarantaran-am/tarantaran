@@ -75,7 +75,7 @@ export async function getVendorFormValues(id: string): Promise<{ values: VendorF
       descriptionHy: vendor.descriptionHy ?? "",
       descriptionEn: vendor.descriptionEn ?? "",
       category: vendor.category,
-      phone: vendor.phone,
+      phone: vendor.phone ?? "",
       address: vendor.address ?? "",
       marzes: vendor.marzes,
       isPublished: vendor.isPublished,

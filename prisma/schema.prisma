@@ -74,7 +74,7 @@ model Vendor {
   descriptionRu String         @map("description_ru")
   descriptionEn String?        @map("description_en")
   category      Category
-  phone         String
+  phone         String?
   address       String?
   marzes        Marz[]
   instagram     String?

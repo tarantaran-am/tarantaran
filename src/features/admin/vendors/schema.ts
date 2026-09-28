@@ -47,11 +47,10 @@ export const vendorSchema = z.object({
   descriptionHy: optionalText(5000),
   descriptionEn: optionalText(5000),
   category: z.enum(CATEGORIES),
-  phone: z
-    .string()
-    .trim()
-    .max(30)
-    .refine((value) => /^\+?[\d\s()-]+$/.test(value) && (value.match(/\d/g)?.length ?? 0) >= 8),
+  // Optional: some vendors, often the top ones, only list social links.
+  phone: optionalText(30).refine(
+    (value) => value === null || (/^\+?[\d\s()-]+$/.test(value) && (value.match(/\d/g)?.length ?? 0) >= 8),
+  ),
   address: optionalText(300),
   marzes: z.array(z.enum(MARZES)).min(1),
   ...(Object.fromEntries(SOCIAL_NETWORKS.map((network) => [network, socialLink])) as Record<

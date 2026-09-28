@@ -149,7 +149,7 @@ export function VendorForm({
       </Section>
 
       <Section title="Контакты">
-        <Field label="Телефон" htmlFor="phone" required error={error("phone")}>
+        <Field label="Телефон" htmlFor="phone" error={error("phone")}>
           <Input
             id="phone"
             name="phone"

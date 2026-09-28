@@ -48,7 +48,7 @@ export async function VendorScreen({ categorySlug, slug }: { categorySlug: strin
       addressCountry: "AM",
     },
     areaServed: region,
-    telephone: vendor.phone,
+    telephone: vendor.phone || undefined,
   };
 
   return (

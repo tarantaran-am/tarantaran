@@ -17,7 +17,7 @@ export type LeadNotification = {
     slug: string;
     category: Category;
     nameRu: string;
-    phone: string;
+    phone: string | null;
     whatsapp: string | null;
     telegram: string | null;
   };
@@ -74,13 +74,14 @@ async function adminMessage({ vendor, lead }: LeadNotification, vendorText: stri
   ).toString();
 
   // Opens the vendor's WhatsApp chat with the request already typed in.
-  const forwardUrl = new URL(
-    vendor.whatsapp ? socialUrl("whatsapp", vendor.whatsapp) : `https://wa.me/${vendor.phone.replace(/\D/g, "")}`,
-  );
-  forwardUrl.searchParams.set("text", vendorText);
+  const whatsappUrl = vendor.whatsapp
+    ? socialUrl("whatsapp", vendor.whatsapp)
+    : vendor.phone && `https://wa.me/${vendor.phone.replace(/\D/g, "")}`;
+  const forwardUrl = whatsappUrl ? new URL(whatsappUrl) : null;
+  forwardUrl?.searchParams.set("text", vendorText);
 
   const vendorContacts = [
-    escapeHtml(vendor.phone),
+    vendor.phone && escapeHtml(vendor.phone),
     vendor.whatsapp && link(socialUrl("whatsapp", vendor.whatsapp), "WhatsApp"),
     vendor.telegram && link(socialUrl("telegram", vendor.telegram), "Telegram"),
   ].filter(Boolean);
@@ -95,8 +96,8 @@ async function adminMessage({ vendor, lead }: LeadNotification, vendorText: stri
     "<b>📩 Новая заявка</b>",
     "",
     `<b>Подрядчик:</b> ${link(vendorUrl, vendor.nameRu)} · ${escapeHtml(tCategory(`${vendor.category}.name`))}`,
-    `Контакты подрядчика: ${vendorContacts.join(" · ")}`,
-    `➡️ ${link(forwardUrl.toString(), "Отправить подрядчику в WhatsApp")}`,
+    `Контакты подрядчика: ${vendorContacts.length > 0 ? vendorContacts.join(" · ") : "не указаны"}`,
+    ...(forwardUrl ? [`➡️ ${link(forwardUrl.toString(), "Отправить подрядчику в WhatsApp")}`] : []),
     "",
     `<b>Клиент:</b> ${escapeHtml(lead.name)}`,
     `<b>Телефон:</b> ${escapeHtml(lead.phone)}`,

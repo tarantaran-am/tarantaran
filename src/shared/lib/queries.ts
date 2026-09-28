@@ -41,7 +41,7 @@ type VendorRow = {
   descriptionEn: string | null;
   marzes: Marz[];
   address: string | null;
-  phone: string;
+  phone: string | null;
   instagram: string | null;
   facebook: string | null;
   tiktok: string | null;
@@ -91,7 +91,7 @@ function toVendor(row: VendorRow, locale: Locale): Vendor {
     marzes: row.marzes,
     address: row.address ?? "",
     description: pick({ hy: row.descriptionHy, ru: row.descriptionRu, en: row.descriptionEn }, locale),
-    phone: row.phone,
+    phone: row.phone ?? "",
     socials: Object.fromEntries(
       SOCIAL_NETWORKS.map((network) => [network, row[network] ? socialUrl(network, row[network]) : undefined]).filter(
         ([, url]) => url,
