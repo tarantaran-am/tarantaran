@@ -4,6 +4,7 @@ import { Link } from "@/i18n/navigation";
 import { SectionHeading } from "@/shared/components/SectionHeading";
 import { Breadcrumbs } from "@/shared/components/Breadcrumbs";
 import { VendorCard } from "@/shared/components/VendorCard";
+import { FavoriteButton } from "@/features/favorites/FavoriteButton";
 import { Pagination } from "@/shared/components/Pagination";
 import { CatalogFilters } from "@/features/catalog/CatalogFilters";
 import { getCatalogVendors } from "@/shared/lib/queries";
@@ -66,7 +67,12 @@ export async function CatalogScreen({ searchParams: params }: { searchParams: Se
       ) : (
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3">
           {vendors.map((vendor, i) => (
-            <VendorCard key={vendor.id} vendor={vendor} priority={i < 3} />
+            <VendorCard
+              key={vendor.id}
+              vendor={vendor}
+              priority={i < 3}
+              action={<FavoriteButton vendorId={vendor.id} />}
+            />
           ))}
         </div>
       )}

@@ -1,5 +1,6 @@
 import { useTranslations } from "next-intl";
 import { VendorCard } from "@/shared/components/VendorCard";
+import { FavoriteButton } from "@/features/favorites/FavoriteButton";
 import { MarzFilter } from "@/features/catalog/MarzFilter";
 import type { Vendor } from "@/shared/model/types";
 
@@ -17,7 +18,12 @@ export function CategoryVendorList({ vendors, marz }: { vendors: Vendor[]; marz:
       ) : (
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {vendors.map((vendor, i) => (
-            <VendorCard key={vendor.id} vendor={vendor} priority={i < 3} />
+            <VendorCard
+              key={vendor.id}
+              vendor={vendor}
+              priority={i < 3}
+              action={<FavoriteButton vendorId={vendor.id} />}
+            />
           ))}
         </div>
       )}

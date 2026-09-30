@@ -9,6 +9,7 @@ import { Eyebrow } from "@/shared/components/eyebrow";
 import { Button, buttonVariants } from "@/shared/components/ui/button";
 import { InvitationsPanel } from "@/features/invitations/InvitationsPanel";
 import { LocalDraftNotice } from "@/features/invitations/LocalDraftNotice";
+import { FavoritesPanel } from "@/features/favorites/FavoritesPanel";
 import { initials } from "./initials";
 
 export async function AccountScreen({ account }: { account: Account }) {
@@ -47,7 +48,10 @@ export async function AccountScreen({ account }: { account: Account }) {
           {/* Signing in lands here for every role: a guest's invitation draft is picked up from here. */}
           <LocalDraftNotice />
           {account.role === "couple" ? (
-            <InvitationsPanel accountId={account.id} />
+            <>
+              <InvitationsPanel accountId={account.id} />
+              <FavoritesPanel accountId={account.id} />
+            </>
           ) : (
             <VendorDashboard soon={t("soon")} />
           )}

@@ -796,5 +796,14 @@
       "deleting": "Deleting…",
       "close": "Close"
     }
+  },
+  "Favorites": {
+    "add": "Save to favorites",
+    "remove": "Remove from favorites",
+    "panel": {
+      "title": "Favorites",
+      "empty": "Save vendors you like with the heart on their card — they will show up here.",
+      "browse": "Browse the catalog"
+    }
   }
 }

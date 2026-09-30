@@ -4,6 +4,7 @@ import { MapPin } from "lucide-react";
 import { Breadcrumbs } from "@/shared/components/Breadcrumbs";
 import { VendorGallery } from "@/features/vendor/VendorGallery";
 import { VendorContacts } from "@/features/vendor/VendorContacts";
+import { FavoriteButton } from "@/features/favorites/FavoriteButton";
 import { getVendor } from "@/shared/lib/queries";
 import { getCategory } from "@/shared/lib/categories";
 import { marzLabel } from "@/shared/lib/marz-label";
@@ -74,11 +75,16 @@ export async function VendorScreen({ categorySlug, slug }: { categorySlug: strin
           <VendorGallery photos={vendor.photos} name={vendor.name} alt={headline} />
 
           <div className="mt-10">
-            <span className="text-[10px] tracking-wider text-muted-foreground uppercase">{category.name}</span>
-            <h1 className="mt-2 mb-3 font-serif text-[length:var(--text-vendor)] leading-[1.1] text-foreground">
-              {vendor.name}
-              {vendor.isVerified && <VerifiedBadge className="-mt-1 ml-2 size-[0.7em]" />}
-            </h1>
+            <div className="flex items-start justify-between gap-4">
+              <div>
+                <span className="text-[10px] tracking-wider text-muted-foreground uppercase">{category.name}</span>
+                <h1 className="mt-2 mb-3 font-serif text-[length:var(--text-vendor)] leading-[1.1] text-foreground">
+                  {vendor.name}
+                  {vendor.isVerified && <VerifiedBadge className="-mt-1 ml-2 size-[0.7em]" />}
+                </h1>
+              </div>
+              <FavoriteButton vendorId={vendor.id} className="shrink-0 border border-border" />
+            </div>
             {region && (
               <div className="mb-6 flex items-center gap-1.5 text-sm text-muted-foreground">
                 <MapPin className="h-4 w-4" />

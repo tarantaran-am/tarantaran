@@ -229,3 +229,13 @@ export async function getVendorPaths(): Promise<{ category: CategorySlug; slug: 
   });
   return rows.map((r) => ({ category: r.category, slug: r.slug }));
 }
+
+// A couple's saved vendors, the latest first. Vendors taken down since are left out, not shown broken.
+export async function getFavoriteVendors(accountId: string, locale: Locale): Promise<Vendor[]> {
+  const rows = await prisma.favorite.findMany({
+    where: { accountId, vendor: { isPublished: true } },
+    orderBy: { createdAt: "desc" },
+    select: { vendor: { select: vendorSelect } },
+  });
+  return rows.map((r) => toVendor(r.vendor, locale));
+}

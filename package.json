@@ -16,7 +16,8 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "test": "vitest run",
-    "analyze": "next experimental-analyze"
+    "analyze": "next experimental-analyze",
+    "migrate": "npx prisma migrate deploy"
   },
   "dependencies": {
     "@base-ui/react": "^1.8.0",

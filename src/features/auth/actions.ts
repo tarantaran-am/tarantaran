@@ -3,6 +3,7 @@
 import { redirect } from "@/i18n/navigation";
 import { toLocale } from "@/i18n/routing";
 import { createAccount, getAuthUser } from "./dal";
+import { savePendingFavorite } from "@/features/favorites/save";
 import { parseRole } from "./params";
 import { rememberRole } from "./role-cookie";
 
@@ -18,5 +19,5 @@ export async function completeSignup(formData: FormData): Promise<void> {
 
   const account = await createAccount(user, role, locale);
   await rememberRole(account.role);
-  redirect({ href: "/account", locale });
+  redirect({ href: (await savePendingFavorite(account.id, account.role)) ?? "/account", locale });
 }

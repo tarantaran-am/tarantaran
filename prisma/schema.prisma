@@ -90,6 +90,7 @@ model Vendor {
   photos        Photo[]
   contactEvents ContactEvent[]
   leads         VendorLead[]
+  favorites     Favorite[]
 
   @@index([category, isPublished])
   @@map("vendors")
@@ -155,8 +156,21 @@ model Account {
   locale      String
   createdAt   DateTime     @default(now()) @map("created_at")
   invitations Invitation[]
+  favorites   Favorite[]
 
   @@map("accounts")
+}
+
+/// A vendor a couple saved with the heart on its card or page.
+model Favorite {
+  accountId String   @map("account_id")
+  account   Account  @relation(fields: [accountId], references: [id], onDelete: Cascade)
+  vendorId  String   @map("vendor_id")
+  vendor    Vendor   @relation(fields: [vendorId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@id([accountId, vendorId])
+  @@map("favorites")
 }
 
 /// One row per "email me a sign-in link" request, only to rate-limit them per visitor and per address.
