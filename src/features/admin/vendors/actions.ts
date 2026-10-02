@@ -1,11 +1,13 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import * as Sentry from "@sentry/nextjs";
 import { Prisma } from "@/generated/prisma/client";
 import { prisma } from "@/shared/lib/db";
 import { requireAdmin } from "@/features/admin/auth/dal";
 import { refreshPublicPages } from "@/features/admin/revalidate";
+import { bucketStorage } from "@/shared/lib/storage";
 import { VENDOR_TEXT_FIELDS, vendorSchema, type VendorField, type VendorFormValues } from "./schema";
 
 export type VendorFormState =
@@ -64,4 +66,21 @@ export async function saveVendor(
   refreshPublicPages();
   if (!vendorId) redirect(`/admin/vendors/${id}`);
   return { status: "saved", values };
+}
+
+// Removes the vendor for good: photos, contact stats, leads and favorites go with it (cascade),
+// then the photo files are cleared from Storage.
+export async function deleteVendor(vendorId: string): Promise<void> {
+  await requireAdmin();
+  const photos = await prisma.photo.findMany({ where: { vendorId }, select: { blobUrl: true } });
+  await prisma.vendor.deleteMany({ where: { id: vendorId } });
+
+  // The row is gone either way; files left behind in Storage are harmless, so a failure here isn't fatal.
+  const { pathFromPublicUrl, removeObjects } = bucketStorage("vendors");
+  const paths = photos.map((photo) => pathFromPublicUrl(photo.blobUrl)).filter((path) => path !== null);
+  await removeObjects(paths).catch((error) => Sentry.captureException(error));
+
+  revalidatePath("/admin", "layout");
+  refreshPublicPages();
+  redirect("/admin/vendors");
 }

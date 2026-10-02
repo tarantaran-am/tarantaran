@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { requireAdmin } from "@/features/admin/auth/dal";
 import { AdminPageHeader } from "@/features/admin/AdminPageHeader";
 import { VendorForm } from "./VendorForm";
+import { DeleteVendorButton } from "./DeleteVendorButton";
 import { PhotoManager } from "@/features/admin/photos/PhotoManager";
 import { getVendorFormValues, getVendorOptions, getVendorPhotos } from "./queries";
 
@@ -41,6 +42,9 @@ export async function VendorEditScreen({ vendorId }: { vendorId: string }) {
       />
       <PhotoManager vendorId={vendorId} photos={photos} />
       <VendorForm vendorId={vendorId} initialValues={values} options={options} />
+      <div className="mt-12 border-t pt-6">
+        <DeleteVendorButton vendorId={vendorId} name={values.nameRu} />
+      </div>
     </>
   );
 }
