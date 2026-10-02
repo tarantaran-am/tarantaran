@@ -87,7 +87,7 @@ export function VendorGallery({
           <Dialog.Close
             ref={closeRef}
             aria-label={t("close")}
-            className="absolute top-6 right-6 text-foreground transition-opacity hover:opacity-70"
+            className="absolute top-6 right-6 z-10 text-foreground transition-opacity hover:opacity-70"
           >
             <X className="h-6 w-6" />
           </Dialog.Close>
@@ -98,7 +98,7 @@ export function VendorGallery({
                 type="button"
                 onClick={() => step(-1)}
                 aria-label={t("prev")}
-                className="absolute left-4 text-foreground transition-opacity hover:opacity-70 md:left-8"
+                className="absolute left-2 z-10 p-2 text-foreground transition-opacity hover:opacity-70 md:left-8"
               >
                 <ChevronLeft className="h-8 w-8" />
               </button>
@@ -106,7 +106,7 @@ export function VendorGallery({
                 type="button"
                 onClick={() => step(1)}
                 aria-label={t("next")}
-                className="absolute right-4 text-foreground transition-opacity hover:opacity-70 md:right-8"
+                className="absolute right-2 z-10 p-2 text-foreground transition-opacity hover:opacity-70 md:right-8"
               >
                 <ChevronRight className="h-8 w-8" />
               </button>
