@@ -7,6 +7,7 @@ import { ChevronDown } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { Button, buttonVariants } from "@/shared/components/ui/button";
 import { Input } from "@/shared/components/ui/input";
+import { DateInput as DatePicker } from "@/shared/components/ui/date-input";
 import { InputGroup, InputGroupAddon, InputGroupInput, InputGroupText } from "@/shared/components/ui/input-group";
 import { Textarea } from "@/shared/components/ui/textarea";
 import { Modal, ModalHeader } from "@/shared/components/Modal";
@@ -303,10 +304,9 @@ function DateInput({
 
   return (
     <div className="flex flex-col gap-1.5">
-      <Input
+      <DatePicker
         id={id}
         name="eventDate"
-        type="date"
         min={min}
         max={max}
         defaultValue={defaultValue}

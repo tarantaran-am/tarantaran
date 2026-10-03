@@ -163,4 +163,20 @@ body {
   html {
     @apply font-sans;
   }
+  /* iOS WebKit (Safari, Chrome): native date/time fields keep an intrinsic width that overflows grid
+     columns, and render an empty value with no height or alignment. */
+  input[type="date"],
+  input[type="time"] {
+    -webkit-appearance: none;
+    appearance: none;
+    min-width: 0;
+    max-width: 100%;
+    display: block;
+    text-align: left;
+  }
+  input[type="date"]::-webkit-date-and-time-value,
+  input[type="time"]::-webkit-date-and-time-value {
+    text-align: left;
+    min-height: 1.5em;
+  }
 }

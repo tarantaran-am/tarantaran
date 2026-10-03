@@ -14,6 +14,7 @@ import { Plus, X } from "lucide-react";
 import { Link, useRouter } from "@/i18n/navigation";
 import { Button, buttonVariants } from "@/shared/components/ui/button";
 import { Input } from "@/shared/components/ui/input";
+import { DateInput } from "@/shared/components/ui/date-input";
 import { Textarea } from "@/shared/components/ui/textarea";
 import { cn } from "cn";
 import { publishInvitation, saveInvitation, unpublishInvitation } from "./actions";
@@ -257,10 +258,9 @@ function Builder({ initial, saved, photoUrl: initialPhoto, signedIn, messagesByL
         </Group>
 
         <Group title={t("when")}>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
             <Field label={t("date")}>
-              <Input
-                type="date"
+              <DateInput
                 value={draft.date}
                 aria-invalid={isInvalid("date")}
                 onChange={(event) => set("date", event.target.value)}
@@ -395,8 +395,7 @@ function Builder({ initial, saved, photoUrl: initialPhoto, signedIn, messagesByL
 
         <Group title={t("rsvpDeadline")}>
           <Field hint={t("rsvpDeadlineHint")}>
-            <Input
-              type="date"
+            <DateInput
               value={draft.rsvpDeadline ?? ""}
               className="max-w-48"
               aria-label={t("rsvpDeadline")}
@@ -480,7 +479,7 @@ function Group({ title, children }: { title: string; children: ReactNode }) {
 
 function Field({ label, hint, children }: { label?: string; hint?: string; children: ReactNode }) {
   return (
-    <label className="flex flex-col gap-1.5">
+    <label className="flex min-w-0 flex-col gap-1.5">
       {label && <span className="text-sm text-foreground">{label}</span>}
       {children}
       {hint && <span className="text-xs leading-relaxed text-muted-foreground">{hint}</span>}
