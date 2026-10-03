@@ -49,6 +49,7 @@ type VendorRow = {
   whatsapp: string | null;
   website: string | null;
   category: CategoryEnum;
+  extraCategories: CategoryEnum[];
   isVerified: boolean;
   photos: PhotoRow[];
 };
@@ -72,6 +73,7 @@ const vendorSelect = {
   whatsapp: true,
   website: true,
   category: true,
+  extraCategories: true,
   isVerified: true,
   photos: {
     where: { isApproved: true },
@@ -87,6 +89,7 @@ function toVendor(row: VendorRow, locale: Locale): Vendor {
     id: row.id,
     slug: row.slug,
     categorySlug: row.category,
+    extraCategorySlugs: row.extraCategories,
     name: pick({ hy: row.nameHy, ru: row.nameRu, en: row.nameEn }, locale),
     marzes: row.marzes,
     address: row.address ?? "",
@@ -104,12 +107,15 @@ function toVendor(row: VendorRow, locale: Locale): Vendor {
 }
 
 export const getVendorCountByCategory = cache(async (): Promise<Partial<Record<CategorySlug, number>>> => {
-  const grouped = await prisma.vendor.groupBy({
-    by: ["category"],
+  const rows = await prisma.vendor.findMany({
     where: { isPublished: true },
-    _count: { _all: true },
+    select: { category: true, extraCategories: true },
   });
-  return Object.fromEntries(grouped.map((g) => [g.category, g._count._all]));
+  const counts: Partial<Record<CategorySlug, number>> = {};
+  for (const row of rows) {
+    for (const category of [row.category, ...row.extraCategories]) counts[category] = (counts[category] ?? 0) + 1;
+  }
+  return counts;
 });
 
 export const getPublishedVendorCount = cache(async (): Promise<number> =>
@@ -137,9 +143,14 @@ function marzWhere(marz: string | undefined): Prisma.VendorWhereInput {
   return values.length > 0 ? { marzes: { hasSome: values.filter(isMarz) } } : {};
 }
 
+// A vendor is listed in its own category and in its extra ones. Wrapped in AND so a search's own OR doesn't replace it.
+function inCategories(slugs: CategorySlug[]): Prisma.VendorWhereInput {
+  return { AND: [{ OR: [{ category: { in: slugs } }, { extraCategories: { hasSome: slugs } }] }] };
+}
+
 function categoriesWhere(categories: string | undefined): Prisma.VendorWhereInput {
-  const slugs = parseList(categories);
-  return slugs.length > 0 ? { category: { in: slugs.filter(isCategory) } } : {};
+  const slugs = parseList(categories).filter(isCategory);
+  return slugs.length > 0 ? inCategories(slugs) : {};
 }
 
 async function findVendorPage(
@@ -172,7 +183,7 @@ export async function getVendorsByCategory(
   filters: VendorFilters = {},
 ): Promise<VendorPage> {
   return findVendorPage(
-    { isPublished: true, category: categorySlug, ...marzWhere(filters.marz) },
+    { isPublished: true, ...inCategories([categorySlug]), ...marzWhere(filters.marz) },
     locale,
     filters.page,
   );

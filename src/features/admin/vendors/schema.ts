@@ -19,6 +19,7 @@ export const VENDOR_TEXT_FIELDS = [
 ] as const;
 
 export type VendorFormValues = Record<(typeof VENDOR_TEXT_FIELDS)[number], string> & {
+  extraCategories: string[];
   marzes: string[];
   isPublished: boolean;
   isVerified: boolean;
@@ -47,6 +48,7 @@ export const vendorSchema = z.object({
   descriptionHy: optionalText(5000),
   descriptionEn: optionalText(5000),
   category: z.enum(CATEGORIES),
+  extraCategories: z.array(z.enum(CATEGORIES)),
   // Optional: some vendors, often the top ones, only list social links.
   phone: optionalText(30).refine(
     (value) => value === null || (/^\+?[\d\s()-]+$/.test(value) && (value.match(/\d/g)?.length ?? 0) >= 8),

@@ -18,6 +18,7 @@ const EMPTY_VALUES: VendorFormValues = {
   descriptionHy: "",
   descriptionEn: "",
   category: "",
+  extraCategories: [],
   phone: "",
   address: "",
   marzes: [],
@@ -99,6 +100,26 @@ export function VendorForm({
               </option>
             ))}
           </select>
+        </Field>
+        <Field
+          label="Ещё показывать в категориях"
+          htmlFor="extraCategories"
+          hint="Например, студия «фото и видео»: основная категория — фотографы, тут отметьте видеографов. Ссылка на страницу остаётся под основной категорией."
+        >
+          <div id="extraCategories" className="grid grid-cols-2 gap-x-6 gap-y-2 sm:grid-cols-3">
+            {options.categories.map(({ value, label }) => (
+              <label key={value} className="flex cursor-pointer items-center gap-2 text-sm text-foreground">
+                <input
+                  type="checkbox"
+                  name="extraCategories"
+                  value={value}
+                  defaultChecked={values.extraCategories.includes(value)}
+                  className="size-4 accent-foreground"
+                />
+                {label}
+              </label>
+            ))}
+          </div>
         </Field>
         <Field
           label="Адрес страницы (slug)"

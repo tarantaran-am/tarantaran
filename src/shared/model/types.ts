@@ -7,7 +7,10 @@ export type Locale = "hy" | "ru" | "en";
 export interface Vendor {
   id: string;
   slug: string;
+  // The page lives under this one.
   categorySlug: CategorySlug;
+  // Listed in these too.
+  extraCategorySlugs: CategorySlug[];
   name: string;
   marzes: MarzSlug[];
   address: string;

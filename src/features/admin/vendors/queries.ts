@@ -23,7 +23,7 @@ export async function listVendors({ query, category, status, verification }: Ven
   await requireAdmin();
 
   const where: Prisma.VendorWhereInput = {
-    ...(isCategory(category) ? { category } : {}),
+    ...(isCategory(category) ? { AND: [{ OR: [{ category }, { extraCategories: { has: category } }] }] } : {}),
     ...(status === "published" ? { isPublished: true } : status === "hidden" ? { isPublished: false } : {}),
     ...(verification === "verified"
       ? { isVerified: true }
@@ -50,6 +50,7 @@ export async function listVendors({ query, category, status, verification }: Ven
       slug: true,
       nameRu: true,
       category: true,
+      extraCategories: true,
       isPublished: true,
       isVerified: true,
       marzes: true,
@@ -75,6 +76,7 @@ export async function getVendorFormValues(id: string): Promise<{ values: VendorF
       descriptionHy: vendor.descriptionHy ?? "",
       descriptionEn: vendor.descriptionEn ?? "",
       category: vendor.category,
+      extraCategories: vendor.extraCategories,
       phone: vendor.phone ?? "",
       address: vendor.address ?? "",
       marzes: vendor.marzes,

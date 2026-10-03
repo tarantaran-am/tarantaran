@@ -65,34 +65,37 @@ enum ContactEventKind {
 }
 
 model Vendor {
-  id            String         @id @default(dbgenerated("gen_random_uuid()"))
-  slug          String         @unique
-  nameHy        String?        @map("name_hy")
-  nameRu        String         @map("name_ru")
-  nameEn        String?        @map("name_en")
-  descriptionHy String?        @map("description_hy")
-  descriptionRu String         @map("description_ru")
-  descriptionEn String?        @map("description_en")
-  category      Category
-  phone         String?
-  address       String?
-  marzes        Marz[]
-  instagram     String?
-  facebook      String?
-  tiktok        String?
-  telegram      String?
-  whatsapp      String?
-  website       String?
-  isPublished   Boolean        @default(true) @map("is_published")
+  id              String         @id @default(dbgenerated("gen_random_uuid()"))
+  slug            String         @unique
+  nameHy          String?        @map("name_hy")
+  nameRu          String         @map("name_ru")
+  nameEn          String?        @map("name_en")
+  descriptionHy   String?        @map("description_hy")
+  descriptionRu   String         @map("description_ru")
+  descriptionEn   String?        @map("description_en")
+  category        Category
+  /// Also listed in these categories (a studio doing photo and video). The page URL stays under `category`.
+  extraCategories Category[]     @default([]) @map("extra_categories")
+  phone           String?
+  address         String?
+  marzes          Marz[]
+  instagram       String?
+  facebook        String?
+  tiktok          String?
+  telegram        String?
+  whatsapp        String?
+  website         String?
+  isPublished     Boolean        @default(true) @map("is_published")
   /// Set by an admin after personally contacting the vendor and agreeing on the listing; shown as a badge.
-  isVerified    Boolean        @default(false) @map("is_verified")
-  createdAt     DateTime       @default(now()) @map("created_at")
-  photos        Photo[]
-  contactEvents ContactEvent[]
-  leads         VendorLead[]
-  favorites     Favorite[]
+  isVerified      Boolean        @default(false) @map("is_verified")
+  createdAt       DateTime       @default(now()) @map("created_at")
+  photos          Photo[]
+  contactEvents   ContactEvent[]
+  leads           VendorLead[]
+  favorites       Favorite[]
 
   @@index([category, isPublished])
+  @@index([extraCategories], type: Gin)
   @@map("vendors")
 }
 

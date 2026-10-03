@@ -27,6 +27,7 @@ function readForm(formData: FormData): VendorFormValues {
       (typeof VENDOR_TEXT_FIELDS)[number],
       string
     >),
+    extraCategories: formData.getAll("extraCategories").filter((value): value is string => typeof value === "string"),
     marzes: formData.getAll("marzes").filter((value): value is string => typeof value === "string"),
     isPublished: formData.get("isPublished") === "on",
     isVerified: formData.get("isVerified") === "on",

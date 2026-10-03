@@ -108,7 +108,9 @@ export async function VendorListScreen({ filters }: { filters: VendorListFilters
                     </Link>
                     <div className="text-xs text-muted-foreground">{vendor.slug}</div>
                   </td>
-                  <td className="px-5 py-3 text-muted-foreground">{categoryLabel.get(vendor.category)}</td>
+                  <td className="px-5 py-3 text-muted-foreground">
+                    {[vendor.category, ...vendor.extraCategories].map((c) => categoryLabel.get(c)).join(", ")}
+                  </td>
                   <td className="px-5 py-3 text-right tabular-nums">{vendor._count.photos}</td>
                   <td className="px-5 py-3 text-right tabular-nums">{vendor._count.leads}</td>
                   <td className="px-5 py-3">
