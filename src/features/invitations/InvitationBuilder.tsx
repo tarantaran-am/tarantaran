@@ -318,6 +318,7 @@ function Builder({ initial, saved, photoUrl: initialPhoto, signedIn, messagesByL
           <Textarea
             rows={4}
             maxLength={600}
+            className="min-h-28 px-4 py-3"
             value={draft.message ?? ""}
             placeholder={t("messagePlaceholder")}
             aria-label={t("message")}
