@@ -65,8 +65,11 @@ const nextConfig: NextConfig = {
     // AVIF where the browser supports it (about a fifth lighter than WebP), WebP otherwise.
     formats: ["image/avif", "image/webp"],
     qualities: [BACKDROP_QUALITY, DEFAULT_QUALITY],
-    // The defaults plus 2560, so large screens get a step between 2048 and 3840.
-    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 2560, 3840],
+    // Every distinct width is a separate billed transformation on Vercel Hobby (5,000/month),
+    // so the list is short and stops at 1920.
+    deviceSizes: [640, 828, 1080, 1200, 1920],
+    // Vendor photos rarely change; keep optimized copies for 31 days instead of re-making them.
+    minimumCacheTTL: 60 * 60 * 24 * 31,
     remotePatterns: [
       {
         protocol: "https",
