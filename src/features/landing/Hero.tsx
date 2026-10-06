@@ -12,6 +12,7 @@ import { MultiCombobox } from "@/shared/components/MultiCombobox";
 import { MarzCombobox } from "@/shared/components/MarzCombobox";
 import { withQuery } from "@/shared/lib/url";
 import { BACKDROP_QUALITY } from "@/shared/config/images";
+import bg from "@/assets/backgrounds/bg.jpg";
 
 const FIELD_CLASS =
   "h-auto w-full min-w-0 flex-1 rounded-none border-0 px-5 py-4 hover:bg-muted/25 [&>svg:last-child]:hidden";
@@ -36,7 +37,7 @@ export function Hero({ categories }: { categories: Category[] }) {
   return (
     <section className="relative flex min-h-screen flex-col justify-center overflow-hidden bg-tone-sand lg:flex-row lg:items-center">
       <Image
-        src="/backgrounds/bg.jpg"
+        src={bg}
         alt={t("imageAlt")}
         fill
         loading="eager"

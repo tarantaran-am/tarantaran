@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import Image from "next/image";
+import Image, { type StaticImageData } from "next/image";
 import { getFormatter, getLocale, getTranslations } from "next-intl/server";
 import { Check, LogOut } from "lucide-react";
 import type { Account } from "@/generated/prisma/client";
@@ -10,6 +10,7 @@ import { Button, buttonVariants } from "@/shared/components/ui/button";
 import { InvitationsPanel } from "@/features/invitations/InvitationsPanel";
 import { LocalDraftNotice } from "@/features/invitations/LocalDraftNotice";
 import { FavoritesPanel } from "@/features/favorites/FavoritesPanel";
+import photographers from "@/assets/categories/photographers.jpg";
 import { initials } from "./initials";
 
 export async function AccountScreen({ account }: { account: Account }) {
@@ -67,7 +68,7 @@ async function VendorDashboard({ soon }: { soon: string }) {
   return (
     <Feature
       soon={soon}
-      image="/categories/photographers.jpg"
+      image={photographers}
       imageAlt={t("profile.imageAlt")}
       title={t("profile.title")}
       description={t("profile.description")}
@@ -96,7 +97,7 @@ function Feature({
   footer,
 }: {
   soon: string;
-  image: string;
+  image: StaticImageData;
   imageAlt: string;
   title: string;
   description: string;

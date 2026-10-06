@@ -4,6 +4,7 @@ import path from "node:path";
 import matter from "gray-matter";
 import type { Locale } from "@/shared/model/types";
 import { type Rubric, isRubric } from "./rubrics";
+import { BLOG_COVERS } from "./covers";
 
 const BLOG_DIR = path.join(process.cwd(), "src/content/blog");
 
@@ -37,7 +38,7 @@ function readMeta(slug: string, locale: Locale): BlogPostMeta | undefined {
     slug,
     title: String(data.title),
     excerpt: String(data.excerpt ?? ""),
-    cover: String(data.cover ?? ""),
+    cover: BLOG_COVERS[slug]?.src ?? "",
     publishedAt: String(data.publishedAt),
     rubric: data.rubric,
     locale,

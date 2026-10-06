@@ -2,6 +2,8 @@ import { getTranslations } from "next-intl/server";
 import Image from "next/image";
 import { Container } from "@/shared/components/container";
 import { Eyebrow } from "@/shared/components/eyebrow";
+import inspiration from "@/assets/backgrounds/inspiration.jpg";
+import bouquet from "@/assets/backgrounds/inspiration-1.jpg";
 
 export async function Inspiration() {
   const t = await getTranslations("Inspiration");
@@ -12,20 +14,14 @@ export async function Inspiration() {
         <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-[minmax(0,1.618fr)_minmax(0,1fr)] lg:gap-20">
           <div className="relative order-2 aspect-golden overflow-hidden bg-muted lg:order-1">
             <Image
-              src="/backgrounds/inspiration.jpg"
+              src={inspiration}
               alt={t("imageAlt")}
               fill
               sizes="(min-width: 1024px) 50vw, 100vw"
               className="object-cover"
             />
             <div className="absolute right-0 bottom-0 hidden aspect-golden-portrait w-40 overflow-hidden border-4 border-muted sm:block md:w-52">
-              <Image
-                src="/backgrounds/inspiration-1.jpg"
-                alt={t("bouquetAlt")}
-                fill
-                sizes="208px"
-                className="object-cover"
-              />
+              <Image src={bouquet} alt={t("bouquetAlt")} fill sizes="208px" className="object-cover" />
             </div>
           </div>
 

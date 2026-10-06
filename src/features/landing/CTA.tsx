@@ -6,6 +6,7 @@ import { Eyebrow } from "@/shared/components/eyebrow";
 import { buttonVariants } from "@/shared/components/ui/button";
 import { Link } from "@/i18n/navigation";
 import { BACKDROP_QUALITY } from "@/shared/config/images";
+import cta from "@/assets/backgrounds/cta.jpg";
 
 export function CTA() {
   const t = useTranslations("CTA");
@@ -14,7 +15,7 @@ export function CTA() {
   return (
     <section className="relative overflow-hidden bg-foreground py-32 md:py-48">
       <Image
-        src="/backgrounds/cta.jpg"
+        src={cta}
         alt=""
         aria-hidden="true"
         fill

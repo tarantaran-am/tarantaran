@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import Image from "next/image";
 import { Eyebrow } from "@/shared/components/eyebrow";
 import { BACKDROP_QUALITY } from "@/shared/config/images";
+import bgAuth from "@/assets/backgrounds/bg-auth.jpg";
 
 // Sign-in and sign-up: a full-bleed photo with the form card on top. The card sits in the wider
 // golden-ratio column on the sky; the caption sits in the narrow one, low on the dark hills.
@@ -23,7 +24,7 @@ export function AuthShell({
   return (
     <section className="relative isolate flex min-h-svh overflow-hidden bg-tone-sand">
       <Image
-        src="/backgrounds/bg-auth.jpg"
+        src={bgAuth}
         alt={imageAlt}
         fill
         loading="eager"
