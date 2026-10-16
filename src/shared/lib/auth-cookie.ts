@@ -23,3 +23,9 @@ export function authHint(cookieHeader: string): AuthHint {
   const role = cookies.find(([name]) => name === ROLE_COOKIE)?.[1];
   return role === "couple" || role === "vendor" ? role : "member";
 }
+
+// The role someone signing up has already told us, by coming from the page for vendors: kept through
+// signing in, which leaves the site for Google or an email, so the role step can be skipped. An hour,
+// like the pending heart: a sign-in is either finished by then or started over.
+export const SIGNUP_ROLE_COOKIE = "tt_signup_role";
+export const SIGNUP_ROLE_MAX_AGE_SECONDS = 60 * 60;

@@ -1,11 +1,11 @@
 import Link from "next/link";
 import { buttonVariants } from "@/shared/components/ui/button";
+import { FormSelect } from "@/shared/components/FormSelect";
 import { SITE_URL } from "@/shared/config/seo";
 import { SOCIAL_LABELS, SOCIAL_NETWORKS } from "@/shared/config/social";
 import { requireAdmin } from "@/features/admin/auth/dal";
 import { AdminPageHeader } from "@/features/admin/AdminPageHeader";
 import { PERIODS, describePeriod, type Period } from "@/features/admin/periods";
-import { adminControlClass } from "@/features/admin/styles";
 import { CopyReportButton } from "./CopyReportButton";
 import { getVendorStats, type VendorStats } from "./queries";
 import { buildVendorReport } from "./report";
@@ -27,13 +27,7 @@ export async function StatsScreen({ period }: { period: Period }) {
       />
 
       <form className="mb-6 flex flex-wrap gap-3">
-        <select name="period" defaultValue={period} className={adminControlClass}>
-          {PERIODS.map(({ value, label }) => (
-            <option key={value} value={value}>
-              {label}
-            </option>
-          ))}
-        </select>
+        <FormSelect name="period" aria-label="Период" defaultValue={period} options={PERIODS} className="w-auto" />
         <button type="submit" className={buttonVariants({ variant: "outline" })}>
           Показать
         </button>

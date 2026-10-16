@@ -1,10 +1,11 @@
 import { getLocale, getTranslations } from "next-intl/server";
 import { AuthShell } from "./AuthShell";
 import { RolePicker } from "./RolePicker";
+import { peekSignupRole } from "./role-cookie";
 
 // The one step after the first sign-in: couple or vendor.
 export async function SignupScreen() {
-  const [t, locale] = await Promise.all([getTranslations("Auth"), getLocale()]);
+  const [t, locale, signupRole] = await Promise.all([getTranslations("Auth"), getLocale(), peekSignupRole()]);
 
   return (
     <AuthShell
@@ -14,7 +15,7 @@ export async function SignupScreen() {
       imageAlt={t("imageAlt")}
       caption={t("caption")}
     >
-      <RolePicker locale={locale} />
+      <RolePicker locale={locale} defaultRole={signupRole ?? "couple"} />
     </AuthShell>
   );
 }

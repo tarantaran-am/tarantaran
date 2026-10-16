@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { cn } from "cn";
 import { buttonVariants } from "@/shared/components/ui/button";
+import { FormSelect } from "@/shared/components/FormSelect";
 import { requireAdmin } from "@/features/admin/auth/dal";
 import { AdminPageHeader } from "@/features/admin/AdminPageHeader";
 import { adminControlClass } from "@/features/admin/styles";
@@ -53,28 +54,27 @@ export async function VendorListScreen({ filters }: { filters: VendorListFilters
           placeholder="Название или адрес страницы"
           className={cn(adminControlClass, "min-w-56 flex-1")}
         />
-        <select name="category" defaultValue={filters.category} className={adminControlClass}>
-          <option value="">Все категории</option>
-          {options.categories.map(({ value, label }) => (
-            <option key={value} value={value}>
-              {label}
-            </option>
-          ))}
-        </select>
-        <select name="status" defaultValue={filters.status} className={adminControlClass}>
-          {STATUS_OPTIONS.map(({ value, label }) => (
-            <option key={value} value={value}>
-              {label}
-            </option>
-          ))}
-        </select>
-        <select name="verified" defaultValue={filters.verification} className={adminControlClass}>
-          {VERIFICATION_OPTIONS.map(({ value, label }) => (
-            <option key={value} value={value}>
-              {label}
-            </option>
-          ))}
-        </select>
+        <FormSelect
+          name="category"
+          aria-label="Категория"
+          defaultValue={filters.category}
+          options={[{ value: "", label: "Все категории" }, ...options.categories]}
+          className="w-auto"
+        />
+        <FormSelect
+          name="status"
+          aria-label="Публикация"
+          defaultValue={filters.status}
+          options={STATUS_OPTIONS}
+          className="w-auto"
+        />
+        <FormSelect
+          name="verified"
+          aria-label="Проверка"
+          defaultValue={filters.verification}
+          options={VERIFICATION_OPTIONS}
+          className="w-auto"
+        />
         <button type="submit" className={buttonVariants({ variant: "outline" })}>
           Показать
         </button>

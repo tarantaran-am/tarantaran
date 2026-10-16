@@ -11,7 +11,7 @@ export default async function LoginPage(props: PageProps<"/[locale]/login">) {
   if (await getAccount()) redirect({ href: "/account", locale });
   // Signed in but never picked couple or vendor: that step is what is left, not signing in again.
   if (await getAuthUser()) redirect({ href: "/signup", locale });
-  const { error } = await props.searchParams;
+  const { error, as } = await props.searchParams;
   const known: LoginError | null = error === "google" || error === "link" ? error : null;
-  return <LoginScreen error={known} />;
+  return <LoginScreen error={known} asVendor={as === "vendor"} />;
 }

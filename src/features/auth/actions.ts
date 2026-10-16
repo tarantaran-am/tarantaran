@@ -5,7 +5,7 @@ import { toLocale } from "@/i18n/routing";
 import { createAccount, getAuthUser } from "./dal";
 import { savePendingFavorite } from "@/features/favorites/save";
 import { parseRole } from "./params";
-import { rememberRole } from "./role-cookie";
+import { rememberRole, takeSignupRole } from "./role-cookie";
 
 // The step after the first sign-in: the person picks couple or vendor, and that makes the account.
 // The locale comes from a hidden field: next/root-params, and so getLocale, is not available in Server Actions.
@@ -17,6 +17,7 @@ export async function completeSignup(formData: FormData): Promise<void> {
   const role = parseRole(formData.get("role")?.toString());
   if (!role) return redirect({ href: "/signup", locale });
 
+  await takeSignupRole();
   const account = await createAccount(user, role, locale);
   await rememberRole(account.role);
   redirect({ href: (await savePendingFavorite(account.id, account.role)) ?? "/account", locale });

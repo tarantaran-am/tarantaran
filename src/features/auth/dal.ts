@@ -5,7 +5,7 @@ import type { Account, AccountRole } from "@/generated/prisma/client";
 import { redirect } from "@/i18n/navigation";
 import { prisma } from "@/shared/lib/db";
 import { savePendingFavorite } from "@/features/favorites/save";
-import { rememberRole } from "./role-cookie";
+import { rememberRole, takeSignupRole } from "./role-cookie";
 import { createSupabaseServerClient } from "./supabase";
 
 export type AuthUser = { id: string; email: string; name: string | null };
@@ -50,11 +50,15 @@ export function createAccount(user: AuthUser, role: AccountRole, locale: string)
 }
 
 // Where a fresh sign-in lands: the account, or the role pick for someone who has none yet.
-// The role is asked only after signing in, so one person can never end up with two of them.
+// The role is asked only after signing in, so one person can never end up with two of them; someone
+// who came from the page for vendors has told us already, and their account is made right away.
 // A heart pressed before signing in takes a couple back to the page they pressed it on.
-export async function afterSignInPath(userId: string): Promise<string> {
-  const account = await prisma.account.findUnique({ where: { id: userId }, select: { role: true } });
+export async function afterSignInPath(user: AuthUser, locale: string): Promise<string> {
+  const signupRole = await takeSignupRole();
+  const account =
+    (await prisma.account.findUnique({ where: { id: user.id }, select: { id: true, role: true } })) ??
+    (signupRole && (await createAccount(user, signupRole, locale)));
   if (!account) return "/signup";
   await rememberRole(account.role);
-  return (await savePendingFavorite(userId, account.role)) ?? "/account";
+  return (await savePendingFavorite(account.id, account.role)) ?? "/account";
 }

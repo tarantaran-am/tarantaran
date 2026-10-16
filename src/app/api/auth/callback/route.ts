@@ -25,5 +25,5 @@ export async function GET(request: NextRequest) {
   const user = data.user && toAuthUser(data.user.id, data.user.email, data.user.user_metadata);
   if (error || !user) return to("/login?error=google");
 
-  return to(await afterSignInPath(user.id));
+  return to(await afterSignInPath(user, locale));
 }

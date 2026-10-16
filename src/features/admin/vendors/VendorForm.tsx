@@ -1,6 +1,7 @@
 "use client";
 
 import { useActionState, useState, type ReactNode } from "react";
+import { FormSelect } from "@/shared/components/FormSelect";
 import { Button } from "@/shared/components/ui/button";
 import { Input } from "@/shared/components/ui/input";
 import { Textarea } from "@/shared/components/ui/textarea";
@@ -35,9 +36,6 @@ const LANGUAGES = [
   { suffix: "Hy", label: "на армянском" },
   { suffix: "En", label: "на английском" },
 ] as const;
-
-const selectClass =
-  "h-9 w-full rounded-3xl border border-transparent bg-input/50 px-3 text-sm text-foreground outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/30 aria-invalid:border-destructive";
 
 export function VendorForm({
   vendorId,
@@ -84,22 +82,14 @@ export function VendorForm({
           );
         })}
         <Field label="Категория" htmlFor="category" required error={error("category")}>
-          <select
+          <FormSelect
             id="category"
             name="category"
             defaultValue={values.category}
-            className={selectClass}
-            aria-invalid={invalid("category") || undefined}
-          >
-            <option value="" disabled>
-              Выберите категорию
-            </option>
-            {options.categories.map(({ value, label }) => (
-              <option key={value} value={value}>
-                {label}
-              </option>
-            ))}
-          </select>
+            placeholder="Выберите категорию"
+            options={options.categories}
+            invalid={invalid("category")}
+          />
         </Field>
         <Field
           label="Ещё показывать в категориях"

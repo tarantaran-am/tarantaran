@@ -164,11 +164,91 @@
   },
   "ForVendorsPage": {
     "metaTitle": "For vendors",
-    "metaDescription": "List your profile on Taran Taran and get requests from couples.",
+    "metaDescription": "List your business on Taran Taran and get requests from couples. The first 3 months are free.",
     "eyebrow": "For vendors",
-    "title": "List your profile and get requests from couples",
-    "description": "We set up vendor profiles ourselves. Contact us on WhatsApp to get your page made.",
-    "whatsapp": "Message us on WhatsApp"
+    "title": "List your business and get requests from couples",
+    "description": "Taran Taran is a catalog of wedding vendors in Armenia. Couples find photographers, venues, hosts and everyone else they need for the wedding here, and contact them directly.",
+    "freeBadge": "The first 3 months are free",
+    "orMessage": "Or message us — we'll set it all up for you",
+    "start": {
+      "cta": "List your business",
+      "openAccount": "Go to your application",
+      "coupleAccount": "You're signed in as a couple. To list a vendor profile, sign out and sign in with another account — or message us."
+    },
+    "steps": {
+      "eyebrow": "How it works",
+      "title": "Three steps to a catalog listing",
+      "signIn": {
+        "title": "Sign in",
+        "desc": "With Google or a link sent to your email — no passwords. It takes less than a minute."
+      },
+      "fill": {
+        "title": "Fill in the application",
+        "desc": "Name, category, description, contacts and 4 to 10 photos of your work. About 5–10 minutes."
+      },
+      "review": {
+        "title": "We review and publish",
+        "desc": "Usually within 1–2 days. If anything needs fixing, we'll leave a comment right in your account."
+      }
+    },
+    "benefits": {
+      "eyebrow": "What you get",
+      "title": "Everything couples need to find you",
+      "page": {
+        "title": "Your own page",
+        "desc": "Photos of your work, description, areas you serve and contacts — in three languages."
+      },
+      "leads": {
+        "title": "Requests from couples",
+        "desc": "Couples send a request with their wedding date right from your page."
+      },
+      "contacts": {
+        "title": "One-click contacts",
+        "desc": "Phone, WhatsApp, Telegram, Instagram and website — no extra steps."
+      },
+      "stats": {
+        "title": "Interest analytics",
+        "desc": "We count how many couples opened your contacts, followed your links and sent requests."
+      }
+    },
+    "pricing": {
+      "eyebrow": "Pricing",
+      "title": "3 months free",
+      "free": "For the first three months your listing is free — no conditions or commitments.",
+      "after": "After that, the price depends on your listing's analytics: how much interest couples showed. Before the free period ends, we'll get in touch, show you the numbers and discuss terms."
+    },
+    "faq": {
+      "eyebrow": "Questions",
+      "title": "Frequently asked questions",
+      "cost": {
+        "q": "How much does a listing cost?",
+        "a": "The first 3 months are free. After that, the price depends on your listing's analytics; before the free period ends, we'll show you the stats and discuss terms."
+      },
+      "time": {
+        "q": "How long does the review take?",
+        "a": "Usually 1–2 days. Your application status and our reply are shown in your account."
+      },
+      "edit": {
+        "q": "Can I change my listing later?",
+        "a": "Yes. You send changes from your account and they appear on the site after review; until then the current version stays."
+      },
+      "noTime": {
+        "q": "No time to fill in the application?",
+        "a": "Message us on WhatsApp, Telegram or Instagram: send photos of your work and a few words about yourself, and we'll set up your listing."
+      },
+      "photos": {
+        "q": "What photos work?",
+        "a": "4 to 10 of your best works, at least 800 px on the short side. JPG, PNG, WebP and iPhone HEIC all work. The first photo becomes the cover."
+      },
+      "categories": {
+        "q": "I work in two fields. Do I need two listings?",
+        "a": "No: in the application you can choose a main and one additional category, for example photo and video."
+      }
+    },
+    "final": {
+      "eyebrow": "Get started",
+      "title": "List your business — the first 3 months are free"
+    }
   },
   "Advertise": {
     "eyebrow": "Advertising",
@@ -565,7 +645,6 @@
     "imageAlt": "A bride and groom walking across a mountain meadow at sunset",
     "caption": "Everything for your day, in one place",
     "legal": "By continuing, you accept the <terms>terms of use</terms> and <privacy>privacy policy</privacy>.",
-    "soon": "Coming soon",
     "roles": {
       "couple": {
         "title": "I'm the bride / groom",
@@ -594,23 +673,17 @@
       "errors": {
         "google": "Couldn't sign in with Google. Please try again — if it keeps happening, let us know.",
         "link": "This sign-in link has expired or was already used. Request a new one."
+      },
+      "vendor": {
+        "eyebrow": "For vendors",
+        "title": "Sign in to list your business",
+        "description": "With Google or a link sent to your email. The vendor application opens right after you sign in."
       }
     },
     "account": {
       "metaTitle": "Account",
       "memberSince": "Member since {date}",
       "signOut": "Sign out"
-    },
-    "vendor": {
-      "profile": {
-        "title": "Your catalog profile",
-        "imageAlt": "A wedding photographer at work",
-        "description": "Soon you'll manage your Taran Taran page yourself. For now we set up profiles for you — message us and we'll take care of it.",
-        "point1": "Photos and a description of your work",
-        "point2": "Requests from couples straight to your page",
-        "point3": "Contacts and social links one tap away",
-        "cta": "Message us on WhatsApp"
-      }
     },
     "or": "or",
     "email": {
@@ -804,6 +877,98 @@
       "title": "Favorites",
       "empty": "Save vendors you like with the heart on their card — they will show up here.",
       "browse": "Browse the catalog"
+    }
+  },
+  "VendorApplication": {
+    "title": "Your catalog listing",
+    "description": "Tell us about yourself — we'll review your application and set up your page in the Taran Taran catalog. We'll add photos of your work together once it's approved.",
+    "adminMessage": "Message from Taran Taran",
+    "openCard": "Open listing",
+    "status": {
+      "pending": {
+        "title": "Application under review",
+        "text": "Sent on {date}. We usually reply within 1–2 business days. You can still edit it while you wait."
+      },
+      "approved": {
+        "title": "Application approved",
+        "text": "Your listing is live in the catalog.",
+        "preparing": "We're preparing your listing and will be in touch soon to add photos."
+      },
+      "rejected": {
+        "title": "Application needs changes",
+        "text": "Update your application following the comment below and send it again."
+      },
+      "pendingEdit": {
+        "title": "Changes under review",
+        "text": "Sent on {date}. The site still shows the previous version. You can still edit your changes."
+      },
+      "rejectedEdit": {
+        "title": "Changes not accepted",
+        "text": "The site keeps the previous version. Update following the comment below and send again."
+      }
+    },
+    "form": {
+      "about": "About you",
+      "name": "Business or your name",
+      "nameHint": "This is how couples will see you in the catalog.",
+      "category": "Category",
+      "categoryPlaceholder": "Choose a category",
+      "description": "Description",
+      "descriptionHint": "What you do, your style, experience and what your services include.",
+      "marzes": "Where you work",
+      "allMarzes": "All of Armenia",
+      "clearMarzes": "Clear all",
+      "contacts": "Contacts",
+      "contactsHint": "Add a phone number or at least one link.",
+      "phone": "Phone",
+      "website": "Website",
+      "socialPlaceholder": "@username or link",
+      "submit": {
+        "new": "Send for review",
+        "pending": "Save changes",
+        "rejected": "Send again",
+        "edit": "Send changes for review"
+      },
+      "submitting": "Sending…",
+      "sent": "Your application has been sent for review.",
+      "errors": {
+        "name": "Enter a name.",
+        "category": "Choose a category.",
+        "description": "Add a description.",
+        "marzes": "Select at least one marz.",
+        "phone": "A phone number with the country code, e.g. +374 91 23 45 67.",
+        "instagram": "A link or username without spaces.",
+        "facebook": "A link or username without spaces.",
+        "tiktok": "A link or username without spaces.",
+        "telegram": "A link or username without spaces.",
+        "whatsapp": "A link or number without spaces.",
+        "website": "A website address without spaces.",
+        "contact": "Add a phone number or at least one link so couples can reach you.",
+        "invalid": "Fix the highlighted fields.",
+        "generic": "Couldn't send the application. Please try again.",
+        "extraCategory": "Choose a category different from the main one.",
+        "photos": "Upload 4 to 10 photos.",
+        "upload": "{count, plural, one {# photo} other {# photos}} failed to upload. Use JPG, PNG, WebP or HEIC, at least 800 px."
+      },
+      "extraCategory": "Additional category",
+      "extraCategoryHint": "If you also work in another field — for example, photo and video.",
+      "extraCategoryNone": "None",
+      "photos": "Photos of your work",
+      "photosHint": "{min} to {max} photos, at least 800 px on the short side. The first one becomes the cover.",
+      "cover": "Cover",
+      "removePhoto": "Remove photo",
+      "movePhotoLeft": "Move left",
+      "movePhotoRight": "Move right",
+      "uploading": "Uploading…",
+      "addPhotos": "Add photos"
+    },
+    "cardDescription": "Your catalog listing. Changes appear on the site after review.",
+    "editHint": "Change what you need and send it for review — the current version stays on the site until it's approved.",
+    "doneForYou": {
+      "title": "Rather not fill it in yourself?",
+      "text": "Send us photos of your work and a few words about yourself in any messenger — we'll set up your listing for you.",
+      "editTitle": "Easier to message us?",
+      "editText": "Send us what to change in any messenger — we'll update your listing for you."
     }
   }
 }

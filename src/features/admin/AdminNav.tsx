@@ -8,6 +8,7 @@ import { cn } from "cn";
 const ITEMS: { href: Route; label: string }[] = [
   { href: "/admin", label: "Обзор" },
   { href: "/admin/vendors", label: "Подрядчики" },
+  { href: "/admin/applications", label: "Анкеты" },
   { href: "/admin/leads", label: "Заявки" },
   { href: "/admin/invitations", label: "Приглашения" },
   { href: "/admin/stats", label: "Статистика" },

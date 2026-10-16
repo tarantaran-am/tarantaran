@@ -54,6 +54,12 @@ enum InvitationTemplate {
   photo
 }
 
+enum VendorApplicationStatus {
+  pending
+  approved
+  rejected
+}
+
 enum ContactEventKind {
   reveal
   instagram
@@ -65,17 +71,17 @@ enum ContactEventKind {
 }
 
 model Vendor {
-  id              String         @id @default(dbgenerated("gen_random_uuid()"))
-  slug            String         @unique
-  nameHy          String?        @map("name_hy")
-  nameRu          String         @map("name_ru")
-  nameEn          String?        @map("name_en")
-  descriptionHy   String?        @map("description_hy")
-  descriptionRu   String         @map("description_ru")
-  descriptionEn   String?        @map("description_en")
+  id              String             @id @default(dbgenerated("gen_random_uuid()"))
+  slug            String             @unique
+  nameHy          String?            @map("name_hy")
+  nameRu          String             @map("name_ru")
+  nameEn          String?            @map("name_en")
+  descriptionHy   String?            @map("description_hy")
+  descriptionRu   String             @map("description_ru")
+  descriptionEn   String?            @map("description_en")
   category        Category
   /// Also listed in these categories (a studio doing photo and video). The page URL stays under `category`.
-  extraCategories Category[]     @default([]) @map("extra_categories")
+  extraCategories Category[]         @default([]) @map("extra_categories")
   phone           String?
   address         String?
   marzes          Marz[]
@@ -85,14 +91,15 @@ model Vendor {
   telegram        String?
   whatsapp        String?
   website         String?
-  isPublished     Boolean        @default(true) @map("is_published")
+  isPublished     Boolean            @default(true) @map("is_published")
   /// Set by an admin after personally contacting the vendor and agreeing on the listing; shown as a badge.
-  isVerified      Boolean        @default(false) @map("is_verified")
-  createdAt       DateTime       @default(now()) @map("created_at")
+  isVerified      Boolean            @default(false) @map("is_verified")
+  createdAt       DateTime           @default(now()) @map("created_at")
   photos          Photo[]
   contactEvents   ContactEvent[]
   leads           VendorLead[]
   favorites       Favorite[]
+  application     VendorApplication?
 
   @@index([category, isPublished])
   @@index([extraCategories], type: Gin)
@@ -152,14 +159,15 @@ model VendorLead {
 /// A couple or vendor who signed up with Google. `id` is the Supabase Auth user id: Supabase keeps
 /// the session, this row keeps what the site needs to know about the person.
 model Account {
-  id          String       @id
+  id          String             @id
   email       String
   name        String?
   role        AccountRole
   locale      String
-  createdAt   DateTime     @default(now()) @map("created_at")
+  createdAt   DateTime           @default(now()) @map("created_at")
   invitations Invitation[]
   favorites   Favorite[]
+  application VendorApplication?
 
   @@map("accounts")
 }
@@ -174,6 +182,42 @@ model Favorite {
 
   @@id([accountId, vendorId])
   @@map("favorites")
+}
+
+/// A vendor account's request for a card in the catalog, filled in from the account page. The admin
+/// approves it, which creates a hidden vendor card from it, or rejects it with a message the vendor
+/// sees in the account. One per account: a rejected one is fixed and sent again.
+model VendorApplication {
+  id            String                  @id @default(dbgenerated("gen_random_uuid()"))
+  accountId     String                  @unique @map("account_id")
+  account       Account                 @relation(fields: [accountId], references: [id], onDelete: Cascade)
+  name          String
+  category      Category
+  /// One more category to also be listed in, like the vendor's extraCategories.
+  extraCategory Category?               @map("extra_category")
+  marzes        Marz[]
+  description   String
+  /// 5 to 10 photos of the vendor's work, uploaded to the "vendors" bucket; the first one is the cover.
+  photoUrls     String[]                @default([]) @map("photo_urls")
+  phone         String?
+  instagram     String?
+  facebook      String?
+  tiktok        String?
+  telegram      String?
+  whatsapp      String?
+  website       String?
+  status        VendorApplicationStatus @default(pending)
+  /// From the admin on approval or rejection; shown to the vendor in the account.
+  adminMessage  String?                 @map("admin_message")
+  /// The card created on approval.
+  vendorId      String?                 @unique @map("vendor_id")
+  vendor        Vendor?                 @relation(fields: [vendorId], references: [id], onDelete: SetNull)
+  reviewedAt    DateTime?               @map("reviewed_at")
+  createdAt     DateTime                @default(now()) @map("created_at")
+  updatedAt     DateTime                @updatedAt @map("updated_at")
+
+  @@index([status, updatedAt])
+  @@map("vendor_applications")
 }
 
 /// One row per "email me a sign-in link" request, only to rate-limit them per visitor and per address.

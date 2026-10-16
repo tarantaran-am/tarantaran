@@ -1,9 +1,9 @@
 import Link from "next/link";
 import type { Route } from "next";
 import { buttonVariants } from "@/shared/components/ui/button";
+import { FormSelect } from "@/shared/components/FormSelect";
 import { requireAdmin } from "@/features/admin/auth/dal";
 import { AdminPageHeader } from "@/features/admin/AdminPageHeader";
-import { adminControlClass } from "@/features/admin/styles";
 import { contactChannels, formatEventDate, formatReceivedAt } from "./format";
 import { DEFAULT_PERIOD, PERIODS } from "@/features/admin/periods";
 import { listLeads, listVendorChoices, type LeadListFilters } from "./queries";
@@ -26,21 +26,23 @@ export async function LeadListScreen({ filters }: { filters: LeadListFilters }) 
       <AdminPageHeader title="Заявки" description={`Найдено: ${total}.`} />
 
       <form className="mb-6 flex flex-wrap gap-3">
-        <select name="vendor" defaultValue={filters.vendorId} className={adminControlClass}>
-          <option value="">Все подрядчики</option>
-          {vendors.map((vendor) => (
-            <option key={vendor.id} value={vendor.id}>
-              {vendor.nameRu}
-            </option>
-          ))}
-        </select>
-        <select name="period" defaultValue={filters.period} className={adminControlClass}>
-          {PERIODS.map(({ value, label }) => (
-            <option key={value} value={value}>
-              {label}
-            </option>
-          ))}
-        </select>
+        <FormSelect
+          name="vendor"
+          aria-label="Подрядчик"
+          defaultValue={filters.vendorId}
+          options={[
+            { value: "", label: "Все подрядчики" },
+            ...vendors.map((vendor) => ({ value: vendor.id, label: vendor.nameRu })),
+          ]}
+          className="w-auto"
+        />
+        <FormSelect
+          name="period"
+          aria-label="Период"
+          defaultValue={filters.period}
+          options={PERIODS}
+          className="w-auto"
+        />
         <button type="submit" className={buttonVariants({ variant: "outline" })}>
           Показать
         </button>

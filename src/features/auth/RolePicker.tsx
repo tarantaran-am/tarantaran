@@ -6,7 +6,7 @@ import { completeSignup } from "./actions";
 const ROLES: AccountRole[] = ["couple", "vendor"];
 
 // The last signup step, after Google: plain radios, so it works before hydration too.
-export async function RolePicker({ locale }: { locale: string }) {
+export async function RolePicker({ locale, defaultRole }: { locale: string; defaultRole: AccountRole }) {
   const t = await getTranslations("Auth");
 
   return (
@@ -23,7 +23,7 @@ export async function RolePicker({ locale }: { locale: string }) {
                 type="radio"
                 name="role"
                 value={role}
-                defaultChecked={role === "couple"}
+                defaultChecked={role === defaultRole}
                 required
                 className="sr-only"
               />

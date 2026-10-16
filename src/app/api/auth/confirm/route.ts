@@ -1,6 +1,6 @@
 import type { NextRequest } from "next/server";
 import { toLocale } from "@/i18n/routing";
-import { afterSignInPath } from "@/features/auth/dal";
+import { afterSignInPath, toAuthUser } from "@/features/auth/dal";
 import { isSameOrigin, redirectToPage } from "@/features/auth/routes";
 import { createSupabaseServerClient } from "@/features/auth/supabase";
 
@@ -16,7 +16,8 @@ export async function POST(request: NextRequest) {
 
   const supabase = await createSupabaseServerClient();
   const { data, error } = await supabase.auth.verifyOtp({ type: "email", token_hash: tokenHash });
-  if (error || !data.user) return to("/login?error=link");
+  const user = data.user && toAuthUser(data.user.id, data.user.email, data.user.user_metadata);
+  if (error || !user) return to("/login?error=link");
 
-  return to(await afterSignInPath(data.user.id));
+  return to(await afterSignInPath(user, locale));
 }
