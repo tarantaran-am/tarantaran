@@ -4,6 +4,7 @@ import { cache } from "react";
 import { prisma } from "@/shared/lib/db";
 import { Prisma, type Category as CategoryEnum, type Marz } from "@/generated/prisma/client";
 import { normalizePage, normalizeQuery, parseList } from "@/shared/lib/listing-params";
+import { rotationOrder, rotationSeed } from "@/shared/lib/vendor-rotation";
 import { isMarz, type MarzSlug } from "@/shared/config/marz";
 import { isCategory, type CategorySlug } from "@/shared/config/category";
 import { SOCIAL_NETWORKS, socialUrl } from "@/shared/config/social";
@@ -136,8 +137,6 @@ export type VendorPage = {
 
 export const PAGE_SIZE = 24;
 
-const DEFAULT_ORDER = { createdAt: "desc" } as const;
-
 function marzWhere(marz: string | undefined): Prisma.VendorWhereInput {
   const values = parseList(marz);
   return values.length > 0 ? { marzes: { hasSome: values.filter(isMarz) } } : {};
@@ -159,18 +158,18 @@ async function findVendorPage(
   requestedPage: number | undefined,
 ): Promise<VendorPage> {
   const page = normalizePage(requestedPage);
-  const [rows, total] = await Promise.all([
-    prisma.vendor.findMany({
-      where,
-      orderBy: DEFAULT_ORDER,
-      select: vendorSelect,
-      skip: (page - 1) * PAGE_SIZE,
-      take: PAGE_SIZE,
-    }),
-    prisma.vendor.count({ where }),
-  ]);
+  // The rotation order can't be expressed in Prisma's orderBy, so rank the matching ids here and load only the page.
+  const candidates = await prisma.vendor.findMany({ where, select: { id: true, isVerified: true } });
+  const total = candidates.length;
+  const pageIds = rotationOrder(candidates, rotationSeed(new Date())).slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
+  const rows =
+    pageIds.length > 0 ? await prisma.vendor.findMany({ where: { id: { in: pageIds } }, select: vendorSelect }) : [];
+  const byId = new Map(rows.map((r) => [r.id, r]));
   return {
-    vendors: rows.map((r) => toVendor(r, locale)),
+    vendors: pageIds.flatMap((id) => {
+      const row = byId.get(id);
+      return row ? [toVendor(row, locale)] : [];
+    }),
     page,
     totalPages: Math.max(1, Math.ceil(total / PAGE_SIZE)),
     total,
